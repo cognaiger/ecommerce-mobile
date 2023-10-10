@@ -1,138 +1,97 @@
-import { Pressable, StyleSheet, View, Image, Text } from "react-native";
-import { Padding, Border, FontFamily, FontSize, Color } from "../GlobalStyles";
-import ButtonComp from "../components/Button";
+import { Pressable, StyleSheet, View, Image, Text, SafeAreaView } from "react-native";
+import { Color } from "../GlobalStyles";
 
 const Opening = () => {
 
     return (
-        <View style={styles.openningScreen}>
-            <View style={styles.signal}>
+        <SafeAreaView style={styles.openningScreen}>
+            <View>
                 <Image
-                    style={styles.signalChild}
-                    contentFit="cover"
-                    source={require("../assets/logo.png")}
+                    style={styles.img}
+                    source={{
+                        uri: "https://img.freepik.com/free-vector/gradient-laptop-logo-template_23-2148995853.jpg"
+                    }}
                 />
-                <View style={[styles.text, styles.textPosition]}>
-                    <Text style={styles.exploreTheApp}>Explore the app</Text>
-                    <Text style={styles.getReadyTo}>
-                        Get ready to explore the endless shopping possibilities
-                    </Text>
-                </View>
             </View>
-            <View style={styles.buttons}>
-                <ButtonComp title={"Test"} />
-            </View>
-        </View>
+
+            <View style={{ alignItems: 'center' }}>
+                <Text style={styles.heading}>
+                Explore the app
+                </Text>
+                <Text style={styles.para}>
+                Get ready to explore the endless shopping possibilities
+                </Text>
+            </View>                
+
+            <Pressable style={styles.button1}>
+                <Text style={styles.signin}>Sign In</Text>
+            </Pressable>
+
+            <Pressable style={styles.button2}>
+                <Text style={styles.register}>Create account</Text>
+            </Pressable>
+        </SafeAreaView>
     );
 };
 
 export default Opening;
 
 const styles = StyleSheet.create({
-    textPosition: {
-        left: 0,
-        right: 0,
-        position: "absolute",
-    },
-    buttonFlexBox: {
-        paddingVertical: Padding.p_mid,
-        paddingHorizontal: Padding.p_133xl,
-        justifyContent: "center",
-        alignItems: "center",
-        height: 56,
-        borderRadius: Border.br_3xs,
-        flexDirection: "row",
-    },
-      buttonTypo: {
-        fontFamily: FontFamily.b01SB600,
-        fontWeight: "600",
-        lineHeight: 20,
-        fontSize: FontSize.header3_size,
-        textAlign: "center",
-    },
-    signalChild: {
-        top: 0,
-        right: 35,
-        left: 34,
-        maxWidth: "100%",
-        height: 225,
-        position: "absolute",
-        overflow: "hidden",
-    },
-    exploreTheApp: {
-        top: 32,
-        left: 50,
-        fontSize: FontSize.title_size,
-        letterSpacing: -0.3,
-        lineHeight: 36,
-        fontWeight: "700",
-        fontFamily: FontFamily.title,
-        textAlign: "left",
-        width: 219,
-        height: 41,
-        color: Color.lightInk,
-        position: "absolute",
-    },
-    getReadyTo: {
-        top: 89,
-        fontSize: 17,
-        lineHeight: 21,
-        fontFamily: FontFamily.b02R400,
-        color: Color.colorGray_800,
-        textAlign: "center",
-        left: 0,
-        width: 319,
-        position: "absolute",
-    },
-    text: {
-        top: 285,
-        height: 163,
-    },
-    signal: {
-        top: 92,
-        left: 21,
-        height: 448,
-        width: 319,
-        position: "absolute",
-    },
-    button1: {
-        color: Color.lightInk,
-    },
-    buttonSecondary: {
-        bottom: 0,
-        borderStyle: "solid",
-        borderColor: Color.colorDimgray_100,
-        borderWidth: 1,
-        left: 0,
-        right: 0,
-        position: "absolute",
-    },
-    button3: {
-        color: Color.lightPrimary,
-    },
-    buttonPrimary: {
-        backgroundColor: Color.lightInk,
-        width: 314,
-    },
-    button2: {
-        bottom: 93,
-        flexDirection: "row",
-        left: 0,
-        right: 0,
-        position: "absolute",
-    },
-    buttons: {
-        top: 600,
-        left: 23,
-        height: 149,
-        width: 314,
-        position: "absolute",
-    },
     openningScreen: {
         backgroundColor: Color.lightPrimary,
         flex: 1,
-        width: 360,
-        height: 800,
-        overflow: "hidden",
+        alignItems: 'center',
+        marginTop: 50
     },
+    img: {
+        marginTop: 50,
+        width: 250,
+        height: 250
+    },
+    heading: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginTop: 100,
+        color: 'black'
+    },
+    para: {
+        fontSize: 17,
+        marginTop: 25,
+        color: 'black',
+        textAlign: 'center'
+    },
+    button1: {
+        marginTop: 80,
+        width: 314,
+        height: 56,
+        backgroundColor: "#000000",
+        borderRadius: 10,
+        marginLeft: "auto",
+        marginRight: "auto",
+        padding: 15,
+    },
+    button2: {
+        marginTop: 50,
+        width: 314,
+        height: 56,
+        backgroundColor: "#ffffff",
+        borderRadius: 10,
+        marginLeft: "auto",
+        marginRight: "auto",
+        padding: 15,
+        borderWidth: 2,
+        borderColor: "#747474"
+    },
+    signin: {
+        textAlign: "center",
+        color: "white",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    register: {
+        textAlign: "center",
+        color: "black",
+        fontSize: 16,
+        fontWeight: "bold",
+    }
 });

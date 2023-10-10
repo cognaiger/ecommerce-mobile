@@ -2,7 +2,7 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Color } from "../GlobalStyles";
 
 
-const ButtonComp = ({ title }) => {
+const ButtonComp = ({ title, position, right, left, bottom,  }) => {
   return (
     <View style={styles.buttonContainer}>
       <Pressable style={styles.button}>
