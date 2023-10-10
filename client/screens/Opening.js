@@ -1,5 +1,6 @@
-import { Pressable, StyleSheet, View, Image, Text, SafeAreaView } from "react-native";
+import { StyleSheet, View, Image, Text, SafeAreaView } from "react-native";
 import { Color } from "../GlobalStyles";
+import BigButton from "../components/BigButton";
 
 const Opening = () => {
 
@@ -23,13 +24,13 @@ const Opening = () => {
                 </Text>
             </View>                
 
-            <Pressable style={styles.button1}>
-                <Text style={styles.signin}>Sign In</Text>
-            </Pressable>
-
-            <Pressable style={styles.button2}>
-                <Text style={styles.register}>Create account</Text>
-            </Pressable>
+            <View style={{ marginTop: 80 }}>
+                <BigButton title="Sign in" />
+            </View>
+            
+            <View style={{ marginTop: 50 }}>
+                <BigButton title="Create account" type="white" />
+            </View>
         </SafeAreaView>
     );
 };
@@ -60,38 +61,4 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center'
     },
-    button1: {
-        marginTop: 80,
-        width: 314,
-        height: 56,
-        backgroundColor: "#000000",
-        borderRadius: 10,
-        marginLeft: "auto",
-        marginRight: "auto",
-        padding: 15,
-    },
-    button2: {
-        marginTop: 50,
-        width: 314,
-        height: 56,
-        backgroundColor: "#ffffff",
-        borderRadius: 10,
-        marginLeft: "auto",
-        marginRight: "auto",
-        padding: 15,
-        borderWidth: 2,
-        borderColor: "#747474"
-    },
-    signin: {
-        textAlign: "center",
-        color: "white",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-    register: {
-        textAlign: "center",
-        color: "black",
-        fontSize: 16,
-        fontWeight: "bold",
-    }
 });
