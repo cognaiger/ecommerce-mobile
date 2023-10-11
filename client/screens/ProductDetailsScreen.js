@@ -8,22 +8,16 @@ import {
   ScrollView,
 } from "react-native";
 
-
 const ProductDetailsScreen = () => {
-
-
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
   const wishlistButtonLink = "client/assets/wishlist.png";
   const starReviewIconLink = "client/assets/review_star.png";
 
-  
-  const [productUnit,setProductUnit] = useState(0);
-  
-  
+  const [productUnit, setProductUnit] = useState(0);
+
   const handleBackButtonPress = () => {
     // Handle back button press
-    
   };
 
   const handleWishlistButtonPress = () => {
@@ -33,13 +27,13 @@ const ProductDetailsScreen = () => {
   const handleDecreaseQuantity = () => {
     // Handle decrease quantity button press
     if (productUnit > 1) {
-      setProductUnit(productUnit-1)
+      setProductUnit(productUnit - 1);
     }
   };
 
   const handleIncreaseQuantity = () => {
     // Handle increase quantity button press
-    setProductUnit(productUnit+1)
+    setProductUnit(productUnit + 1);
   };
 
   return (
@@ -141,9 +135,6 @@ const ProductDetailsScreen = () => {
           <Text style={styles.buttonTextBuyNow}>Buy Now</Text>
         </TouchableOpacity>
       </View>
-
- 
-
     </ScrollView>
   );
 };
@@ -266,8 +257,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 20,
   },
   button: {
@@ -280,24 +271,23 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   addToCartButton: {
-    backgroundColor: 'white',
-    borderColor: 'black',
+    backgroundColor: "white",
+    borderColor: "black",
   },
   buyNowButton: {
-    backgroundColor: 'black',
-    color: 'white',
-    
+    backgroundColor: "black",
+    color: "white",
   },
   buttonTextBuyNow: {
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: 'bold',
+    color: "white",
+    textAlign: "center",
+    fontWeight: "bold",
   },
   buttonTextAddToCart: {
-    color: 'black',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  }
+    color: "black",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
 });
 
 export default ProductDetailsScreen;
