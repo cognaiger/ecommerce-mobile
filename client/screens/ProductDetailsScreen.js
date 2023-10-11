@@ -12,9 +12,12 @@ const ProductDetailsScreen = () => {
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
   const wishlistButtonLink = "client/assets/wishlist.png";
+  const wishlistAddedButtonLink = "client/assets/wishlist_added.png";
   const starReviewIconLink = "client/assets/review_star.png";
 
   const [productUnit, setProductUnit] = useState(0);
+
+  const [clickWishlist, setClickWishlist] = useState(0);
 
   const handleBackButtonPress = () => {
     // Handle back button press
@@ -22,6 +25,8 @@ const ProductDetailsScreen = () => {
 
   const handleWishlistButtonPress = () => {
     // Handle wishlist button press
+    setClickWishlist(clickWishlist + 1);
+    
   };
 
   const handleDecreaseQuantity = () => {
@@ -50,7 +55,7 @@ const ProductDetailsScreen = () => {
         onPress={handleWishlistButtonPress}
       >
         {/* Render your wishlist button icon/image here */}
-        <Image source={require(wishlistButtonLink)}></Image>
+        {clickWishlist % 2 === 0? <Image source={require(wishlistButtonLink)}></Image> : <Image source={require(wishlistAddedButtonLink)}></Image>}
       </TouchableOpacity>
       <Image source={require(productImgLink)} style={styles.image} />
 
