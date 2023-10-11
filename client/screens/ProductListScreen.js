@@ -12,18 +12,11 @@ import ProductCard from "../components/ProductCard";
 
 import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
+import SearchBar from "../components/SearchBar";
 
 const ProductListScreen = () => {
-  const [searchText, setSearchText] = useState("");
-
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
-  const searchButtonLink = "client/assets/search.png";
-
-  const handleSearch = () => {
-    // Handle search logic here
-    console.log("Search:", searchText);
-  };
 
   return (
     <View style={styles.container}>
@@ -36,17 +29,7 @@ const ProductListScreen = () => {
       </View>
 
       {/* Search bar */}
-      <View style={styles.searchBar}>
-        <Image source={require(searchButtonLink)}></Image>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Product Name"
-          placeholderTextColor="#888"
-          value={searchText}
-          onChangeText={setSearchText}
-          onSubmitEditing={handleSearch}
-        />
-      </View>
+      <SearchBar />
 
       {/* Product list */}
       <ScrollView style={styles.scrollView}>
@@ -129,25 +112,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  searchBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#f2f2f2",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    backgroundColor: "#f2f2f2",
-    padding: 10,
-    borderRadius: 20,
-  },
   scrollView: {
     flex: 1,
   },
@@ -178,7 +142,6 @@ const styles = StyleSheet.create({
   buttonText: {
     marginLeft: 5,
   },
-
 });
 
 export default ProductListScreen;
