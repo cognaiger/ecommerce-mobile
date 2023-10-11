@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from "react-native";
 
+import BottomNavigator from "../components/BottomNavigator";
+
 const ProductDetailsScreen = () => {
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
@@ -140,6 +142,8 @@ const ProductDetailsScreen = () => {
           <Text style={styles.buttonTextBuyNow}>Buy Now</Text>
         </TouchableOpacity>
       </View>
+
+      <BottomNavigator/>
     </ScrollView>
   );
 };
