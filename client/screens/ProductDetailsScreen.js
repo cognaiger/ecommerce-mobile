@@ -17,7 +17,7 @@ const ProductDetailsScreen = () => {
   const wishlistAddedButtonLink = "client/assets/wishlist_added.png";
   const starReviewIconLink = "client/assets/review_star.png";
 
-  const [productUnit, setProductUnit] = useState(0);
+  const [productUnit, setProductUnit] = useState(1);
 
   const [clickWishlist, setClickWishlist] = useState(0);
 
@@ -28,7 +28,6 @@ const ProductDetailsScreen = () => {
   const handleWishlistButtonPress = () => {
     // Handle wishlist button press
     setClickWishlist(clickWishlist + 1);
-    
   };
 
   const handleDecreaseQuantity = () => {
@@ -57,7 +56,11 @@ const ProductDetailsScreen = () => {
         onPress={handleWishlistButtonPress}
       >
         {/* Render your wishlist button icon/image here */}
-        {clickWishlist % 2 === 0? <Image source={require(wishlistButtonLink)}></Image> : <Image source={require(wishlistAddedButtonLink)}></Image>}
+        {clickWishlist % 2 === 0 ? (
+          <Image source={require(wishlistButtonLink)}></Image>
+        ) : (
+          <Image source={require(wishlistAddedButtonLink)}></Image>
+        )}
       </TouchableOpacity>
       <Image source={require(productImgLink)} style={styles.image} />
 
@@ -143,7 +146,7 @@ const ProductDetailsScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <BottomNavigator/>
+      <BottomNavigator />
     </ScrollView>
   );
 };

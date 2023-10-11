@@ -10,7 +10,7 @@ import {
   Montserrat_700Bold,
 } from "@expo-google-fonts/montserrat";
 import ProductDetailsScreen from "./screens/ProductDetailsScreen";
-
+import ProductListScreen from "./screens/ProductListScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -32,6 +32,7 @@ export default function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
 
-    <ProductDetailsScreen />
+    // <ProductDetailsScreen />
+    <ProductListScreen />
   );
 }
