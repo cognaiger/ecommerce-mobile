@@ -1,8 +1,8 @@
-import { StyleSheet, View, Image, Text, SafeAreaView } from "react-native";
+import { StyleSheet, View, Image, Text, SafeAreaView, Pressable } from "react-native";
 import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
 
-const Opening = () => {
+const Opening = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.openningScreen}>
@@ -24,13 +24,13 @@ const Opening = () => {
                 </Text>
             </View>                
 
-            <View style={{ marginTop: 80 }}>
+            <Pressable style={{ marginTop: 80 }} onPress={() => navigation.navigate('Login')}>
                 <BigButton title="Sign in" />
-            </View>
+            </Pressable>
             
-            <View style={{ marginTop: 50 }}>
+            <Pressable style={{ marginTop: 50 }} onPress={() => navigation.navigate('Register')}>
                 <BigButton title="Create account" type="white" />
-            </View>
+            </Pressable>
         </SafeAreaView>
     );
 };

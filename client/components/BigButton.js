@@ -1,18 +1,18 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const BigButton = ({ title, type}) => {
   if (type === "white") {
     return (
-      <Pressable style={styles.btnwhite}>
+      <View style={styles.btnwhite}>
         <Text style={styles.textwhite}>{title}</Text>
-      </Pressable>
+      </View>
     );
   };
 
   return (
-    <Pressable style={styles.btnblack}>
+    <View style={styles.btnblack}>
       <Text style={styles.textblack}>{title}</Text>
-    </Pressable>
+    </View>
   );
 };
 

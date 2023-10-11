@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Color } from '../GlobalStyles';
 import BigButton from '../components/BigButton';
+import { CheckBox } from '@rneui/themed';
 
-const Login = () => {
+const Login = ({ navigation }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [checked, setChecked] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,14 +49,24 @@ const Login = () => {
             </View>
 
             <View style={styles.condition}>
-                <Text>I accept the term</Text>
+              <CheckBox
+                checked={checked}
+                onPress={() => setChecked(!checked)}
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                title="Remember me"
+                containerStyle={{ marginLeft: 0 }}
+              />
+              <Pressable style={{ marginLeft: 30 }}>
+                <Text>Forgot password?</Text>
+              </Pressable>
             </View>
 
             <View style={{ marginTop: 35 }}>
                 <BigButton title="Sign in" />
             </View>
 
-            <Pressable style={{ marginTop: 15 }}>
+            <Pressable style={{ marginTop: 15 }} onPress={() => navigation.navigate("Register")}>
                 <Text style={{ textAlign: 'center', fontSize: 16 }}>
                     Don't have an account? Sign up
                 </Text>
@@ -105,6 +117,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   condition: {
-    marginTop: 15
+    marginTop: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
