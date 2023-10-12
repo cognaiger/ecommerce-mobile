@@ -13,8 +13,13 @@ import ProductCard from "../components/ProductCard";
 import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
-
+import Modal from "react-native-modal";
 const ProductListScreen = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
 
@@ -85,7 +90,28 @@ const ProductListScreen = () => {
         </View>
       </ScrollView>
 
-      <FilterAndSort />
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={toggleModal}
+        style={styles.modalContainer}
+        backdropOpacity={0.5}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        avoidKeyboard={true}
+        useNativeDriverForBackdrop
+      >
+        <View style={styles.modalContent}>
+          <Text style={styles.modalTitle}>Sort by</Text>
+          <TouchableOpacity onPress={toggleModal} style={styles.modalOption}>
+            <Text style={styles.modalOptionText}>Price - High to Low</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={toggleModal} style={styles.modalOption}>
+            <Text style={styles.modalOptionText}>Price - Low to High</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      <FilterAndSort onSortPress={toggleModal} />
       <BottomNavigator />
     </View>
   );
@@ -141,6 +167,28 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     marginLeft: 5,
+  },
+  modalContainer: {
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalOption: {
+    paddingVertical: 10,
+  },
+  modalOptionText: {
+    fontSize: 16,
+    color: "#000",
   },
 });
 

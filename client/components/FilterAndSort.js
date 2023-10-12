@@ -2,7 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const FilterAndSort = () => {
+const FilterAndSort = ({onSortPress}) => {
   const filterIcon = "client/assets/filter.png";
   const sortIcon = "client/assets/sort.png";
   return (
@@ -11,7 +11,7 @@ const FilterAndSort = () => {
         <Image source={require(filterIcon)}></Image>
         <Text style={styles.tabText}>Filter</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.tab}>
+      <TouchableOpacity style={styles.tab} onPress={onSortPress}>
         <Image source={require(sortIcon)}></Image>
         <Text style={styles.tabText}>Sort by</Text>
       </TouchableOpacity>
