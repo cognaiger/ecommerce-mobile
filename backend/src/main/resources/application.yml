@@ -42,10 +42,11 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    schemas: ["ecommerce"]
+    schemas: ["product_schema"]
     locations: classpath:/db/migration
 
   docker:
     compose:
       enabled: true
       file: src/main/docker/docker-compose.yml
+      lifecycle-management: start_and_stop
