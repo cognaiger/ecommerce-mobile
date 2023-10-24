@@ -1,8 +1,7 @@
-CREATE TABLE product_schema.category_attribute (
-    category_attribute_id uuid NOT NULL DEFAULT uuid_generate_v1(),
-    category_id uuid NOT NULL,
+CREATE TABLE product_schema.general_attribute (
+    general_attribute_id SERIAL,
     name varchar NOT NULL,
+    is_filter boolean NOT NULL,
 
-    CONSTRAINT category_attribute_pk PRIMARY KEY (category_attribute_id),
-    CONSTRAINT category_attribute_fk1 FOREIGN KEY (category_id) REFERENCES product_schema.category(category_id)
+    CONSTRAINT category_attribute_pk PRIMARY KEY (general_attribute_id)
 )

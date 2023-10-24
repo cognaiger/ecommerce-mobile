@@ -1,2 +1,4 @@
-package mobile.com.backend.entity;public class Brand {
+package mobile.com.backend.entity;
+
+public class Brand {
 }
