@@ -9,29 +9,36 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(schema = "product_schema",name = "category")
+@Table(schema = "product_schema",name = "product")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@TypeDef()
-public class Category {
+public class Product {
 
   @Id
-  @Column(name = "category_id", updatable = false, nullable = false)
+  @Column(name = "product_id")
   @GeneratedValue(generator = "UUID")
   @GenericGenerator(
       name = "UUID",
       strategy = "org.hibernate.id.UUIDGenerator"
   )
-  private UUID categoryId;
+  private UUID productId;
 
-  @Column(name = "name")
-  private String name;
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "card_id")
+  private Card card;
+
+  @Column(name = "price")
+  private BigDecimal price;
+
+  @Column(name = "quantity")
+  private Integer quantity;
 
   @Column(name = "created_date")
   @CreationTimestamp
@@ -40,5 +47,4 @@ public class Category {
   @Column(name = "last_updated_date")
   @UpdateTimestamp
   private LocalDateTime lastUpdatedDate;
-
 }

@@ -13,25 +13,31 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(schema = "product_schema",name = "category")
+@Table(schema = "product_schema",name = "card")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@TypeDef()
-public class Category {
+public class Card {
 
   @Id
-  @Column(name = "category_id", updatable = false, nullable = false)
+  @Column(name = "card_id")
   @GeneratedValue(generator = "UUID")
   @GenericGenerator(
       name = "UUID",
       strategy = "org.hibernate.id.UUIDGenerator"
   )
-  private UUID categoryId;
+  private UUID cardId;
+
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id")
+  private Category category;
 
   @Column(name = "name")
   private String name;
+
+  @Column(name = "description")
+  private String description;
 
   @Column(name = "created_date")
   @CreationTimestamp
@@ -40,5 +46,4 @@ public class Category {
   @Column(name = "last_updated_date")
   @UpdateTimestamp
   private LocalDateTime lastUpdatedDate;
-
 }
