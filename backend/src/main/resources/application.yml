@@ -42,7 +42,7 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-    schemas: ["product_schema"]
+    schemas: ["product"]
     locations: classpath:/db/migration
 
   docker:
