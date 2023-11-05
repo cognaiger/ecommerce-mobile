@@ -14,6 +14,8 @@ import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
 import Modal from "react-native-modal";
+import FilterDetailModal from "../components/FilterDetailModal";
+
 const ProductListScreen = () => {
   const [isSortModalVisible, setIsSortModalVisible] = useState(false);
   const toggleSortModal = () => {
@@ -25,12 +27,24 @@ const ProductListScreen = () => {
     setIsFilterModalVisible(!isFilterModalVisible);
   };
 
+  const [isSeriesFilterVisisble, setIsSeriesFilterVisisble] = useState(false);
+
+  const toggleSeriesFilter = () => {
+    setIsSeriesFilterVisisble(!isSeriesFilterVisisble);
+  };
+
   const seeFilterResult = () => {
     toggleFilterModal();
 
     // get query result
   };
 
+
+  const [series, setSeries] = useState("Zenbook")
+
+
+  console.log(isSeriesFilterVisisble);
+  console.log(series);
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
 
@@ -76,26 +90,7 @@ const ProductListScreen = () => {
             name="Lenovo Ideapad Gaming 3"
             price="$1200"
           />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
+          
 
           {/* ... */}
         </View>
@@ -129,6 +124,14 @@ const ProductListScreen = () => {
         </View>
       </Modal>
 
+      <FilterDetailModal
+        toggleVisible={toggleSeriesFilter}
+        visible={isSeriesFilterVisisble}
+        filterTitle="Series"
+        listOption={["Zenbook", "Vivo"]}
+        target = {series}
+      />
+
       {/* filter modal */}
       <Modal
         isVisible={isFilterModalVisible}
@@ -144,11 +147,11 @@ const ProductListScreen = () => {
           <Text style={styles.modalTitle}>Filter</Text>
 
           <TouchableOpacity
-            onPress={toggleFilterModal}
+            onPress={toggleSeriesFilter}
             style={styles.modalOption}
           >
             <Text style={styles.modalOptionText}>Series</Text>
-            <Text style={styles.modalOptionText}>Zenbook</Text>
+            <Text style={styles.modalOptionText}>{series}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
