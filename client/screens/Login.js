@@ -67,9 +67,12 @@ const Login = ({ navigation }) => {
           </Pressable>
         </View>
 
-        <View style={{ marginTop: 35 }}>
+        <Pressable 
+          style={{ marginTop: 35 }}
+          onPress={() => navigation.navigate("Home")}
+        >
           <BigButton title="Sign in" />
-        </View>
+        </Pressable>
 
         <Pressable
           style={{ marginTop: 15 }}
