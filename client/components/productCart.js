@@ -1,36 +1,44 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 
-const ProductCart = ({ image, name, price, quantity }) => {
+const ProductCart = ({ image, name, price, quantity, totalPrice, setTotalPrice }) => {
     const [quan, setQuan] = useState(quantity);
 
     const increaseQuantity = () => {
         setQuan(quan + 1);
+        setTotalPrice(totalPrice + price);
     }
 
     const decreaseQuantity = () => {
         if (quan >= 1) {
             setQuan(quan - 1);
+            setTotalPrice(totalPrice - price);
         }
     }
 
     return (
         <View style={{
             flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'center'
+            alignItems: 'center',
+            justifyContent: 'space-between'
         }}>
-            <Image
-                style={{
-                    width: 70,
-                    height: 70,
-                }}
-                source={{ uri: image }}
-            />
-            <View>
-                <Text style={styles.textName}>{name}</Text>
-                <Text style={styles.textPrice}>{price}$</Text>
+            <View style={{
+                flexDirection: 'row',
+                gap: 20
+            }}>
+                <Image
+                    style={{
+                        width: 70,
+                        height: 70,
+                    }}
+                    source={{ uri: image }}
+                />
+                <View>
+                    <Text style={styles.textName}>{name}</Text>
+                    <Text style={styles.textPrice}>{price}$</Text>
+                </View>
             </View>
+
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',

@@ -1,5 +1,5 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import ProductCart from '../components/productCart';
@@ -8,6 +8,7 @@ import BigButton from '../components/BigButton';
 const Cart = () => {
     const backButtonLink = "client/assets/Back.png";
     const navigation = useNavigation();
+    const [totalPrice, setTotalPrice] = useState(33000);
 
     const turnBack = () => {
         navigation.goBack();
@@ -87,7 +88,7 @@ const Cart = () => {
                     {item.map((el, i) => (
                         <ProductCart name={el.name} price={el.price}
                             image={el.image} quantity={el.quantity}
-                            key={i}
+                            key={i} totalPrice={totalPrice} setTotalPrice={setTotalPrice}
                         />
                     ))}
                 </View>
@@ -97,7 +98,7 @@ const Cart = () => {
             <View style={styles.bottom}>
                 <View style={styles.totalPrice}>
                     <Text>Subtotal: </Text>
-                    <Text>4000$</Text>
+                    <Text style={styles.priceText}>{totalPrice} $</Text>
                 </View>
                 <BigButton title="Check out" />
             </View>
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     },
     items: {
         padding: 30,
-        gap: 30
+        gap: 30,
     },
     bottom: {
         alignItems: 'center',
@@ -127,6 +128,11 @@ const styles = StyleSheet.create({
     },
     totalPrice: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        gap: 180
+    },
+    priceText: {
+        fontSize: 18,
+        fontWeight: '700'
     }
 })
