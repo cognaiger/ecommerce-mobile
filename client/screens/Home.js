@@ -82,10 +82,8 @@ const Home = () => {
           <Text>Top selection</Text>
         </View>
 
-        <View tyle={styles.bottom}>
-            <Text>Hello</Text>
-        </View>
       </ScrollView>
+      <BottomNavigator />
     </SafeAreaView>
   )
 }
@@ -103,12 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 25,
   },
-  bottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
   adver: {
     flex: 1,
     height: 120
@@ -117,5 +109,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 30
+  },
+  bottom: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
   }
 })
