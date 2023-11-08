@@ -15,7 +15,6 @@ import Category from "./screens/Category";
 import Cart from "./screens/Cart";
 import Profile from "./screens/Profile";
 import Wishlist from "./screens/Wishlist";
-import BottomNavigator from "./components/BottomNavigator";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
