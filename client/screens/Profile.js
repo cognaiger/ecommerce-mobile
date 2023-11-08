@@ -8,7 +8,7 @@ const Profile = () => {
     const navigation = useNavigation();
 
     const turnBack = () => {
-        navigation.navigate("Home");
+        navigation.goBack();
     }
 
     return (

@@ -13,16 +13,19 @@ import ProductCard from "../components/ProductCard";
 import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductListScreen = () => {
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Top bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Image source={require(backButtonLink)}></Image>
         </TouchableOpacity>
         <Text style={styles.title}>Laptop/Asus</Text>
@@ -87,7 +90,7 @@ const ProductListScreen = () => {
 
       <FilterAndSort />
       <BottomNavigator />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   topBar: {
-    marginTop: 25,
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 10,

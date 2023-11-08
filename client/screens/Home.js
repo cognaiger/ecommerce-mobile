@@ -80,11 +80,10 @@ const Home = () => {
         <View style={styles.adver}>
           <Image
             source={require('../assets/adver2.jpeg')}
-            resizeMode='contain'
+            resizeMethod='auto'
             style={{
-              flex: 1,
-              width: undefined,
-              height: undefined
+              width: '100%',
+              height: '100%'
             }}
           />
         </View>
@@ -130,8 +129,15 @@ const Home = () => {
 
         </View>
 
-        <View>
-          <Text>Adver</Text>
+        <View style={styles.adver}>
+          <Image
+            source={require('../assets/adver3.jpeg')}
+            resizeMethod='auto'
+            style={{
+              width: '100%',
+              height: '100%'
+            }}
+          />
         </View>
 
         <View>
@@ -162,11 +168,10 @@ const styles = StyleSheet.create({
     padding: 25,
   },
   adver: {
-    flex: 1,
-    height: 120
+    height: 120,
+    width: '100%'
   },
   category: {
-    flex: 1,
     padding: 30,
     gap: 30,
     alignItems: 'center'

@@ -8,7 +8,7 @@ const Wishlist = () => {
     const navigation = useNavigation();
 
     const turnBack = () => {
-        navigation.navigate("Home");
+        navigation.goBack();
     }
 
     return (

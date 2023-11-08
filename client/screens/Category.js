@@ -204,7 +204,7 @@ const Category = () => {
     ]
 
     const turnBack = () => {
-        navigation.navigate("Home");
+        navigation.goBack();
     }
 
     return (
@@ -255,7 +255,9 @@ const Category = () => {
                                 flex: 1,
                                 alignItems: 'center',
                                 flexBasis: '40%'
-                            }}>
+                            }}
+                            onPress={() => navigation.navigate("ProductList")}
+                            >
                                 <Image
                                     style={{
                                         width: 40,

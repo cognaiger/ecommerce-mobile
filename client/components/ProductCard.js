@@ -6,16 +6,22 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { FontFamily } from "../GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductCard = (props) => {
-  
+
+  const navigation = useNavigation();
+
   return (
     <View style={styles.productCard}>
-      <Image source={ props.imgLink } style={styles.productImage} />
-      <Text style={styles.productName}>{props.name}</Text>
-      <Text style={styles.productPrice}>{props.price}</Text>
+      <Pressable onPress={() => navigation.navigate("ProductDetail")}>
+        <Image source={props.imgLink} style={styles.productImage} />
+        <Text style={styles.productName}>{props.name}</Text>
+        <Text style={styles.productPrice}>{props.price}</Text>
+      </Pressable>
       <TouchableOpacity style={styles.addToCartButton}>
         <Text style={styles.addToCartButtonText}>Add to Cart</Text>
       </TouchableOpacity>
@@ -44,7 +50,6 @@ const styles = StyleSheet.create({
     fontWeight: "regular", // Added fontWeight: 'bold'
   },
   productPrice: {
-    fontFamily: FontFamily.h6,
     fontSize: 16,
     marginBottom: 10,
     fontWeight: "bold", // Added fontWeight: 'bold'
