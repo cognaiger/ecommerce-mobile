@@ -82,7 +82,7 @@ const Wishlist = () => {
             <ScrollView>
                 <View style={styles.item}>
                     {items.map((item, i) => (
-                        <ProductWishlist name={item.name} price={item.price} image={item.image} />
+                        <ProductWishlist name={item.name} price={item.price} image={item.image} key={i} />
                     ))}
                 </View>
             </ScrollView>

@@ -1,7 +1,15 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+const wishlistButtonLink = "client/assets/wishlist.png";
+const wishlistAddedButtonLink = "client/assets/wishlist_added.png";
 
 const ProductWishlist = ({ image, name, price }) => {
+    const [clickWishlist, setClickWishlist] = useState(false);
+
+    const handleWishlistButtonPress = () => {
+        setClickWishlist(!clickWishlist);
+    }
+
     return (
         <View style={styles.container}>
             <View style={{
@@ -19,7 +27,20 @@ const ProductWishlist = ({ image, name, price }) => {
                     <Text style={styles.textName}>{name}</Text>
                     <Text style={styles.textPrice}>{price}$</Text>
                 </View>
+
             </View>
+
+            <TouchableOpacity
+                style={styles.wishlistButton}
+                onPress={handleWishlistButtonPress}
+            >
+                {/* Render your wishlist button icon/image here */}
+                {clickWishlist === false ? (
+                    <Image source={require(wishlistButtonLink)}></Image>
+                ) : (
+                    <Image source={require(wishlistAddedButtonLink)}></Image>
+                )}
+            </TouchableOpacity>
         </View>
     )
 }

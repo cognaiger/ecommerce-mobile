@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from "react-native";
 
-import BottomNavigator from "../components/BottomNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
