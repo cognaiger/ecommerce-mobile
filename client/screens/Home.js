@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet, FlatList, ScrollView, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigator from '../components/BottomNavigator';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
+  const navigation = useNavigation();
   const category1 = [
     {
       name: "Laptop",
@@ -71,7 +73,7 @@ const Home = () => {
             <Pressable>
               <Ionicons name="notifications-outline" size={24} color="black" />
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate("Cart")}>
               <Ionicons name="cart-outline" size={24} color="black" />
             </Pressable>
           </View>
