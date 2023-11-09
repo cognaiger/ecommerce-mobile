@@ -1,14 +1,17 @@
 import { View, Text, StyleSheet, ScrollView, Pressable, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNavigator from '../components/BottomNavigator';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import ProductSale from '../components/ProductSale';
+import Notification from '../components/Notification';
 
 const Home = () => {
   const navigation = useNavigation();
+  const [notiOpen, setNotiOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const category1 = [
     {
       name: "Laptop",
@@ -95,6 +98,7 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+
       <View style={styles.topbar}>
         <View style={{
           flexDirection: 'row',
@@ -116,7 +120,7 @@ const Home = () => {
           <Pressable>
             <AntDesign name="search1" size={24} color="black" />
           </Pressable>
-          <Pressable>
+          <Pressable onPress={() => setNotiOpen(!notiOpen)}>
             <Ionicons name="notifications-outline" size={24} color="black" />
           </Pressable>
           <Pressable onPress={() => navigation.navigate("Cart")}>
@@ -226,7 +230,8 @@ const Home = () => {
         </View>
 
       </ScrollView>
-
+      
+      <Notification modalOpen={notiOpen} setModalOpen={setNotiOpen} />
       <BottomNavigator />
     </SafeAreaView >
   )
