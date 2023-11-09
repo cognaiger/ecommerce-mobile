@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import Opening from "./screens/Opening";
 import Register from "./screens/Register";
 import Login from "./screens/Login";
@@ -15,9 +16,10 @@ import Category from "./screens/Category";
 import Cart from "./screens/Cart";
 import Profile from "./screens/Profile";
 import Wishlist from "./screens/Wishlist";
-const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
   const [fontsLoaded] = useFonts({
     MontserratRegular: Montserrat_400Regular,
     MontserratBold: Montserrat_700Bold,

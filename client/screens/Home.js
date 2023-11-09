@@ -5,6 +5,7 @@ import BottomNavigator from '../components/BottomNavigator';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import ProductSale from '../components/ProductSale';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -46,39 +47,85 @@ const Home = () => {
     }
   ]
 
+
+  const saleItems = [
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+    {
+      name: "Lenovo Ideapad Gaming 3",
+      image: 'https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG',
+      price: 3000,
+      salePrice: 2000,
+    },
+  ]
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.topbar}>
-          <View style={{
-            flexDirection: 'row',
-            gap: 20
-          }}>
-            <Pressable>
-              <AntDesign name="menu-fold" size={24} color="black" />
-            </Pressable>
-            <Text style={{
-              fontSize: 14,
-              fontWeight: 700
-            }}>Home</Text>
-          </View>
-
-          <View style={{
-            flexDirection: 'row',
-            gap: 20
-          }}>
-            <Pressable>
-              <AntDesign name="search1" size={24} color="black" />
-            </Pressable>
-            <Pressable>
-              <Ionicons name="notifications-outline" size={24} color="black" />
-            </Pressable>
-            <Pressable onPress={() => navigation.navigate("Cart")}>
-              <Ionicons name="cart-outline" size={24} color="black" />
-            </Pressable>
-          </View>
+      <View style={styles.topbar}>
+        <View style={{
+          flexDirection: 'row',
+          gap: 20
+        }}>
+          <Pressable>
+            <AntDesign name="menu-fold" size={24} color="black" />
+          </Pressable>
+          <Text style={{
+            fontSize: 14,
+            fontWeight: 700
+          }}>Home</Text>
         </View>
 
+        <View style={{
+          flexDirection: 'row',
+          gap: 20
+        }}>
+          <Pressable>
+            <AntDesign name="search1" size={24} color="black" />
+          </Pressable>
+          <Pressable>
+            <Ionicons name="notifications-outline" size={24} color="black" />
+          </Pressable>
+          <Pressable onPress={() => navigation.navigate("Cart")}>
+            <Ionicons name="cart-outline" size={24} color="black" />
+          </Pressable>
+        </View>
+      </View>
+
+      <ScrollView style={styles.content}>
         <View style={styles.adver}>
           <Image
             source={require('../assets/adver2.jpeg')}
@@ -142,17 +189,41 @@ const Home = () => {
           />
         </View>
 
-        <View>
-          <Text>Most popular</Text>
+        <View style={styles.hotSale}>
+          <Text style={{
+            color: '#9A771E',
+            fontSize: 20,
+            fontWeight: '700'
+          }}>Hot Sales</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {saleItems.map((item, i) => (
+              <ProductSale name={item.name} image={item.image} price={item.price}
+                salePrice={item.salePrice} key={i}
+              />
+            ))}
+          </ScrollView>
         </View>
 
-        <View>
-          <Text>Top selection</Text>
+        <View style={styles.recommendation}>
+          <Text style={{
+            color: '#fff',
+            fontSize: 20,
+            fontWeight: '700'
+          }}>Recommendation</Text>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {saleItems.map((item, i) => (
+              <ProductSale name={item.name} image={item.image} price={item.price}
+                salePrice={item.salePrice} key={i} color='white'
+              />
+            ))}
+          </ScrollView>
         </View>
 
       </ScrollView>
+
       <BottomNavigator />
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 
@@ -169,6 +240,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 25,
   },
+  content: {
+  },
   adver: {
     height: 120,
     width: '100%'
@@ -181,10 +254,13 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row'
   },
-  bottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0
+  hotSale: {
+    gap: 20,
+    padding: 20
+  },
+  recommendation: {
+    backgroundColor: 'black',
+    gap: 20,
+    padding: 20
   }
 })
