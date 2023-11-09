@@ -38,7 +38,12 @@ export default function App() {
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }} />
         <Stack.Screen name='ProductList' component={ProductListScreen} options={{ headerShown: false }} />
         <Stack.Screen name='ProductDetail' component={ProductDetailsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='Category' component={Category} options={{ headerShown: false }} />
+        <Stack.Screen 
+        name='Category' 
+        component={Category} 
+        options={{ headerShown: false }}
+        initialParams={{ state: 'Laptop' }}
+        />
         <Stack.Screen name='Cart' component={Cart} options={{ headerShown: false }} />
         <Stack.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
         <Stack.Screen name='Wishlist' component={Wishlist} options={{ headerShown: false }} />

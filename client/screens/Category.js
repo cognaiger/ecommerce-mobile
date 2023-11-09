@@ -1,12 +1,11 @@
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 
-const Category = () => {
+const Category = ({ route, navigation }) => {
     const backButtonLink = "client/assets/Back.png";
-    const navigation = useNavigation();
-    const [cateSelected, setCateSelected] = useState('Laptop');
+    const { state } = route.params;
+    const [cateSelected, setCateSelected] = useState(state);
 
     const main = [
         {

@@ -140,10 +140,13 @@ const Home = () => {
         <View style={styles.category}>
           <View style={styles.row}>
             {category1.map((cate, i) => (
-              <Pressable key={i} style={{
+              <Pressable key={i} 
+              style={{
                 flex: 1,
                 alignItems: 'center'
-              }}>
+              }}
+              onPress={() => navigation.navigate("Category", { state: cate.name })}
+              >
                 <Image
                   style={{
                     width: 40,
@@ -162,7 +165,9 @@ const Home = () => {
               <Pressable key={i} style={{
                 flex: 1,
                 alignItems: 'center'
-              }}>
+              }}
+              onPress={() => navigation.navigate("Category", { state: cate.name })}
+              >
                 <Image
                   style={{
                     width: 40,
