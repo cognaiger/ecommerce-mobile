@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import ProductSale from '../components/ProductSale';
 import NotificationModal from '../components/NotificationModal';
+import SearchModal from '../components/SearchModal';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -117,7 +118,7 @@ const Home = () => {
           flexDirection: 'row',
           gap: 20
         }}>
-          <Pressable>
+          <Pressable onPress={() => setSearchOpen(!searchOpen)}>
             <AntDesign name="search1" size={24} color="black" />
           </Pressable>
           <Pressable onPress={() => setNotiOpen(!notiOpen)}>
@@ -232,6 +233,7 @@ const Home = () => {
       </ScrollView>
       
       <NotificationModal modalOpen={notiOpen} setModalOpen={setNotiOpen} />
+      <SearchModal modalOpen={searchOpen} setModalOpen={setSearchOpen} />
       <BottomNavigator />
     </SafeAreaView >
   )
