@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import ProductSale from '../components/ProductSale';
-import Notification from '../components/Notification';
+import NotificationModal from '../components/NotificationModal';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -231,7 +231,7 @@ const Home = () => {
 
       </ScrollView>
       
-      <Notification modalOpen={notiOpen} setModalOpen={setNotiOpen} />
+      <NotificationModal modalOpen={notiOpen} setModalOpen={setNotiOpen} />
       <BottomNavigator />
     </SafeAreaView >
   )
