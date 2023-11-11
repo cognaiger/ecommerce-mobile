@@ -26,13 +26,13 @@ const FilterAndSort = () => {
   ]);
 
   const [sortCriterias, setSortCriterias] = useState([
-    { title: "Series"},
-    { title: "Release date"},
-    { title: "Color"},
+    { title: "Series" },
+    { title: "Release date" },
+    { title: "Color" },
     { title: "Screen Size" },
-    { title: "Processor"},
-    { title: "RAM"},
-    { title: "Storage"},
+    { title: "Processor" },
+    { title: "RAM" },
+    { title: "Storage" },
   ]);
 
   const openModal = (title) => {
@@ -57,7 +57,6 @@ const FilterAndSort = () => {
 
       {/* Filter Modal */}
       <Modal visible={modalVisible} animationType="slide" transparent={true}>
-      
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{filterTitle}</Text>

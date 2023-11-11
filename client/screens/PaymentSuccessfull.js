@@ -14,6 +14,7 @@ const CheckoutScreen = () => {
   const navigation = useNavigation();
   const handleViewOrderStatus = () => {
     // Handle view order status logic here
+    navigation.navigate("OrderStatus")
   };
 
   const handleBackToHome = () => {
