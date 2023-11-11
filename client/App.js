@@ -18,6 +18,7 @@ import Profile from "./screens/Profile";
 import Wishlist from "./screens/Wishlist";
 import Checkout from "./screens/Checkout";
 import WalletPassword from "./screens/WalletPassword";
+import PaymentSuccessful from "./screens/PaymentSuccessfull";
 export default function App() {
   const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,7 @@ export default function App() {
         <Stack.Screen name='Wishlist' component={Wishlist} options={{ headerShown: false }} />
         <Stack.Screen name='Checkout' component={Checkout} options={{ headerShown: false }} />
         <Stack.Screen name='WalletPassword' component={WalletPassword} options={{ headerShown: false }} />
+        <Stack.Screen name='PaymentSuccessful' component={PaymentSuccessful} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
