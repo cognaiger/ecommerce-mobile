@@ -22,9 +22,22 @@ const Checkout = () => {
     navigation.goBack();
   };
 
- const handleNavigateWalletPassword = () => {
-    navigation.navigate("WalletPassword")
- }
+  const handleNavigateWalletPassword = () => {
+    navigation.navigate("WalletPassword");
+  };
+
+  const addresses = [
+    {
+      type: "Home",
+      phoneNumber: "1234567890",
+      address: "123 Street, City, Country",
+    },
+    {
+      type: "Office",
+      phoneNumber: "0987654321",
+      address: "456 Street, City, Country",
+    },
+  ];
 
   return (
     <SafeAreaView
@@ -45,8 +58,50 @@ const Checkout = () => {
           Checkout
         </Text>
       </View>
-      <ScrollView>
-        <View style={styles.items}></View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.deliveryAddressContainer}>
+          <Text style={styles.sectionTitle}>Delivery Address</Text>
+          {addresses.map((address, index) => (
+            <View style={styles.addressCard} key={index}>
+              <View style={styles.addressCardContent}>
+                <Text style={styles.addressType}>{address.type}</Text>
+                <Text>{address.phoneNumber}</Text>
+                <Text>{address.address}</Text>
+              </View>
+              <TouchableOpacity style={styles.editIconContainer}>
+                <Ionicons name="ios-create-outline" size={20} color="gray" />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.billingInfoContainer}>
+          <Text style={styles.sectionTitle}>Billing Information</Text>
+          <Text style={styles.deliveryFee}>Delivery Fee: $50</Text>
+          <Text style={styles.subtotal}>Subtotal: $3200</Text>
+          <Text style={styles.total}>Total: $3250</Text>
+        </View>
+
+        <View style={styles.paymentMethodContainer}>
+          <Text style={styles.sectionTitle}>Payment Method</Text>
+          <View style={styles.paymentIconsContainer}>
+            <Image
+              source={require("client/assets/momo.png")}
+              style={styles.paymentIcon}
+              resizeMode="contain"
+            />
+            <Image
+              source={require("client/assets/paypal.png")}
+              style={styles.paymentIcon}
+              resizeMode="contain"
+            />
+            <Image
+              source={require("client/assets/cod.png")}
+              style={styles.paymentIcon}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
       </ScrollView>
       <View style={styles.bottom}>
         <TouchableOpacity
@@ -58,7 +113,6 @@ const Checkout = () => {
           onPress={handleNavigateWalletPassword}
         >
           <View style={styles.buttonContent}>
-            
             <Text style={[styles.buttonTextBuyNow, { color: "white" }]}>
               Continue to payment
             </Text>
@@ -124,5 +178,61 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+  },
+  container: {
+    flexGrow: 1,
+    padding: 16,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  deliveryAddressContainer: {
+    marginBottom: 20,
+  },
+  addressCard: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "lightgray",
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 10,
+  },
+  addressCardContent: {
+    flex: 1,
+  },
+  addressType: {
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  editIconContainer: {
+    marginLeft: 10,
+  },
+  billingInfoContainer: {
+    marginBottom: 20,
+  },
+  deliveryFee: {
+    marginBottom: 8,
+  },
+  subtotal: {
+    marginBottom: 8,
+  },
+  total: {
+    fontWeight: "bold",
+  },
+  paymentMethodContainer: {
+    marginBottom: 20,
+  },
+  paymentIconsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  paymentIcon: {
+    width: 100,
+    height: 50,
   },
 });
