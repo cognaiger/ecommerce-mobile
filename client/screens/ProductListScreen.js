@@ -8,24 +8,75 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import ProductCard from "../components/ProductCard";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
+import ProductCard from "../components/ProductCard";
 import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 
 const ProductListScreen = () => {
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
   const navigation = useNavigation();
 
+  const [products, setProducts] = useState([
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+    {
+      imgLink: require(productImgLink),
+      name: "Lenovo Ideapad Gaming 3",
+      price: "$1200",
+    },
+  ]);
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Top bar */}
       <View style={styles.topBar}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
           <Image source={require(backButtonLink)}></Image>
         </TouchableOpacity>
         <Text style={styles.title}>Laptop/Asus</Text>
@@ -38,53 +89,14 @@ const ProductListScreen = () => {
       <ScrollView style={styles.scrollView}>
         <View style={styles.productList}>
           {/* Product cards go here */}
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-          <ProductCard
-            imgLink={require(productImgLink)}
-            name="Lenovo Ideapad Gaming 3"
-            price="$1200"
-          />
-
-          {/* ... */}
+          {products.map((product, index) => (
+            <ProductCard
+              key={index}
+              imgLink={product.imgLink}
+              name={product.name}
+              price={product.price}
+            />
+          ))}
         </View>
       </ScrollView>
 
