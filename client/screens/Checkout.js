@@ -26,6 +26,26 @@ const Checkout = () => {
     navigation.navigate("WalletPassword");
   };
 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+
+  const handlePaymentMethodSelect = (method) => {
+    setSelectedPaymentMethod(method);
+  };
+
+  const paymentMethods = [
+    {
+      name: "momo",
+      image: require("client/assets/momo.png"),
+    },
+    {
+      name: "paypal",
+      image: require("client/assets/paypal.png"),
+    },
+    {
+      name: "cod",
+      image: require("client/assets/cod.png"),
+    },
+  ];
   const addresses = [
     {
       type: "Home",
@@ -77,29 +97,52 @@ const Checkout = () => {
 
         <View style={styles.billingInfoContainer}>
           <Text style={styles.sectionTitle}>Billing Information</Text>
-          <Text style={styles.deliveryFee}>Delivery Fee: $50</Text>
-          <Text style={styles.subtotal}>Subtotal: $3200</Text>
-          <Text style={styles.total}>Total: $3250</Text>
+          <View style={styles.billingInfoRow}>
+            <Text style={styles.billingInfoLabel}>Delivery Fee:</Text>
+            <Text style={styles.billingInfoValue}>$50</Text>
+          </View>
+          <View style={styles.billingInfoRow}>
+            <Text style={styles.billingInfoLabel}>Subtotal:</Text>
+            <Text style={styles.billingInfoValue}>$3200</Text>
+          </View>
+          <View style={styles.billingInfoRow}>
+            <Text style={[styles.billingInfoLabel, styles.totalLabel]}>
+              Total:
+            </Text>
+            <Text style={[styles.billingInfoValue, styles.totalValue]}>
+              $3250
+            </Text>
+          </View>
         </View>
 
         <View style={styles.paymentMethodContainer}>
           <Text style={styles.sectionTitle}>Payment Method</Text>
           <View style={styles.paymentIconsContainer}>
-            <Image
-              source={require("client/assets/momo.png")}
-              style={styles.paymentIcon}
-              resizeMode="contain"
-            />
-            <Image
-              source={require("client/assets/paypal.png")}
-              style={styles.paymentIcon}
-              resizeMode="contain"
-            />
-            <Image
-              source={require("client/assets/cod.png")}
-              style={styles.paymentIcon}
-              resizeMode="contain"
-            />
+            {paymentMethods.map((method, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.paymentIconContainer}
+                onPress={() => handlePaymentMethodSelect(method.name)}
+              >
+                <Image
+                  source={method.image}
+                  style={[
+                    styles.paymentIcon,
+                    selectedPaymentMethod === method.name &&
+                      styles.selectedPaymentIcon,
+                  ]}
+                  resizeMode="contain"
+                />
+                {selectedPaymentMethod === method.name && (
+                  <Ionicons
+                    name="ios-checkmark-circle"
+                    size={24}
+                    color="green"
+                    style={styles.checkmarkIcon}
+                  />
+                )}
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
       </ScrollView>
@@ -215,14 +258,26 @@ const styles = StyleSheet.create({
   billingInfoContainer: {
     marginBottom: 20,
   },
-  deliveryFee: {
+  billingInfoRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 8,
   },
-  subtotal: {
-    marginBottom: 8,
+  billingInfoLabel: {
+    flex: 1,
+    textAlign: "left",
   },
-  total: {
+  billingInfoValue: {
+    flex: 1,
+    textAlign: "right",
+  },
+  totalLabel: {
     fontWeight: "bold",
+  },
+  totalValue: {
+    fontWeight: "bold",
+    color: "blue",
   },
   paymentMethodContainer: {
     marginBottom: 20,
@@ -234,5 +289,23 @@ const styles = StyleSheet.create({
   paymentIcon: {
     width: 100,
     height: 50,
+  },
+  paymentIconContainer: {
+    position: "relative",
+  },
+  paymentIcon: {
+    width: 100,
+    height: 50,
+  },
+  selectedPaymentIcon: {
+    borderWidth: 2,
+    borderColor: "green",
+    borderRadius: 8,
+  },
+  checkmarkIcon: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    zIndex: 1,
   },
 });
