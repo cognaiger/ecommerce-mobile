@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   PanResponder,
+  Modal, TextInput
 } from "react-native";
 import React, { useState, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -59,6 +60,31 @@ const Checkout = () => {
     },
   ];
 
+  const [editingAddressIndex, setEditingAddressIndex] = useState(-1);
+  const [editAddressModalVisible, setEditAddressModalVisible] = useState(false);
+  const [editedAddress, setEditedAddress] = useState({
+    type: "",
+    phoneNumber: "",
+    address: "",
+  });
+
+  const handleEditAddress = (index) => {
+    const address = addresses[index];
+    setEditedAddress({
+      type: address.type,
+      phoneNumber: address.phoneNumber,
+      address: address.address,
+    });
+    setEditingAddressIndex(index);
+    setEditAddressModalVisible(true);
+  };
+
+  const handleSaveAddress = () => {
+    const updatedAddresses = [...addresses];
+    updatedAddresses[editingAddressIndex] = editedAddress;
+    setEditedAddress(updatedAddresses);
+    setEditAddressModalVisible(false);
+  };
   return (
     <SafeAreaView
       style={{
@@ -88,12 +114,51 @@ const Checkout = () => {
                 <Text>{address.phoneNumber}</Text>
                 <Text>{address.address}</Text>
               </View>
-              <TouchableOpacity style={styles.editIconContainer}>
+              <TouchableOpacity
+                style={styles.editIconContainer}
+                onPress={() => handleEditAddress(index)}
+              >
                 <Ionicons name="ios-create-outline" size={20} color="gray" />
               </TouchableOpacity>
             </View>
           ))}
         </View>
+
+        <Modal visible={editAddressModalVisible} animationType="slide">
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Edit Address</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Type"
+              value={editedAddress.type}
+              onChangeText={(text) =>
+                setEditedAddress({ ...editedAddress, type: text })
+              }
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              value={editedAddress.phoneNumber}
+              onChangeText={(text) =>
+                setEditedAddress({ ...editedAddress, phoneNumber: text })
+              }
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Address"
+              value={editedAddress.address}
+              onChangeText={(text) =>
+                setEditedAddress({ ...editedAddress, address: text })
+              }
+            />
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={handleSaveAddress}
+            >
+              <Text style={styles.saveButtonText}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
 
         <View style={styles.billingInfoContainer}>
           <Text style={styles.sectionTitle}>Billing Information</Text>
@@ -277,7 +342,7 @@ const styles = StyleSheet.create({
   },
   totalValue: {
     fontWeight: "bold",
-    color: "blue",
+    color: "black",
   },
   paymentMethodContainer: {
     marginBottom: 20,
@@ -307,5 +372,39 @@ const styles = StyleSheet.create({
     top: 8,
     right: 8,
     zIndex: 1,
+  },
+  editIconContainer: {
+    marginLeft: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+  },
+  saveButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  saveButtonText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
