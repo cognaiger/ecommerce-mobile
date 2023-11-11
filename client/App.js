@@ -16,7 +16,8 @@ import Category from "./screens/Category";
 import Cart from "./screens/Cart";
 import Profile from "./screens/Profile";
 import Wishlist from "./screens/Wishlist";
-
+import Checkout from "./screens/Checkout";
+import WalletPassword from "./screens/WalletPassword";
 export default function App() {
   const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,8 @@ export default function App() {
         <Stack.Screen name='Cart' component={Cart} options={{ headerShown: false }} />
         <Stack.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
         <Stack.Screen name='Wishlist' component={Wishlist} options={{ headerShown: false }} />
+        <Stack.Screen name='Checkout' component={Checkout} options={{ headerShown: false }} />
+        <Stack.Screen name='WalletPassword' component={WalletPassword} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
