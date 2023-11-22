@@ -19,4 +19,8 @@ public class PageParamRequest {
 
   @Min(1)
   private Integer pageSize = 10;
+
+  private String sortBy;
+
+  private String sortDirection;
 }

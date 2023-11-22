@@ -3,7 +3,7 @@ version: '3.1'
 services:
   db:
     image: 'postgres:15.2'
-    container_name: postgres
+    container_name: ecommerce-postgres
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -11,3 +11,21 @@ services:
       POSTGRES_DB: ecommerce
     ports:
       - "5432:5432"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch

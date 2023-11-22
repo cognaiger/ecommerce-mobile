@@ -38,6 +38,8 @@ spring:
             non_contextual_creation: true
         default_schema: ecommerce
         ddl-auto: validate
+        show_sql: true
+        format_sql: true
     generate-ddl: true
   flyway:
     enabled: true
@@ -50,3 +52,11 @@ spring:
       enabled: true
       file: src/main/docker/docker-compose.yml
       lifecycle-management: start_and_stop
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE

@@ -20,12 +20,14 @@ public class CategoryController {
 
   private final LaptopService laptopService;
 
-  @GetMapping("/laptop")
+  @GetMapping("/laptops")
   public ResponseEntity<Page<LaptopGeneralResponse>> getLaptopPage(
       LaptopPageFilterRequest request,
-      PageParamRequest pageParamRequest
-  ) {
+      PageParamRequest pageParamRequest) {
     Page<LaptopGeneralResponse> laptopPage = laptopService.getLaptopPage(request, pageParamRequest);
     return new ResponseEntity<>(laptopPage, HttpStatus.OK);
   }
+
+
+
 }

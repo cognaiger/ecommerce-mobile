@@ -16,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +30,12 @@ public class LaptopServiceImpl implements LaptopService {
   @Override
   public Page<LaptopGeneralResponse> getLaptopPage(LaptopPageFilterRequest laptopPageFilterRequest, PageParamRequest pageParamRequest) {
     Specification<Laptop> spec = laptopSpecificationService.getLaptopSpecification(laptopPageFilterRequest);
+
+//    Sort sort = Sort.by(pageParamRequest.getSortBy()).descending();
+
     Pageable pageable = PageRequest.of(pageParamRequest.getPageNumber(), pageParamRequest.getPageSize());
     Page<Laptop> laptopPage = laptopRepository.findAll(spec, pageable);
     return laptopPage.map(laptopGeneralMapper::toDto);
   }
+
 }
