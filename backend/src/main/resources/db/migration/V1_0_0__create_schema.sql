@@ -1,0 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS ecommerce;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+SET search_path TO ecommerce;
+SET TIME ZONE 'UTC';

@@ -1,5 +1,0 @@
-CREATE SCHEMA IF NOT EXISTS product;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-SET search_path TO product;
-SET TIME ZONE 'UTC';

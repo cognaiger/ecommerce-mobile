@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mobile.com.backend.dto.reponse.LaptopGeneralResponse;
 import mobile.com.backend.dto.request.LaptopPageFilterRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.service.LaptopService;
+import mobile.com.backend.service.impl.LaptopService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,12 +20,14 @@ public class CategoryController {
 
   private final LaptopService laptopService;
 
-  @GetMapping("/laptop")
+  @GetMapping("/laptops")
   public ResponseEntity<Page<LaptopGeneralResponse>> getLaptopPage(
       LaptopPageFilterRequest request,
-      PageParamRequest pageParamRequest
-  ) {
+      PageParamRequest pageParamRequest) {
     Page<LaptopGeneralResponse> laptopPage = laptopService.getLaptopPage(request, pageParamRequest);
     return new ResponseEntity<>(laptopPage, HttpStatus.OK);
   }
+
+
+
 }
