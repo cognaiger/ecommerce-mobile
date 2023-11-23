@@ -15,7 +15,7 @@ import javax.validation.constraints.Min;
 public class PageParamRequest {
 
   @Min(0)
-  private Integer pageNumber = 1;
+  private Integer pageNumber = 0;
 
   @Min(1)
   private Integer pageSize = 10;

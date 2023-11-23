@@ -10,6 +10,9 @@ server:
     context-path: /ecommerce
 
 spring:
+  http:
+    headers:
+      content-type: application/json
   datasource:
     host: localhost
     port: 5432
@@ -50,8 +53,22 @@ spring:
   docker:
     compose:
       enabled: true
-      file: src/main/docker/docker-compose.yml
+      file: docker-compose.yml
       lifecycle-management: start_and_stop
+
+  data:
+    elsaticsearch:
+      cluster-nodes: localhost:9200
+      cluster-name: elasticsearch
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+
+
+  main:
+    allow-bean-definition-overriding: true
 
 logging:
   level:
@@ -60,3 +77,12 @@ logging:
         orm:
           jdbc:
             bind: TRACE
+      springframework:
+        data:
+          elasticsearch:
+            client: DEBUG
+
+elasticsearch:
+  url: elasticsearch
+  username:
+

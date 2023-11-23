@@ -34,26 +34,11 @@ public class Laptop {
   @Column(name = "brand")
   private String brand;
 
-  @Column(name = "series")
-  private String series;
-
-  @Column(name = "part_number")
-  private String partNumber;
-
   @Column(name = "color")
   private String color;
 
-  @Column(name = "demand")
-  private String demand;
-
-  @Column(name = "cpu_series")
-  private String cpuSeries;
-
-  @Column(name = "cpu_brand")
-  private String cpuBrand;
-
-  @Column(name = "cpu_model")
-  private String cpuModel;
+  @Column(name = "cpu")
+  private String cpu;
 
   @Column(name = "gpu")
   private String gpu;

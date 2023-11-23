@@ -39,4 +39,5 @@ public class Product {
   @Column(name = "quantity")
   private Integer quantity;
 
+
 }

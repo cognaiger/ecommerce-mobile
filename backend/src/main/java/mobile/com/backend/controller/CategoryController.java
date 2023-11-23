@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mobile.com.backend.dto.reponse.LaptopGeneralResponse;
 import mobile.com.backend.dto.request.LaptopPageFilterRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.service.LaptopService;
+import mobile.com.backend.service.impl.LaptopService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

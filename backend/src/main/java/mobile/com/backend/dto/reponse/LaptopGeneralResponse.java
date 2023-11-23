@@ -22,19 +22,9 @@ public class LaptopGeneralResponse {
 
   private String brand;
 
-  private String series;
-
-  private String partNumber;
-
   private String color;
 
-  private String demand;
-
-  private String cpuSeries;
-
-  private String cpuBrand;
-
-  private String cpuModel;
+  private String cpu;
 
   private String gpu;
 
