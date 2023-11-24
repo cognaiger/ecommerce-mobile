@@ -1,11 +1,10 @@
 package mobile.com.backend.service;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.FunctionBoostMode;
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
 import mobile.com.backend.dto.reponse.ProductGeneralResponse;
 import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.mapper.ProductDocumentMapper;
+import mobile.com.backend.mapper.response.entity.ProductDocumentMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;

@@ -1,4 +1,4 @@
-package mobile.com.backend.mapper;
+package mobile.com.backend.mapper.response.entity;
 
 
 import java.util.List;

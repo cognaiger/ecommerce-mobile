@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import mobile.com.backend.common.enums.OrderStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -32,14 +34,15 @@ public class OrderTransportation {
   private Order order;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "status")
+  @Column(name = "status", columnDefinition = "order_status")
+  @JdbcTypeCode(SqlTypes.NAMED_ENUM)
   private OrderStatus status;
 
   @CreationTimestamp
-  @Column(name = "created_date")
-  private LocalDateTime createdDate;
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
 
   @UpdateTimestamp
-  @Column(name = "updated_date")
-  private LocalDateTime updatedDate;
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
 }

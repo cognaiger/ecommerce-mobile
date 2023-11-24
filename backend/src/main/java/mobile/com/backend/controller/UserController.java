@@ -2,10 +2,12 @@ package mobile.com.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.common.enums.OrderStatus;
+import mobile.com.backend.dto.reponse.OrderDetailResponse;
 import mobile.com.backend.dto.reponse.OrderGeneralResponse;
 import mobile.com.backend.dto.request.OrderCreateRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
 import mobile.com.backend.service.OrderService;
+import mobile.com.backend.service.OrderTransportationService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +22,7 @@ import java.util.UUID;
 public class UserController {
 
   private final OrderService orderService;
+  private final OrderTransportationService orderTransportationService;
 
   @GetMapping("/{userId}/orders")
   public ResponseEntity<Page<OrderGeneralResponse>> getOrdersByUserId(
@@ -33,10 +36,19 @@ public class UserController {
   }
 
   @PostMapping("/{userId}/orders")
-  public ResponseEntity<Object> createOrderByUserId(
+  public ResponseEntity<OrderGeneralResponse> createOrderByUserId(
       @PathVariable UUID userId,
       @RequestBody OrderCreateRequest request) {
-    return ResponseEntity.ok(null);
+    OrderGeneralResponse order = orderService.createOrderByUserId(userId, request);
+    return ResponseEntity.created(null).body(order);
+  }
+
+  @GetMapping("/{userId}/orders/{orderId}")
+  public ResponseEntity<OrderDetailResponse> getOrderByUserId(
+      @PathVariable UUID userId,
+      @PathVariable UUID orderId) {
+    OrderDetailResponse order = orderService.getOrderDetailResponseByOrderId(userId, orderId);
+    return ResponseEntity.ok(order);
   }
 
   @PostMapping("/{userId}/orders/{orderId}/orderTransportations")
@@ -44,7 +56,9 @@ public class UserController {
       @PathVariable UUID userId,
       @PathVariable UUID orderId,
       @RequestBody OrderStatus orderStatus) {
-    return ResponseEntity.ok(null);
+
+    orderTransportationService.createOrderTransportationByUserId(userId, orderId, orderStatus);
+    return ResponseEntity.created(null).body(null);
   }
 
   @DeleteMapping("/{userId}/orders/{orderId}")

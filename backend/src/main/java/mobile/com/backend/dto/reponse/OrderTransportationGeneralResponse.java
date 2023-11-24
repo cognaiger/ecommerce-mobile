@@ -1,4 +1,4 @@
-package mobile.com.backend.dto.request;
+package mobile.com.backend.dto.reponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import mobile.com.backend.common.enums.OrderStatus;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,7 +17,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderCreateRequest {
-  private UUID productId;
-  private Integer quantity;
+public class OrderTransportationGeneralResponse {
+  private UUID orderTransportationId;
+
+  private OrderStatus status;
+
+  private LocalDateTime createdAt;
+
+  private LocalDateTime updatedAt;
 }

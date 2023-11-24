@@ -45,9 +45,6 @@ public class Order {
   @JdbcTypeCode(SqlTypes.NAMED_ENUM)
   private OrderStatus lastStatus;
 
-
   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<OrderTransportation> orderTransportations;
-
-
 }

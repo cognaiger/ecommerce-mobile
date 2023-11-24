@@ -44,7 +44,7 @@ spring:
         show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: true
+    generate-ddl: false
   flyway:
     enabled: true
     baseline-on-migrate: true

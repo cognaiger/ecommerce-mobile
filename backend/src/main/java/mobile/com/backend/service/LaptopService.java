@@ -5,7 +5,7 @@ import mobile.com.backend.dto.reponse.LaptopGeneralResponse;
 import mobile.com.backend.dto.request.LaptopPageFilterRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
 import mobile.com.backend.entity.Laptop;
-import mobile.com.backend.mapper.LaptopGeneralMapper;
+import mobile.com.backend.mapper.response.entity.LaptopGeneralMapper;
 import mobile.com.backend.repository.LaptopRepository;
 import mobile.com.backend.service.specification.LaptopSpecificationService;
 import org.springframework.data.domain.Page;

@@ -2,16 +2,16 @@ package mobile.com.backend.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Setter
 @Getter
+@Setter
 public class ProductCreateRequest {
 
   private String name;
