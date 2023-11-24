@@ -1,4 +1,4 @@
-package mobile.com.backend.service.impl;
+package mobile.com.backend.service;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.FunctionBoostMode;
 import lombok.RequiredArgsConstructor;

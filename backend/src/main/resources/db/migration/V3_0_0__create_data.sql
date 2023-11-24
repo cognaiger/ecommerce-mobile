@@ -1,7 +1,7 @@
 INSERT INTO ecommerce.user (user_id, username, password, email, phone, address)
-VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'admin', '$2a$1', 'dar@gmail.com', '0123456789', 'Hanoi, Vietnam'),
-       ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 'user', '$2a$1', 'darerr@gmail.com', '0123456789', 'Hanoi, Vietnam'),
-       ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 'user1', '$2a$1', 'darerr@gmail.com', '0123456789', 'Hanoi, Vietnam');
+VALUES ('475b88b6-8a71-11ee-b9d1-0242ac120002', 'admin', '$2a$1', 'dar@gmail.com', '0123456789', 'Hanoi, Vietnam'),
+       ('475b88b6-8a71-11ee-b9d1-0242ac120003', 'user', '$2a$1', 'darerr@gmail.com', '0123456789', 'Hanoi, Vietnam'),
+       ('475b88b6-8a71-11ee-b9d1-0242ac120004', 'user1', '$2a$1', 'darerr@gmail.com', '0123456789', 'Hanoi, Vietnam');
 
 INSERT INTO ecommerce.product (product_id, name, image_link, description, price, quantity)
 VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
@@ -51,3 +51,14 @@ VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
         '1 x 8GB DDR4 3200MHz ( 2 Khe cắm / Hỗ trợ tối đa 32GB )');
 
 
+INSERT INTO ecommerce.order (order_id, user_id, product_id, quantity, last_status)
+VALUES
+    ('3cb4f3a2-8a71-11ee-b9d1-0242ac120002', '475b88b6-8a71-11ee-b9d1-0242ac120002', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 2, 'IN_CART'),
+    ('3cb4f3a2-8a71-11ee-b9d1-0242ac120003', '475b88b6-8a71-11ee-b9d1-0242ac120002', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 3, 'IN_CART'),
+    ('3cb4f3a2-8a71-11ee-b9d1-0242ac120004', '475b88b6-8a71-11ee-b9d1-0242ac120002', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 1, 'IN_CART');
+
+INSERT INTO ecommerce.order_transportation (order_id, status)
+VALUES
+    ('3cb4f3a2-8a71-11ee-b9d1-0242ac120002', 'IN_CART'),
+    ('3cb4f3a2-8a71-11ee-b9d1-0242ac120003', 'IN_CART'),
+    ('3cb4f3a2-8a71-11ee-b9d1-0242ac120004', 'IN_CART');

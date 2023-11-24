@@ -2,10 +2,8 @@ package mobile.com.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
-import mobile.com.backend.dto.reponse.ProductGeneralResponse;
 import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.service.impl.ProductService;
-import org.springframework.data.domain.Page;
+import mobile.com.backend.service.ProductService;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -30,4 +28,6 @@ public class ProductController {
     SearchPage<ProductDocument> productPage = productService.searchProducts(pageParamRequest, keyword);
     return ResponseEntity.ok(productPage);
   }
+
+
 }

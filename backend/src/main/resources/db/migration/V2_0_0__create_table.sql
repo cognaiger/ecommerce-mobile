@@ -128,15 +128,30 @@ CREATE TABLE ecommerce.mouse(
     CONSTRAINT mouse_product_fk FOREIGN KEY (product_id) REFERENCES ecommerce.product (product_id)
 );
 
+CREATE TYPE ecommerce.order_status AS ENUM ('IN_CART', 'RECEIVED', 'DELIVERING', 'COMPLETED');
 
-
-CREATE TABLE ecommerce.cart(
-    cart_id UUID NOT NULL DEFAULT uuid_generate_v1(),
+CREATE TABLE ecommerce.order(
+    order_id UUID NOT NULL DEFAULT uuid_generate_v1(),
     user_id UUID NOT NULL,
     product_id UUID NOT NULL,
     quantity INT NOT NULL CHECK ( quantity >= 0 ),
+    last_status order_status NOT NULL,
 
-    CONSTRAINT cart_pk PRIMARY KEY (cart_id),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT cart_pk PRIMARY KEY (order_id),
     CONSTRAINT cart_user_fk FOREIGN KEY (user_id) REFERENCES ecommerce.user (user_id),
     CONSTRAINT cart_product_fk FOREIGN KEY (product_id) REFERENCES ecommerce.product (product_id)
+);
+
+CREATE TABLE ecommerce.order_transportation(
+    order_transportation_id UUID NOT NULL DEFAULT uuid_generate_v1(),
+    order_id UUID NOT NULL,
+    status order_status NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT order_transportation_pk PRIMARY KEY (order_transportation_id),
+    CONSTRAINT order_transportation_order_fk FOREIGN KEY (order_id) REFERENCES ecommerce.order (order_id)
 );

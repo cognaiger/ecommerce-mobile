@@ -1,4 +1,4 @@
-package mobile.com.backend.service.impl;
+package mobile.com.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.dto.reponse.LaptopGeneralResponse;
