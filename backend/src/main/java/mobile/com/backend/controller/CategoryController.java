@@ -1,10 +1,10 @@
 package mobile.com.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import mobile.com.backend.dto.reponse.LaptopGeneralResponse;
-import mobile.com.backend.dto.request.LaptopPageFilterRequest;
+import mobile.com.backend.dto.reponse.product.LaptopGeneralResponse;
+import mobile.com.backend.dto.request.product.LaptopPageFilterRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.service.LaptopService;
+import mobile.com.backend.service.product.LaptopService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

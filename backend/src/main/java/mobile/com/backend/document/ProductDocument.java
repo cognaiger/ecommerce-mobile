@@ -1,6 +1,5 @@
 package mobile.com.backend.document;
 
-import jakarta.persistence.Column;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -24,6 +23,8 @@ public class ProductDocument {
   @Field(type = FieldType.Text, fielddata = true)
   private String name;
 
+//  private Brand brand;
+
   @Field(type = FieldType.Text, fielddata = true)
   private String imageLink;
 
@@ -31,6 +32,8 @@ public class ProductDocument {
   private String description;
 
   private BigDecimal price;
+
+  private BigDecimal priceDiscount;
 
   private Integer quantity;
 }
