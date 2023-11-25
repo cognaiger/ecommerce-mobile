@@ -6,6 +6,6 @@ import mobile.com.backend.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductGeneralMapper extends GenericMapper<ProductGeneralResponse, Product> {
 }

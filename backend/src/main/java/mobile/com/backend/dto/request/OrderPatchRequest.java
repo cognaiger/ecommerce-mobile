@@ -1,10 +1,12 @@
 package mobile.com.backend.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -14,10 +16,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderCreateRequest {
-  @NotNull
-  private UUID productId;
+public class OrderPatchRequest {
 
-  @Min(1)
-  private Integer quantity;
+  @NotNull
+  UUID productId;
+
+  Integer quantity;
+
 }

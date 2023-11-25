@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -20,13 +22,20 @@ public class ProductController {
 
   private final ProductService productService;
 
-  @GetMapping("")
+  @GetMapping("/search")
   public ResponseEntity<SearchPage<ProductDocument>> searchProducts(
-      @RequestParam(defaultValue = "") String keyword,
+      @RequestParam String keyword,
       PageParamRequest pageParamRequest
   ) {
     SearchPage<ProductDocument> productPage = productService.searchProducts(pageParamRequest, keyword);
     return ResponseEntity.ok(productPage);
+  }
+
+  @GetMapping("/search-suggest")
+  public ResponseEntity<List<ProductDocument>> searchSuggestProduct(
+      @RequestParam String keyword
+  ) {
+    return ResponseEntity.ok(productService.getAutoCompleteProduct(keyword));
   }
 
 

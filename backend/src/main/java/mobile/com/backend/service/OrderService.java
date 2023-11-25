@@ -6,6 +6,7 @@ import mobile.com.backend.common.enums.OrderStatus;
 import mobile.com.backend.dto.reponse.OrderDetailResponse;
 import mobile.com.backend.dto.reponse.OrderGeneralResponse;
 import mobile.com.backend.dto.request.OrderCreateRequest;
+import mobile.com.backend.dto.request.OrderPatchRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
 import mobile.com.backend.entity.Order;
 import mobile.com.backend.entity.Product;
@@ -77,5 +78,55 @@ public class OrderService {
         .quantity(quantity)
         .lastStatus(OrderStatus.IN_CART)
         .build();
+  }
+
+  @Transactional
+  public void deleteOrderByUserId(UUID userId, UUID orderId) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Order order = orderRepository.findById(orderId)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+
+    if (!order.getUser().getUserId().equals(user.getUserId())) {
+      throw new RuntimeException("Order not found");
+    }
+
+    if (order.getLastStatus() != OrderStatus.IN_CART) {
+      throw new RuntimeException("Only delete in cart order");
+    }
+
+    orderRepository.delete(order);
+  }
+
+  @Transactional
+  public OrderGeneralResponse patchOrderByUserId(UUID userId, UUID orderId, OrderPatchRequest orderPatchRequest) {
+        User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Order order = orderRepository.findById(orderId)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+
+    if (!order.getUser().getUserId().equals(user.getUserId())) {
+      throw new RuntimeException("Order not found");
+    }
+
+    order = orderRepository.save(createOrderByPatchRequest(order, orderPatchRequest));
+    return orderGeneralMapper.toDto(order);
+  }
+
+  public Order createOrderByPatchRequest(Order order, OrderPatchRequest request) {
+    Product product = productRepository.findById(request.getProductId())
+        .orElseThrow(() -> new RuntimeException("Product not found"));
+
+
+    if (request.getQuantity() != null) {
+      if (request.getQuantity() <= 0) {
+        throw new RuntimeException("Invalid order quantity");
+      }
+      order.setQuantity(request.getQuantity());
+    }
+
+    return order;
   }
 }

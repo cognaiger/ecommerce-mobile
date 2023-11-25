@@ -5,6 +5,7 @@ import mobile.com.backend.common.enums.OrderStatus;
 import mobile.com.backend.dto.reponse.OrderDetailResponse;
 import mobile.com.backend.dto.reponse.OrderGeneralResponse;
 import mobile.com.backend.dto.request.OrderCreateRequest;
+import mobile.com.backend.dto.request.OrderPatchRequest;
 import mobile.com.backend.dto.request.PageParamRequest;
 import mobile.com.backend.service.OrderService;
 import mobile.com.backend.service.OrderTransportationService;
@@ -58,13 +59,24 @@ public class UserController {
       @RequestBody OrderStatus orderStatus) {
 
     orderTransportationService.createOrderTransportationByUserId(userId, orderId, orderStatus);
-    return ResponseEntity.created(null).body(null);
+    return ResponseEntity.created(null).build();
   }
 
   @DeleteMapping("/{userId}/orders/{orderId}")
   public ResponseEntity<Object> deleteOrderByUserId(
       @PathVariable UUID userId,
       @PathVariable UUID orderId) {
-    return ResponseEntity.ok(null);
+    orderService.deleteOrderByUserId(userId, orderId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PatchMapping("/{userId}/orders/{orderId}")
+  public ResponseEntity<OrderGeneralResponse> patchOrderByUserId(
+      @PathVariable UUID userId,
+      @PathVariable UUID orderId,
+      @RequestBody OrderPatchRequest orderPatchRequest
+      ) {
+    OrderGeneralResponse order = orderService.patchOrderByUserId(userId, orderId, orderPatchRequest);
+    return ResponseEntity.ok(order);
   }
 }
