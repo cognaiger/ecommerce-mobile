@@ -5,10 +5,10 @@ import jakarta.persistence.PostRemove;
 import jakarta.persistence.PostUpdate;
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
-import mobile.com.backend.entity.Product;
+import mobile.com.backend.entity.product.Product;
 import mobile.com.backend.mapper.response.entity.ProductDocumentMapper;
-import mobile.com.backend.repository.ProductElasticsearchRepository;
-import mobile.com.backend.repository.ProductRepository;
+import mobile.com.backend.repository.elasticsearch.ProductElasticsearchRepository;
+import mobile.com.backend.repository.product.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
