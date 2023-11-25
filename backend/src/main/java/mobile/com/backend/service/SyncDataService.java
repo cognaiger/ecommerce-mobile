@@ -6,7 +6,7 @@ import jakarta.persistence.PostUpdate;
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
 import mobile.com.backend.entity.Product;
-import mobile.com.backend.mapper.ProductDocumentMapper;
+import mobile.com.backend.mapper.response.entity.ProductDocumentMapper;
 import mobile.com.backend.repository.ProductElasticsearchRepository;
 import mobile.com.backend.repository.ProductRepository;
 import org.springframework.stereotype.Service;

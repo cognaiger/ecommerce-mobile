@@ -92,6 +92,17 @@
 <!--			<artifactId>elasticsearch</artifactId>-->
 <!--			<version>8.6.2</version>-->
 <!--		</dependency>-->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.3.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.2.0</version>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>

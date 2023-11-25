@@ -1,20 +1,19 @@
-package mobile.com.backend.service.impl;
+package mobile.com.backend.service;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.FunctionBoostMode;
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
 import mobile.com.backend.dto.reponse.ProductGeneralResponse;
 import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.mapper.ProductDocumentMapper;
+import mobile.com.backend.mapper.response.entity.ProductDocumentMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.SearchHitSupport;
-import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.SearchPage;
+import org.springframework.data.elasticsearch.core.*;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -54,7 +53,26 @@ public class ProductService {
     SearchPage<ProductDocument> searchPage = SearchHitSupport.searchPageFor(searchHitsResult, nativeQuery.build().getPageable());
 
     return searchPage;
+  }
 
+  public List<ProductDocument> getAutoCompleteProduct(String keyword) {
+    NativeQuery matchQuery = NativeQuery.builder()
+        .withQuery(
+            q -> q.matchPhrasePrefix(
+                mPP -> mPP.field("name").query(keyword)
+            )
+        )
+        .withSourceFilter(
+            new FetchSourceFilter(
+                new String[]{"name"}, null
+            )
+        )
+        .build();
+
+    SearchHits<ProductDocument> searchHits = elasticsearchOperations.search(matchQuery, ProductDocument.class);
+    List<ProductDocument> productDocuments = searchHits.stream().map(SearchHit::getContent).toList();
+
+    return productDocuments;
   }
 
 }

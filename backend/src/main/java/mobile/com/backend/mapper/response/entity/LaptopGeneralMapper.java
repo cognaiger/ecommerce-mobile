@@ -1,4 +1,4 @@
-package mobile.com.backend.mapper;
+package mobile.com.backend.mapper.response.entity;
 
 import mobile.com.backend.dto.reponse.LaptopGeneralResponse;
 import mobile.com.backend.entity.Laptop;
