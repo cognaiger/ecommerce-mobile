@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-25T21:46:12+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
+    date = "2023-11-30T23:59:18+0700",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.8 (Red Hat, Inc.)"
 )
 @Component
 public class ProductDocumentMapperImpl implements ProductDocumentMapper {
@@ -21,17 +21,9 @@ public class ProductDocumentMapperImpl implements ProductDocumentMapper {
             return null;
         }
 
-        ProductDocument.ProductDocumentBuilder productDocument = ProductDocument.builder();
+        ProductDocument productDocument = new ProductDocument();
 
-        productDocument.productId( entity.getProductId() );
-        productDocument.name( entity.getName() );
-        productDocument.imageLink( entity.getImageLink() );
-        productDocument.description( entity.getDescription() );
-        productDocument.price( entity.getPrice() );
-        productDocument.priceDiscount( entity.getPriceDiscount() );
-        productDocument.quantity( entity.getQuantity() );
-
-        return productDocument.build();
+        return productDocument;
     }
 
     @Override
@@ -54,17 +46,9 @@ public class ProductDocumentMapperImpl implements ProductDocumentMapper {
             return null;
         }
 
-        Product.ProductBuilder product = Product.builder();
+        Product product = new Product();
 
-        product.productId( dto.getProductId() );
-        product.name( dto.getName() );
-        product.imageLink( dto.getImageLink() );
-        product.description( dto.getDescription() );
-        product.price( dto.getPrice() );
-        product.priceDiscount( dto.getPriceDiscount() );
-        product.quantity( dto.getQuantity() );
-
-        return product.build();
+        return product;
     }
 
     @Override

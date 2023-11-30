@@ -89,3 +89,5 @@ VALUES
 INSERT INTO ecommerce.notification (notification_id, user_id, title, content, type, reference)
 VALUES
     ('a4f02214-8b63-11ee-b9d1-0242ac120002', '475b88b6-8a71-11ee-b9d1-0242ac120002', 'Thông báo 1', 'Nội dung thông báo 1', 'ORDER', '');
+
+
