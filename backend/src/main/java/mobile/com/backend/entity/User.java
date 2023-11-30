@@ -69,4 +69,12 @@ public class User {
         email = email2;
         password = encode;
     }
+
+    public User(String username2, String email2, String encode, String address2, String phone2) {
+        username = username2;
+        email = email2;
+        password = encode;
+        address=address2;
+        phone=phone2;
+    }
 }

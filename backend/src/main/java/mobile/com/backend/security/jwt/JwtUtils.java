@@ -8,14 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
-
+import org.springframework.web.util.WebUtils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import mobile.com.backend.security.services.UserDetailsImpl;
 import mobile.com.backend.security.services.UserDetailsServiceImpl;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 
 @Component
 public class JwtUtils {
@@ -26,6 +30,18 @@ public class JwtUtils {
 
   @Value("${ecommerce.app.jwtExpirationMs}")
   private int jwtExpirationMs;
+  
+  @Value("${ecommerce.app.jwtCookieName}")
+  private String jwtCookie;
+
+  public String getJwtFromCookies(HttpServletRequest request) {
+    Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+    if (cookie != null) {
+      return cookie.getValue();
+    } else {
+      return null;
+    }
+  }
 
   public String generateJwtToken(Authentication authentication) {
 
@@ -38,14 +54,14 @@ public class JwtUtils {
         .signWith(key(), SignatureAlgorithm.HS256)
         .compact();
   }
-  
+
   private Key key() {
     return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
   }
 
   public String getUserNameFromJwtToken(String token) {
     return Jwts.parserBuilder().setSigningKey(key()).build()
-               .parseClaimsJws(token).getBody().getSubject();
+        .parseClaimsJws(token).getBody().getSubject();
   }
 
   public boolean validateJwtToken(String authToken) {

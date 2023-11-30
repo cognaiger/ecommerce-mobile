@@ -1,9 +1,3 @@
-ecommerce:
-  app:
-    jwtSecret: ======================ecommerce-app===========================
-    jwtExpirationMs: 86400000
-
-
 # get git information: http://localhost:8080/actuator/info
 management:
   info:

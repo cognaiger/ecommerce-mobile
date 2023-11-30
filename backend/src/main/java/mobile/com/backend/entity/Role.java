@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "roles")
+@Table(schema = "ecommerce", name = "roles")
 @Builder
 @AllArgsConstructor
 @Data
 public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "role_id")
   private Integer id;
 
   @Enumerated(EnumType.STRING)
