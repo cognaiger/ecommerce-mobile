@@ -2,6 +2,7 @@ package mobile.com.backend.dto.request.product;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import mobile.com.backend.dto.request.product.filter.LaptopAttributeFilter;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Data
 @Setter
 @Getter
-public class LaptopPageFilterRequest {
-
-  private List<String> brands;
+public class LaptopPageRequest {
+  private ProductFilterRequest generalFilter;
+  private List<LaptopAttributeFilter> attributeFilters;
 }

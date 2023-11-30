@@ -1,0 +1,87 @@
+# get git information: http://localhost:8080/actuator/info
+management:
+  info:
+    git:
+      mode: full
+
+server:
+  port: 8080
+  servlet:
+    context-path: /ecommerce
+
+spring:
+  http:
+    headers:
+      content-type: application/json
+  datasource:
+    host: localhost
+    port: 5432
+    dbname: ecommerce
+    url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.dbname}
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
+      pool-name: SpringBootJPAHikariCP
+      connection-timeout: 3000
+      idle-timeout: 30000
+      max-lifetime: 2000000
+      connection-test-query: select 1
+      connection-init-sql: select 1
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 400
+          lob:
+            non_contextual_creation: true
+        default_schema: ecommerce
+        ddl-auto: none
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    schemas: ["ecommerce"]
+    locations: classpath:/db/migration
+
+  docker:
+    compose:
+      enabled: true
+      file: docker-compose.yml
+      lifecycle-management: start_and_stop
+
+  data:
+    elsaticsearch:
+      cluster-nodes: localhost:9200
+      cluster-name: elasticsearch
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE
+      springframework:
+        data:
+          elasticsearch:
+            client: DEBUG
+
+elasticsearch:
+  url: elasticsearch
+  username:
+
