@@ -7,11 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(schema = "ecommerce", name = "user")
+@Table(schema = "ecommerce", name = "user",uniqueConstraints = { 
+  @UniqueConstraint(columnNames = "username"),
+  @UniqueConstraint(columnNames = "email") 
+})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,4 +44,37 @@ public class User {
 
   @Column(name = "address")
   private String address;
+
+  @ManyToOne
+  @JoinColumn(name = "role_id")
+  private Role role;
+
+  public List<Role> getRoles() {
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        return roles;
+    }
+
+    public void setRole(Set<Role> roles) {
+        Role[] array = roles.toArray(new Role[0]);
+        for (Role role : array) {
+            System.out.println(role);
+        }
+        role = array[0];
+
+    }
+
+    public User(String username2, String email2, String encode) {
+        username = username2;
+        email = email2;
+        password = encode;
+    }
+
+    public User(String username2, String email2, String encode, String address2, String phone2) {
+        username = username2;
+        email = email2;
+        password = encode;
+        address=address2;
+        phone=phone2;
+    }
 }

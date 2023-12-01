@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-25T21:09:04+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
+    date = "2023-12-01T01:22:41+0700",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.8 (Red Hat, Inc.)"
 )
 @Component
 public class OrderTransportationGeneralMapperImpl implements OrderTransportationGeneralMapper {
@@ -21,14 +21,9 @@ public class OrderTransportationGeneralMapperImpl implements OrderTransportation
             return null;
         }
 
-        OrderTransportationGeneralResponse.OrderTransportationGeneralResponseBuilder<?, ?> orderTransportationGeneralResponse = OrderTransportationGeneralResponse.builder();
+        OrderTransportationGeneralResponse orderTransportationGeneralResponse = new OrderTransportationGeneralResponse();
 
-        orderTransportationGeneralResponse.orderTransportationId( entity.getOrderTransportationId() );
-        orderTransportationGeneralResponse.status( entity.getStatus() );
-        orderTransportationGeneralResponse.createdAt( entity.getCreatedAt() );
-        orderTransportationGeneralResponse.updatedAt( entity.getUpdatedAt() );
-
-        return orderTransportationGeneralResponse.build();
+        return orderTransportationGeneralResponse;
     }
 
     @Override
@@ -51,14 +46,9 @@ public class OrderTransportationGeneralMapperImpl implements OrderTransportation
             return null;
         }
 
-        OrderTransportation.OrderTransportationBuilder orderTransportation = OrderTransportation.builder();
+        OrderTransportation orderTransportation = new OrderTransportation();
 
-        orderTransportation.orderTransportationId( dto.getOrderTransportationId() );
-        orderTransportation.status( dto.getStatus() );
-        orderTransportation.createdAt( dto.getCreatedAt() );
-        orderTransportation.updatedAt( dto.getUpdatedAt() );
-
-        return orderTransportation.build();
+        return orderTransportation;
     }
 
     @Override
