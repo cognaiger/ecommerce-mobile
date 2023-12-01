@@ -8,19 +8,27 @@ import mobile.com.backend.dto.reponse.order.OrderItemGeneralResponse;
 import mobile.com.backend.dto.request.order.OrderCreateRequest;
 import mobile.com.backend.dto.request.order.OrderItemCreateRequest;
 import mobile.com.backend.dto.request.order.OrderItemPatchRequest;
+import mobile.com.backend.security.jwt.JwtUtils;
+import mobile.com.backend.security.utils.SecurityContextUtil;
 import mobile.com.backend.dto.request.PageParamRequest;
 import mobile.com.backend.service.order.OrderItemService;
 import mobile.com.backend.service.order.OrderService;
 import mobile.com.backend.service.order.OrderTransportationService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.UUID;
 
 @Validated
 @RestController
+// @PreAuthorize("hasRole('ROLE_USER')")
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/users", produces = "application/json")
 public class UserController {
@@ -33,8 +41,7 @@ public class UserController {
   public ResponseEntity<Page<OrderGeneralResponse>> getOrdersByUserId(
       @PathVariable UUID userId,
       PageParamRequest pageParamRequest,
-      @RequestParam("lastStatus") OrderStatus lastStatus
-  ) {
+      @RequestParam("lastStatus") OrderStatus lastStatus) {
 
     Page<OrderGeneralResponse> orders = orderService.getOrdersByUserId(userId, lastStatus, pageParamRequest);
     return ResponseEntity.ok(orders);
@@ -79,9 +86,9 @@ public class UserController {
       @PathVariable UUID userId,
       @PathVariable UUID orderId,
       @PathVariable UUID orderItemId,
-      @RequestBody OrderItemPatchRequest orderItemPatchRequest
-      ) {
-    OrderItemGeneralResponse orderItem = orderItemService.patchOrderItemByUserId(userId, orderId, orderItemId, orderItemPatchRequest);
+      @RequestBody OrderItemPatchRequest orderItemPatchRequest) {
+    OrderItemGeneralResponse orderItem = orderItemService.patchOrderItemByUserId(userId, orderId, orderItemId,
+        orderItemPatchRequest);
     return ResponseEntity.ok(orderItem);
   }
 
@@ -98,9 +105,30 @@ public class UserController {
   public ResponseEntity<OrderItemGeneralResponse> createOrderItemByUserId(
       @PathVariable UUID userId,
       @PathVariable UUID orderId,
-      @RequestBody OrderItemCreateRequest orderItemCreateRequest
-      ) {
-    OrderItemGeneralResponse orderItem = orderItemService.createOrderItemByUserId(userId, orderId, orderItemCreateRequest);
+      @RequestBody OrderItemCreateRequest orderItemCreateRequest) {
+    OrderItemGeneralResponse orderItem = orderItemService.createOrderItemByUserId(userId, orderId,
+        orderItemCreateRequest);
     return ResponseEntity.created(null).body(orderItem);
+  }
+
+  @GetMapping("/currentUserId")
+  public String getCurrentUserId() {
+    UUID userId = SecurityContextUtil.getCurrentUserId();
+    if (userId != null) {
+      return userId.toString();
+    } else {
+      return "No authenticated user";
+    }
+  }
+
+  @GetMapping("/currentJwtToken")
+  public String getCurrentJwtToken(HttpServletRequest request) {
+    String jwtToken = SecurityContextUtil.getCurrentJwtToken(request);
+    if (jwtToken != null) {
+      System.out.println(jwtToken);
+      return jwtToken;
+    } else {
+      return "No JWT token found";
+    }
   }
 }

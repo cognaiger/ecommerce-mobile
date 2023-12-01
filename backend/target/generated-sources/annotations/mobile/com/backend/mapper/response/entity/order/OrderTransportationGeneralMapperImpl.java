@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-01T01:22:41+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.8 (Red Hat, Inc.)"
+    date = "2023-12-01T20:01:35+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.36.0.v20231030-1524, environment: Java 17.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class OrderTransportationGeneralMapperImpl implements OrderTransportationGeneralMapper {
@@ -21,9 +21,14 @@ public class OrderTransportationGeneralMapperImpl implements OrderTransportation
             return null;
         }
 
-        OrderTransportationGeneralResponse orderTransportationGeneralResponse = new OrderTransportationGeneralResponse();
+        OrderTransportationGeneralResponse.OrderTransportationGeneralResponseBuilder<?, ?> orderTransportationGeneralResponse = OrderTransportationGeneralResponse.builder();
 
-        return orderTransportationGeneralResponse;
+        orderTransportationGeneralResponse.createdAt( entity.getCreatedAt() );
+        orderTransportationGeneralResponse.orderTransportationId( entity.getOrderTransportationId() );
+        orderTransportationGeneralResponse.status( entity.getStatus() );
+        orderTransportationGeneralResponse.updatedAt( entity.getUpdatedAt() );
+
+        return orderTransportationGeneralResponse.build();
     }
 
     @Override
@@ -46,9 +51,14 @@ public class OrderTransportationGeneralMapperImpl implements OrderTransportation
             return null;
         }
 
-        OrderTransportation orderTransportation = new OrderTransportation();
+        OrderTransportation.OrderTransportationBuilder orderTransportation = OrderTransportation.builder();
 
-        return orderTransportation;
+        orderTransportation.createdAt( dto.getCreatedAt() );
+        orderTransportation.orderTransportationId( dto.getOrderTransportationId() );
+        orderTransportation.status( dto.getStatus() );
+        orderTransportation.updatedAt( dto.getUpdatedAt() );
+
+        return orderTransportation.build();
     }
 
     @Override

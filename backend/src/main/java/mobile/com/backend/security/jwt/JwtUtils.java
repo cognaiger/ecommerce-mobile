@@ -2,6 +2,7 @@ package mobile.com.backend.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class JwtUtils {
 
   @Value("${ecommerce.app.jwtExpirationMs}")
   private int jwtExpirationMs;
-  
+
   @Value("${ecommerce.app.jwtCookieName}")
   private String jwtCookie;
 
@@ -46,13 +47,13 @@ public class JwtUtils {
   public String generateJwtToken(Authentication authentication) {
 
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
-    return Jwts.builder()
+    String jwt = Jwts.builder()
         .setSubject((userPrincipal.getUsername()))
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(key(), SignatureAlgorithm.HS256)
         .compact();
+    return jwt;
   }
 
   private Key key() {
@@ -80,4 +81,5 @@ public class JwtUtils {
 
     return false;
   }
+
 }

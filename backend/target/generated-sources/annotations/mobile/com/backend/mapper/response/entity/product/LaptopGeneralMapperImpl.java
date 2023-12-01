@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-01T01:22:41+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.8 (Red Hat, Inc.)"
+    date = "2023-12-01T20:01:34+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.36.0.v20231030-1524, environment: Java 17.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class LaptopGeneralMapperImpl implements LaptopGeneralMapper {
@@ -21,9 +21,19 @@ public class LaptopGeneralMapperImpl implements LaptopGeneralMapper {
             return null;
         }
 
-        LaptopGeneralResponse laptopGeneralResponse = new LaptopGeneralResponse();
+        LaptopGeneralResponse.LaptopGeneralResponseBuilder<?, ?> laptopGeneralResponse = LaptopGeneralResponse.builder();
 
-        return laptopGeneralResponse;
+        laptopGeneralResponse.cpu( entity.getCpu() );
+        laptopGeneralResponse.createdAt( entity.getCreatedAt() );
+        laptopGeneralResponse.gpu( entity.getGpu() );
+        laptopGeneralResponse.os( entity.getOs() );
+        laptopGeneralResponse.productId( entity.getProductId() );
+        laptopGeneralResponse.ram( entity.getRam() );
+        laptopGeneralResponse.screenSize( entity.getScreenSize() );
+        laptopGeneralResponse.storage( entity.getStorage() );
+        laptopGeneralResponse.updatedAt( entity.getUpdatedAt() );
+
+        return laptopGeneralResponse.build();
     }
 
     @Override
@@ -46,9 +56,19 @@ public class LaptopGeneralMapperImpl implements LaptopGeneralMapper {
             return null;
         }
 
-        Laptop laptop = new Laptop();
+        Laptop.LaptopBuilder laptop = Laptop.builder();
 
-        return laptop;
+        laptop.cpu( dto.getCpu() );
+        laptop.createdAt( dto.getCreatedAt() );
+        laptop.gpu( dto.getGpu() );
+        laptop.os( dto.getOs() );
+        laptop.productId( dto.getProductId() );
+        laptop.ram( dto.getRam() );
+        laptop.screenSize( dto.getScreenSize() );
+        laptop.storage( dto.getStorage() );
+        laptop.updatedAt( dto.getUpdatedAt() );
+
+        return laptop.build();
     }
 
     @Override

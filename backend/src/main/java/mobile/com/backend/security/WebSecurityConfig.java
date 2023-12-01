@@ -19,8 +19,12 @@ import mobile.com.backend.security.jwt.AuthEntryPointJwt;
 import mobile.com.backend.security.jwt.AuthTokenFilter;
 import mobile.com.backend.security.services.UserDetailsServiceImpl;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import org.springframework.context.annotation.Scope;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -41,14 +45,14 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public DaoAuthenticationProvider authenticationProvider() {
-      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-       
-      authProvider.setUserDetailsService(userDetailsService);
-      authProvider.setPasswordEncoder(passwordEncoder());
-   
-      return authProvider;
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+    authProvider.setUserDetailsService(userDetailsService);
+    authProvider.setPasswordEncoder(passwordEncoder());
+
+    return authProvider;
   }
- 
+
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
     return authConfig.getAuthenticationManager();
@@ -58,28 +62,50 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-  
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+    RequestMatcher swaggerUIRequestMatcher = new AntPathRequestMatcher("/swagger-ui/**");
+    RequestMatcher apiDocsRequestMatcher = new AntPathRequestMatcher("/v2/api-docs");
+    RequestMatcher configurationUIRequestMatcher = new AntPathRequestMatcher("/configuration/ui");
+    RequestMatcher swaggerResourcesRequestMatcher = new AntPathRequestMatcher("/swagger-resources/**");
+    RequestMatcher configurationRequestMatcher = new AntPathRequestMatcher("/configuration/**");
+    RequestMatcher swaggerHTMLRequestMatcher = new AntPathRequestMatcher("/swagger-ui.html");
+    RequestMatcher webjarsRequestMatcher = new AntPathRequestMatcher("/webjars/**");
+
+    // Combine the matchers using OrRequestMatcher
+    RequestMatcher combinedMatcher = new OrRequestMatcher(
+        swaggerUIRequestMatcher,
+        apiDocsRequestMatcher,
+        configurationUIRequestMatcher,
+        swaggerResourcesRequestMatcher,
+        configurationRequestMatcher,
+        swaggerHTMLRequestMatcher,
+        webjarsRequestMatcher);
+
     http.csrf(csrf -> csrf.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(auth -> 
-          auth.requestMatchers(mvc.pattern("/api/auth/**")).permitAll()
-              .requestMatchers(mvc.pattern("/api/test/**")).permitAll()
-              .anyRequest().authenticated()
-        );
-    
+        .authorizeHttpRequests(auth -> auth.requestMatchers(mvc.pattern("/v3/api-docs/**")).permitAll()
+            .requestMatchers(mvc.pattern("/configuration/ui")).permitAll()
+            .requestMatchers(mvc.pattern("/swagger-resources/**")).permitAll()
+            .requestMatchers(mvc.pattern("/configuration/security")).permitAll()
+            .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
+            .requestMatchers(mvc.pattern("/webjars/**")).permitAll()
+            .requestMatchers(mvc.pattern("/api/test/**")).permitAll()
+            .requestMatchers(mvc.pattern("/api/auth/**")).permitAll()
+            .anyRequest().authenticated());
+
     http.authenticationProvider(authenticationProvider());
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    
+
     return http.build();
   }
 
-    @Scope("prototype")
-	@Bean
-	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
-		return new MvcRequestMatcher.Builder(introspector);
-	}
+  @Scope("prototype")
+  @Bean
+  MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+    return new MvcRequestMatcher.Builder(introspector);
+  }
 }
