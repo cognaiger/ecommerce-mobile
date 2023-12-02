@@ -127,4 +127,8 @@ public class OrderService {
     orderRepository.delete(order);
   }
 
+
+  public List<Order> findAll() {
+    return orderRepository.findAll();
+  }
 }
