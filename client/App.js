@@ -21,6 +21,7 @@ import WalletPassword from "./screens/WalletPassword";
 import PaymentSuccessful from "./screens/PaymentSuccessfull";
 import OrderStatus from "./screens/OrderStatus";
 import Products from "./screens/Products";
+import Orders from "./screens/Orders";
 export default function App() {
   const Stack = createNativeStackNavigator();
 
@@ -112,6 +113,12 @@ export default function App() {
         <Stack.Screen
           name="Products"
           component={Products}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Orders"
+          component={Orders}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

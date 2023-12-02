@@ -80,7 +80,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .requestMatchers(mvc.pattern("/api/vnpay/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/stats/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/products")).permitAll()
-            .requestMatchers(mvc.pattern("/api/v1/orders")).hasRole("ADMIN")
+            .requestMatchers(mvc.pattern("/api/v1/orders")).permitAll()
             .anyRequest().authenticated()); 
 
     http.authenticationProvider(authenticationProvider());

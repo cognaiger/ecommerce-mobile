@@ -25,6 +25,18 @@ const Profile = () => {
     address: "123 Main St",
   });
 
+  let currentUser;
+  [currentRole, setCurrentRole] = useState("");
+  AuthService.getCurrentUser()
+    .then((res) => {
+      currentUser = res;
+      console.log(currentUser.roles[0]);
+      setCurrentRole(currentUser.roles[0]);
+    })
+    .catch((error) => {
+      console.error("Error while fetching current user:", error);
+    });
+
   const turnBack = () => {
     navigation.goBack();
   };
@@ -87,12 +99,18 @@ const Profile = () => {
         </View>
 
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={[styles.button, { backgroundColor: "black", flex: 1 }]}
-            onPress={handleMyOrdersPress}
-          >
-            <Text style={styles.buttonText}>View Orders</Text>
-          </TouchableOpacity>
+          {currentRole === "ROLE_USER" ? (
+            <>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: "black", flex: 1 }]}
+                onPress={handleMyOrdersPress}
+              >
+                <Text style={styles.buttonText}>View Orders</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <></>
+          )}
 
           <TouchableOpacity
             style={[styles.button, { backgroundColor: "red", flex: 1 }]}

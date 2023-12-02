@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   Image,
   ScrollView,
@@ -6,15 +7,60 @@ import {
   TouchableOpacity,
   View,
   PanResponder,
-  Modal, TextInput
+  Modal,
+  TextInput,
+  Linking,
 } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import ProductCart from "../components/productCart";
 import BigButton from "../components/BigButton";
 import { Ionicons } from "@expo/vector-icons";
 const Checkout = () => {
+  [paymentLink, setPaymentLink] = useState("");
+  loadInBrowser = () => {
+    Linking.openURL(paymentLink).catch((err) =>
+      console.error("Couldn't load page", err)
+    );
+  };
+  const generateRandomTxnRef = () => {
+    // Generate a random number between 100000 and 999999 (inclusive)
+    const min = 100000;
+    const max = 999999;
+    const randomTxnRef = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Convert the number to a string if needed
+    return randomTxnRef;
+  };
+  const handlePayment = async () => {
+    const randomTxnRef = generateRandomTxnRef();
+    try {
+      const paymentData = {
+        vnp_Ammount: 3250, // Replace with the actual payment amount
+        vnp_OrderInfo: "Order information",
+        vnp_TxnRef: randomTxnRef, // Replace with order information
+        // Add other payment data as needed
+      };
+
+      // Make a POST request to your backend
+      const response = await axios.post(
+        "http://192.168.1.211:8080/ecommerce/api/vnpay/pay",
+        paymentData
+      );
+
+      // Handle the response from the server (e.g., redirect to a payment gateway)
+      console.log(typeof response.data);
+      setPaymentLink(response.data);
+
+      // Handle the payment process as per your backend's logic
+    } catch (error) {
+      console.error("Error making payment:", error);
+    }
+
+    this.loadInBrowser();
+  };
+
   const backButtonLink = "client/assets/Back.png";
   const navigation = useNavigation();
   const [totalPrice, setTotalPrice] = useState(33000);
@@ -218,7 +264,7 @@ const Checkout = () => {
             styles.buyNowButton,
             { backgroundColor: "black" },
           ]}
-          onPress={handleNavigateWalletPassword}
+          onPress={handlePayment}
         >
           <View style={styles.buttonContent}>
             <Text style={[styles.buttonTextBuyNow, { color: "white" }]}>

@@ -24,9 +24,9 @@ const BottomAdminNavigator = () => {
         <Image source={require(ordersIconLink)} style={styles.icon} resizeMode="contain" />
         <Text style={styles.navigationItemText}>Orders</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navigationItem} onPress={() => navigation.navigate("Customers")}>
+      <TouchableOpacity style={styles.navigationItem} onPress={() => navigation.navigate("Profile")}>
         <Image source={require(customersIconLink)} style={styles.icon} resizeMode="contain" />
-        <Text style={styles.navigationItemText}>Customers</Text>
+        <Text style={styles.navigationItemText}>Profile</Text>
       </TouchableOpacity>
     </View>
   );
