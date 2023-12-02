@@ -23,6 +23,8 @@ import mobile.com.backend.repository.order.OrderRepository;
 import mobile.com.backend.repository.order.OrderTransportationRepository;
 import mobile.com.backend.repository.product.ProductRepository;
 import mobile.com.backend.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -40,15 +42,22 @@ public class OrderService {
   private final OrderItemGeneralMapper orderItemGeneralMapper;
 
   private final UserRepository userRepository;
-  private final OrderRepository orderRepository;
+
   private final ProductRepository productRepository;
   private final OrderTransportationRepository orderTransportationRepository;
   private final DeliveryAddressRepository deliveryAddressRepository;
   private final OrderItemRepository orderItemRepository;
 
   private final OrderItemService orderItemService;
+  @Autowired
+  private OrderRepository orderRepository;
 
-  public Page<OrderGeneralResponse> getOrdersByUserId(UUID userId, OrderStatus lastStatus, PageParamRequest pageParamRequest) {
+  public long getCompletedOrderCount() {
+    return orderRepository.countByLastStatus(OrderStatus.COMPLETED);
+  }
+
+  public Page<OrderGeneralResponse> getOrdersByUserId(UUID userId, OrderStatus lastStatus,
+      PageParamRequest pageParamRequest) {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -117,6 +126,5 @@ public class OrderService {
 
     orderRepository.delete(order);
   }
-
 
 }

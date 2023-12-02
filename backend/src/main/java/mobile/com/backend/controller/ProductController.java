@@ -3,6 +3,7 @@ package mobile.com.backend.controller;
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
 import mobile.com.backend.dto.request.PageParamRequest;
+import mobile.com.backend.entity.product.Product;
 import mobile.com.backend.service.product.ProductService;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.http.ResponseEntity;
@@ -25,18 +26,21 @@ public class ProductController {
   @GetMapping("/search")
   public ResponseEntity<SearchPage<ProductDocument>> searchProducts(
       @RequestParam String keyword,
-      PageParamRequest pageParamRequest
-  ) {
+      PageParamRequest pageParamRequest) {
     SearchPage<ProductDocument> productPage = productService.searchProducts(pageParamRequest, keyword);
     return ResponseEntity.ok(productPage);
   }
 
   @GetMapping("/search-suggest")
   public ResponseEntity<List<ProductDocument>> searchSuggestProduct(
-      @RequestParam String keyword
-  ) {
+      @RequestParam String keyword) {
     return ResponseEntity.ok(productService.getAutoCompleteProduct(keyword));
   }
 
+  @GetMapping
+  public ResponseEntity<List<Product>> getAllProducts() {
+    List<Product> products = productService.getAll();
+    return ResponseEntity.ok(products);
+  }
 
 }

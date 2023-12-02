@@ -65,24 +65,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
-    RequestMatcher swaggerUIRequestMatcher = new AntPathRequestMatcher("/swagger-ui/**");
-    RequestMatcher apiDocsRequestMatcher = new AntPathRequestMatcher("/v2/api-docs");
-    RequestMatcher configurationUIRequestMatcher = new AntPathRequestMatcher("/configuration/ui");
-    RequestMatcher swaggerResourcesRequestMatcher = new AntPathRequestMatcher("/swagger-resources/**");
-    RequestMatcher configurationRequestMatcher = new AntPathRequestMatcher("/configuration/**");
-    RequestMatcher swaggerHTMLRequestMatcher = new AntPathRequestMatcher("/swagger-ui.html");
-    RequestMatcher webjarsRequestMatcher = new AntPathRequestMatcher("/webjars/**");
-
-    // Combine the matchers using OrRequestMatcher
-    RequestMatcher combinedMatcher = new OrRequestMatcher(
-        swaggerUIRequestMatcher,
-        apiDocsRequestMatcher,
-        configurationUIRequestMatcher,
-        swaggerResourcesRequestMatcher,
-        configurationRequestMatcher,
-        swaggerHTMLRequestMatcher,
-        webjarsRequestMatcher);
-
+    
     http.csrf(csrf -> csrf.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -94,7 +77,10 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .requestMatchers(mvc.pattern("/webjars/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/test/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/auth/**")).permitAll()
-            .anyRequest().authenticated());
+            .requestMatchers(mvc.pattern("/api/vnpay/**")).permitAll()
+            .requestMatchers(mvc.pattern("/api/v1/stats/**")).permitAll()
+            .requestMatchers(mvc.pattern("/api/v1/products")).permitAll()
+            .anyRequest().authenticated()); 
 
     http.authenticationProvider(authenticationProvider());
 

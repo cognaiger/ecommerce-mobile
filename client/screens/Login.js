@@ -15,7 +15,7 @@ import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
 import { CheckBox } from "@rneui/themed";
 import axios from "axios";
-
+import AuthService from "../services/auth.service";
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,12 +28,13 @@ const Login = ({ navigation }) => {
     setMessage("");
 
     try {
-      const response = await axios.post("http://192.168.1.211:8080/ecommerce/api/auth/signin", {
-        username,
-        password,
-      });
+      const response = await AuthService.login(username, password);
       setLoading(false);
       Alert.alert("Success", "Logged in successfully");
+
+      // Log the current user data
+      // console.log("Current User:", response);
+
       navigation.navigate("Home");
       // You might want to add more logic here for handling successful login
     } catch (error) {
@@ -100,15 +101,8 @@ const Login = ({ navigation }) => {
           </Pressable>
         </View>
 
-        <Pressable 
-          style={{ marginTop: 35 }}
-          onPress={handleLogin}
-        >
-          {loading ? (
-            <ActivityIndicator />
-          ) : (
-            <BigButton title="Sign in" />
-          )}
+        <Pressable style={{ marginTop: 35 }} onPress={handleLogin}>
+          {loading ? <ActivityIndicator /> : <BigButton title="Sign in" />}
         </Pressable>
 
         <Pressable

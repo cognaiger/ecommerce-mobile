@@ -22,11 +22,6 @@ CREATE TABLE ecommerce.user(
 );
 
 
-
-
-
-
-
 CREATE TABLE ecommerce.delivery_address(
     delivery_address_id UUID NOT NULL DEFAULT uuid_generate_v1(),
     user_id UUID NOT NULL,

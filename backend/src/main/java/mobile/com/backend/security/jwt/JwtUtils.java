@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
@@ -44,11 +45,16 @@ public class JwtUtils {
     }
   }
 
+  public ResponseCookie getCleanJwtCookie() {
+    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/ecommerce/api").build();
+    return cookie;
+  }
+
   public String generateJwtToken(Authentication authentication) {
 
     UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
     String jwt = Jwts.builder()
-        .setSubject((userPrincipal.getUsername()))
+        .setSubject(userPrincipal.getUsername())
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(key(), SignatureAlgorithm.HS256)
@@ -61,7 +67,7 @@ public class JwtUtils {
   }
 
   public String getUserNameFromJwtToken(String token) {
-    return Jwts.parserBuilder().setSigningKey(key()).build()
+    return Jwts.parserBuilder().setSigningKey(key()).build()    
         .parseClaimsJws(token).getBody().getSubject();
   }
 
