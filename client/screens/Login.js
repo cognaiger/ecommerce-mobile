@@ -82,6 +82,10 @@ const Login = ({ navigation }) => {
           />
         </View>
 
+        {message ? (
+          <Text style={{ color: "red", textAlign: "center" }}>{message}</Text>
+        ) : null}
+
         <View style={styles.condition}>
           <CheckBox
             checked={checked}
@@ -95,11 +99,6 @@ const Login = ({ navigation }) => {
             <Text>Forgot password?</Text>
           </Pressable>
         </View>
-
-        {message ? (
-          <Text style={{ color: "red", textAlign: "center" }}>{message}</Text>
-        ) : null}
-
 
         <Pressable 
           style={{ marginTop: 35 }}

@@ -7,9 +7,8 @@ import {
   Text,
   TextInput,
   View,
-    Alert,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
@@ -17,8 +16,8 @@ import { CheckBox } from "@rneui/themed";
 import axios from "axios";
 
 const Register = ({ navigation }) => {
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
 
@@ -42,7 +41,6 @@ const Register = ({ navigation }) => {
       Alert.alert("Error", "You must accept the terms to continue");
     }
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -166,3 +164,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+export default Register;
