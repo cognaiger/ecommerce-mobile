@@ -1,14 +1,13 @@
 package mobile.com.backend.service.product;
 
 import lombok.RequiredArgsConstructor;
-import mobile.com.backend.dto.reponse.product.LaptopGeneralResponse;
-import mobile.com.backend.dto.reponse.product.ProductGeneralResponse;
-import mobile.com.backend.dto.request.product.LaptopPageRequest;
-import mobile.com.backend.dto.request.product.filter.AttributeFilter;
+import mobile.com.backend.dto.product.response.ProductGeneralResponse;
+import mobile.com.backend.dto.product.request.LaptopPageRequest;
+import mobile.com.backend.dto.product.request.filter.AttributeFilter;
 import mobile.com.backend.entity.product.Laptop;
 import mobile.com.backend.entity.product.Product;
-import mobile.com.backend.mapper.response.entity.product.LaptopGeneralMapper;
-import mobile.com.backend.mapper.response.entity.product.ProductGeneralMapper;
+import mobile.com.backend.mapper.product.LaptopGeneralMapper;
+import mobile.com.backend.mapper.product.ProductGeneralMapper;
 import mobile.com.backend.repository.product.LaptopRepository;
 import mobile.com.backend.repository.product.ProductRepository;
 import mobile.com.backend.service.product.specification.LaptopSpecificationService;

@@ -1,106 +1,35 @@
 package mobile.com.backend.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import mobile.com.backend.common.enums.OrderStatus;
-import mobile.com.backend.dto.reponse.order.OrderDetailResponse;
-import mobile.com.backend.dto.reponse.order.OrderGeneralResponse;
-import mobile.com.backend.dto.reponse.order.OrderItemGeneralResponse;
-import mobile.com.backend.dto.request.order.OrderCreateRequest;
-import mobile.com.backend.dto.request.order.OrderItemCreateRequest;
-import mobile.com.backend.dto.request.order.OrderItemPatchRequest;
-import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.service.order.OrderItemService;
-import mobile.com.backend.service.order.OrderService;
-import mobile.com.backend.service.order.OrderTransportationService;
-import org.springframework.data.domain.Page;
+import mobile.com.backend.dto.user.UserGeneralResponse;
+import mobile.com.backend.dto.user.UserPutRequest;
+import mobile.com.backend.entity.auth.UserAuthentication;
+import mobile.com.backend.service.auth.AuthenticationService;
+import mobile.com.backend.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/v1/users", produces = "application/json")
+@SecurityRequirement(name = "Bearer Authentication")
 public class UserController {
 
-  private final OrderService orderService;
-  private final OrderTransportationService orderTransportationService;
-  private final OrderItemService orderItemService;
+  private final UserService userService;
 
-  @GetMapping("/{userId}/orders")
-  public ResponseEntity<Page<OrderGeneralResponse>> getOrdersByUserId(
-      @PathVariable UUID userId,
-      PageParamRequest pageParamRequest,
-      @RequestParam("lastStatus") OrderStatus lastStatus
-  ) {
-
-    Page<OrderGeneralResponse> orders = orderService.getOrdersByUserId(userId, lastStatus, pageParamRequest);
-    return ResponseEntity.ok(orders);
+  @GetMapping("/profile")
+  public ResponseEntity<UserGeneralResponse> getUser() {
+    return ResponseEntity.ok(userService.getByUser(AuthenticationService.getCurrentUser()));
   }
 
-  @PostMapping("/{userId}/orders")
-  public ResponseEntity<OrderDetailResponse> createOrderByUserId(
-      @PathVariable UUID userId,
-      @RequestBody OrderCreateRequest request) {
-    OrderDetailResponse order = orderService.createOrderByUserId(userId, request);
-    return ResponseEntity.created(null).body(order);
+  @PutMapping("/profile")
+  public ResponseEntity<UserGeneralResponse> putUser(@RequestBody UserPutRequest request) {
+    return ResponseEntity.ok(userService.putByUser(AuthenticationService.getCurrentUser(), request));
   }
 
-  @GetMapping("/{userId}/orders/{orderId}")
-  public ResponseEntity<OrderDetailResponse> getOrderByUserId(
-      @PathVariable UUID userId,
-      @PathVariable UUID orderId) {
-    OrderDetailResponse order = orderService.getOrderDetailResponseByOrderId(userId, orderId);
-    return ResponseEntity.ok(order);
-  }
-
-  @DeleteMapping("/{userId}/orders/{orderId}")
-  public ResponseEntity<Object> deleteOrderByUserId(
-      @PathVariable UUID userId,
-      @PathVariable UUID orderId) {
-    orderService.deleteOrderByUserId(userId, orderId);
-    return ResponseEntity.noContent().build();
-  }
-
-  @PostMapping("/{userId}/orders/{orderId}/orderTransportations")
-  public ResponseEntity<Object> addOrderTransportationByUserId(
-      @PathVariable UUID userId,
-      @PathVariable UUID orderId,
-      @RequestBody OrderStatus orderStatus) {
-
-    orderTransportationService.createOrderTransportationByUserId(userId, orderId, orderStatus);
-    return ResponseEntity.created(null).build();
-  }
-
-  @PatchMapping("/{userId}/orders/{orderId}/orderItems/{orderItemId}")
-  public ResponseEntity<OrderItemGeneralResponse> patchOrderByUserId(
-      @PathVariable UUID userId,
-      @PathVariable UUID orderId,
-      @PathVariable UUID orderItemId,
-      @RequestBody OrderItemPatchRequest orderItemPatchRequest
-      ) {
-    OrderItemGeneralResponse orderItem = orderItemService.patchOrderItemByUserId(userId, orderId, orderItemId, orderItemPatchRequest);
-    return ResponseEntity.ok(orderItem);
-  }
-
-  @DeleteMapping("/{userId}/orders/{orderId}/orderItems/{orderItemId}")
-  public ResponseEntity<Object> deleteOrderItemByUserId(
-      @PathVariable UUID userId,
-      @PathVariable UUID orderId,
-      @PathVariable UUID orderItemId) {
-    orderItemService.deleteOrderItemByUserId(userId, orderId, orderItemId);
-    return ResponseEntity.noContent().build();
-  }
-
-  @PostMapping("/{userId}/orders/{orderId}/orderItems")
-  public ResponseEntity<OrderItemGeneralResponse> createOrderItemByUserId(
-      @PathVariable UUID userId,
-      @PathVariable UUID orderId,
-      @RequestBody OrderItemCreateRequest orderItemCreateRequest
-      ) {
-    OrderItemGeneralResponse orderItem = orderItemService.createOrderItemByUserId(userId, orderId, orderItemCreateRequest);
-    return ResponseEntity.created(null).body(orderItem);
-  }
 }

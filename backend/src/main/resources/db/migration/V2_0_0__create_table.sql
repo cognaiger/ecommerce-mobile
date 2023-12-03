@@ -1,6 +1,7 @@
 CREATE TYPE ecommerce.address_type AS ENUM ('HOME', 'USER');
 CREATE TYPE ecommerce.order_status AS ENUM ('IN_CART', 'RECEIVED', 'DELIVERING', 'COMPLETED');
 CREATE TYPE ecommerce.notification_type AS ENUM ('ORDER');
+CREATE TYPE ecommerce.user_role AS ENUM ('USER', 'ADMIN');
 
 CREATE TABLE ecommerce.user(
     user_id UUID NOT NULL DEFAULT uuid_generate_v1(),
@@ -9,6 +10,7 @@ CREATE TABLE ecommerce.user(
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
+    role user_role NOT NULL,
 
     CONSTRAINT user_pk PRIMARY KEY (user_id)
 );

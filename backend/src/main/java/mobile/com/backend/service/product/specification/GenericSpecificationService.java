@@ -1,7 +1,7 @@
 package mobile.com.backend.service.product.specification;
 
 import jakarta.persistence.criteria.Expression;
-import mobile.com.backend.dto.request.product.filter.AttributeFilter;
+import mobile.com.backend.dto.product.request.filter.AttributeFilter;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;

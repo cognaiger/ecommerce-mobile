@@ -2,7 +2,7 @@ package mobile.com.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
-import mobile.com.backend.dto.request.PageParamRequest;
+import mobile.com.backend.dto.PageParamRequest;
 import mobile.com.backend.service.product.ProductService;
 import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.http.ResponseEntity;

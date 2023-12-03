@@ -2,14 +2,14 @@ package mobile.com.backend.service.order;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import mobile.com.backend.dto.reponse.order.OrderItemGeneralResponse;
-import mobile.com.backend.dto.request.order.OrderItemCreateRequest;
-import mobile.com.backend.dto.request.order.OrderItemPatchRequest;
+import mobile.com.backend.dto.order.response.OrderItemGeneralResponse;
+import mobile.com.backend.dto.order.request.OrderItemCreateRequest;
+import mobile.com.backend.dto.order.request.OrderItemPatchRequest;
 import mobile.com.backend.entity.User;
 import mobile.com.backend.entity.order.Order;
 import mobile.com.backend.entity.order.OrderItem;
 import mobile.com.backend.entity.product.Product;
-import mobile.com.backend.mapper.response.entity.order.OrderItemGeneralMapper;
+import mobile.com.backend.mapper.order.OrderItemGeneralMapper;
 import mobile.com.backend.repository.UserRepository;
 import mobile.com.backend.repository.order.OrderItemRepository;
 import mobile.com.backend.repository.order.OrderRepository;
@@ -31,17 +31,14 @@ public class OrderItemService {
   private final OrderRepository orderRepository;
 
   @Transactional
-  public OrderItemGeneralResponse patchOrderItemByUserId(UUID userId, UUID orderId, UUID orderItemId, OrderItemPatchRequest orderItemPatchRequest) {
-    OrderItem orderItem = validateOrderItemId(userId, orderId, orderItemId);
+  public OrderItemGeneralResponse patchOrderItemByUserId(User user, UUID orderId, UUID orderItemId, OrderItemPatchRequest orderItemPatchRequest) {
+    OrderItem orderItem = validateOrderItemId(user, orderId, orderItemId);
     orderItem = orderItemRepository.save(createOrderItemByPatchRequest(orderItem, orderItemPatchRequest));
     return orderItemGeneralMapper.toDto(orderItem);
   }
 
   @Transactional
-  public OrderItemGeneralResponse createOrderItemByUserId(UUID userId, UUID orderId, OrderItemCreateRequest orderItemCreateRequest) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public OrderItemGeneralResponse createOrderItemByUserId(User user, UUID orderId, OrderItemCreateRequest orderItemCreateRequest) {
     Order order = orderRepository.findById(orderId)
         .orElseThrow(() -> new RuntimeException("Order not found"));
 
@@ -56,8 +53,8 @@ public class OrderItemService {
   }
 
   @Transactional
-  public void deleteOrderItemByUserId(UUID userId, UUID orderId, UUID orderItemId) {
-    OrderItem orderItem = validateOrderItemId(userId, orderId, orderItemId);
+  public void deleteOrderItemByUserId(User user, UUID orderId, UUID orderItemId) {
+    OrderItem orderItem = validateOrderItemId(user, orderId, orderItemId);
     orderItemRepository.delete(orderItem);
   }
 
@@ -98,10 +95,7 @@ public class OrderItemService {
     return orderItem;
   }
 
-  public OrderItem validateOrderItemId(UUID userId, UUID orderId, UUID orderItemId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public OrderItem validateOrderItemId(User user, UUID orderId, UUID orderItemId) {
     Order order = orderRepository.findById(orderId)
         .orElseThrow(() -> new RuntimeException("Order not found"));
 
