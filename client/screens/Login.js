@@ -1,3 +1,4 @@
+import React, { useState, useRef } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -6,17 +7,43 @@ import {
   Text,
   TextInput,
   View,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
 import { CheckBox } from "@rneui/themed";
+import axios from "axios";
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [checked, setChecked] = useState(false);
+
+  const handleLogin = async () => {
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await axios.post("http://192.168.1.211:8080/ecommerce/api/auth/signin", {
+        username,
+        password,
+      });
+      setLoading(false);
+      Alert.alert("Success", "Logged in successfully");
+      navigation.navigate("Home");
+      // You might want to add more logic here for handling successful login
+    } catch (error) {
+      setLoading(false);
+      const errorMessage =
+        error.response?.data?.message || error.message || "An error occurred";
+      setMessage(errorMessage);
+      Alert.alert("Error", errorMessage);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,11 +62,12 @@ const Login = ({ navigation }) => {
         </View>
 
         <View style={styles.email}>
-          <Text style={styles.label}>Email</Text>
+          <Text style={styles.label}>Username</Text>
           <TextInput
-            value={email}
+            value={username}
             style={styles.input}
-            placeholder="Enter your email here"
+            placeholder="Enter your username here"
+            onChangeText={setUsername}
           />
         </View>
 
@@ -50,6 +78,7 @@ const Login = ({ navigation }) => {
             value={password}
             style={styles.input}
             placeholder="Enter your password here"
+            onChangeText={setPassword}
           />
         </View>
 
@@ -67,11 +96,20 @@ const Login = ({ navigation }) => {
           </Pressable>
         </View>
 
+        {message ? (
+          <Text style={{ color: "red", textAlign: "center" }}>{message}</Text>
+        ) : null}
+
+
         <Pressable 
           style={{ marginTop: 35 }}
-          onPress={() => navigation.navigate("Home")}
+          onPress={handleLogin}
         >
-          <BigButton title="Sign in" />
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <BigButton title="Sign in" />
+          )}
         </Pressable>
 
         <Pressable

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -6,18 +7,42 @@ import {
   Text,
   TextInput,
   View,
+    Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
 import { CheckBox } from "@rneui/themed";
+import axios from "axios";
 
 const Register = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
+
+  const handleSignUp = async () => {
+    if (checked) {
+      try {
+        const response = await axios.post("http://192.168.1.211:8080/ecommerce/api/auth/signup", {
+          username,
+          email,
+          password,
+          role: ["user"],
+        });
+        Alert.alert("Success", "Account created successfully!");
+        navigation.navigate("Login");
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || error.message || "An error occurred during sign up";
+        Alert.alert("Error", errorMessage);
+      }
+    } else {
+      Alert.alert("Error", "You must accept the terms to continue");
+    }
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,15 +66,17 @@ const Register = ({ navigation }) => {
             value={email}
             style={styles.input}
             placeholder="Enter your email here"
+            onChangeText={setEmail}
           />
         </View>
 
         <View style={styles.name}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>Username</Text>
           <TextInput
-            value={name}
+            value={username}
             style={styles.input}
-            placeholder="Enter your name here"
+            placeholder="Enter your username here"
+            onChangeText={setUsername}
           />
         </View>
 
@@ -60,6 +87,7 @@ const Register = ({ navigation }) => {
             value={password}
             style={styles.input}
             placeholder="Enter your password here"
+            onChangeText={setPassword}
           />
         </View>
 
@@ -69,7 +97,7 @@ const Register = ({ navigation }) => {
             onPress={() => setChecked(!checked)}
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
-            title="I accept the term"
+            title="I accept the terms"
             containerStyle={{ marginLeft: 0 }}
           />
         </View>
