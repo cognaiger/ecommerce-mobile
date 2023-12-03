@@ -104,6 +104,7 @@ const Register = ({ navigation }) => {
           style={{ marginTop: 20 }}
           onPress={handleSignUp}
         >
+        <BigButton title="Sign up" />
         </Pressable>
 
         <Pressable
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.lightPrimary,
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 0,
   },
   img: {
     height: 46,
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   condition: {
-    marginTop: 50,
+    marginTop: 10,
   },
 });
 
