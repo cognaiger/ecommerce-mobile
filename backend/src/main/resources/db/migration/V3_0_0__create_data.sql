@@ -55,15 +55,27 @@ VALUES
         'HOME'
     );
 
-INSERT INTO
-    ecommerce.brand (brand_name, image_link)
+INSERT INTO ecommerce.brand (brand_name, image_link)
 VALUES
-    ('ACER', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Acer-logo.jpg/768px-Acer-logo.jpg'),
-    ('ASUS', 'https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-asus-inkythuatso-2-01-26-09-21-11.jpg'),
-    ('HP', 'https://i2.cdn.turner.com/money/dam/assets/160405075114-hp-logo-640x640.jpg'),
-    ('Dell','https://inkythuatso.com/uploads/images/2021/10/dell-logo-inkythuatso-4-01-30-10-17-55.jpg'),
-    ('MSI','https://devdiscourse.blob.core.windows.net/devnews/15_09_2020_11_27_22_2518697.jpg'),
-    ('Lenovo','https://thumbs.dreamstime.com/b/lenovo-logo-vector-format-available-illustrator-ai-149074793.jpg');
+('ACER', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Acer-logo.jpg/768px-Acer-logo.jpg'),
+('ASUS', 'https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-asus-inkythuatso-2-01-26-09-21-11.jpg'),
+('MSI', 'https://devdiscourse.blob.core.windows.net/devnews/15_09_2020_11_27_22_2518697.jpg'),
+('Lenovo', 'https://thumbs.dreamstime.com/b/lenovo-logo-vector-format-available-illustrator-ai-149074793.jpg'),
+('HP', 'https://i2.cdn.turner.com/money/dam/assets/160405075114-hp-logo-640x640.jpg'),
+('Dell', 'https://inkythuatso.com/uploads/images/2021/10/dell-logo-inkythuatso-4-01-30-10-17-55.jpg'),
+('Corsair', 'https://logowik.com/content/uploads/images/corsair7271.jpg'),
+('Kingston', 'https://logowik.com/content/uploads/images/647_kingston_logo.jpg'),
+('G.Skill', 'https://logowik.com/content/uploads/images/gskill3165.jpg'),
+('PNY', 'https://logonoid.com/images/pny-logo.png'),
+('Western Digital', 'https://logowik.com/content/uploads/images/western-digital-wd4852.jpg'),
+('SamSung', 'https://images.samsung.com/is/image/samsung/assets/vn/about-us/brand/logo/mo/360_197_1.png?$FB_TYPE_B_PNG$'),
+('LG', 'https://static.vecteezy.com/system/resources/previews/018/911/404/original/lg-logo-life-s-good-editorial-free-vector.jpg'),
+('ViewSonic', 'https://1000logos.net/wp-content/uploads/2017/12/ViewSonic-Symbol.jpg'),
+('Razor', 'https://cdn.dribbble.com/users/163339/screenshots/12047842/logos-razor-logo.png'),
+('HyperX', 'https://steamuserimages-a.akamaihd.net/ugc/1002557701827770568/5065A15BD82BCFBCDA57ADBDEAA84B10E49B5398/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true'),
+('Glorious', 'https://inkythuatso.com/uploads/images/2021/10/dell-logo-inkythuatso-4-01-30-10-17-55.jpg'),
+('Logitech', 'https://cdn.icon-icons.com/icons2/2845/PNG/512/logitech_logo_icon_181377.png');
+
 
 INSERT INTO
     ecommerce.product (

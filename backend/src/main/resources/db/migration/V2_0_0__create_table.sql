@@ -119,3 +119,13 @@ CREATE TABLE ecommerce.notification(
     CONSTRAINT notification_pk PRIMARY KEY (notification_id),
     CONSTRAINT notification_user_fk FOREIGN KEY (user_id) REFERENCES ecommerce.user (user_id)
 );
+
+CREATE TABLE ecommerce.wishlist (
+    wishlist_id UUID NOT NULL DEFAULT uuid_generate_v1(),
+    user_id UUID NOT NULL,
+    product_id UUID NOT NULL,
+    
+    CONSTRAINT wishlist_pk PRIMARY KEY (wishlist_id),
+    CONSTRAINT wishlist_user_fk FOREIGN KEY (user_id) REFERENCES ecommerce.user (user_id),
+    CONSTRAINT wishlist_product_fk FOREIGN KEY (product_id) REFERENCES ecommerce.product (product_id)
+);

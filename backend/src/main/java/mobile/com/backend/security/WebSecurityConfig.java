@@ -65,7 +65,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
-    
+
     http.csrf(csrf -> csrf.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -80,8 +80,10 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .requestMatchers(mvc.pattern("/api/vnpay/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/stats/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/products")).permitAll()
+            .requestMatchers(mvc.pattern("/api/v1/products/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/orders")).permitAll()
-            .anyRequest().authenticated()); 
+            .requestMatchers(mvc.pattern("/api/v1/algolia")).permitAll()
+            .anyRequest().authenticated());
 
     http.authenticationProvider(authenticationProvider());
 
