@@ -5,30 +5,36 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mobile.com.backend.common.enums.UserRole;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(schema = "ecommerce", name = "user",uniqueConstraints = { 
-  @UniqueConstraint(columnNames = "username"),
-  @UniqueConstraint(columnNames = "email") 
-})
+@Table(schema = "ecommerce", name = "user")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class User {
+public class User{
 
   @Id
   @Column(name = "user_id")
   @GeneratedValue(generator = "UUID")
   @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
   private UUID userId;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role", columnDefinition = "user_role")
+  @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+  private UserRole role;
 
   @Column(name = "username")
   private String username;
@@ -44,37 +50,4 @@ public class User {
 
   @Column(name = "address")
   private String address;
-
-  @ManyToOne
-  @JoinColumn(name = "role_id")
-  private Role role;
-
-  public List<Role> getRoles() {
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
-        return roles;
-    }
-
-    public void setRole(Set<Role> roles) {
-        Role[] array = roles.toArray(new Role[0]);
-        for (Role role : array) {
-            System.out.println(role);
-        }
-        role = array[0];
-
-    }
-
-    public User(String username2, String email2, String encode) {
-        username = username2;
-        email = email2;
-        password = encode;
-    }
-
-    public User(String username2, String email2, String encode, String address2, String phone2) {
-        username = username2;
-        email = email2;
-        password = encode;
-        address=address2;
-        phone=phone2;
-    }
 }

@@ -3,20 +3,17 @@ package mobile.com.backend.service.order;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.common.enums.OrderStatus;
-import mobile.com.backend.dto.reponse.order.OrderDetailResponse;
-import mobile.com.backend.dto.reponse.order.OrderGeneralResponse;
-import mobile.com.backend.dto.reponse.order.OrderItemGeneralResponse;
-import mobile.com.backend.dto.request.order.OrderCreateRequest;
-import mobile.com.backend.dto.request.order.OrderItemPatchRequest;
-import mobile.com.backend.dto.request.PageParamRequest;
+import mobile.com.backend.dto.order.response.OrderDetailResponse;
+import mobile.com.backend.dto.order.response.OrderGeneralResponse;
+import mobile.com.backend.dto.order.request.OrderCreateRequest;
+import mobile.com.backend.dto.PageParamRequest;
 import mobile.com.backend.entity.order.DeliveryAddress;
 import mobile.com.backend.entity.order.Order;
 import mobile.com.backend.entity.order.OrderItem;
-import mobile.com.backend.entity.product.Product;
 import mobile.com.backend.entity.User;
-import mobile.com.backend.mapper.response.entity.order.OrderDetailMapper;
-import mobile.com.backend.mapper.response.entity.order.OrderGeneralMapper;
-import mobile.com.backend.mapper.response.entity.order.OrderItemGeneralMapper;
+import mobile.com.backend.mapper.order.OrderDetailMapper;
+import mobile.com.backend.mapper.order.OrderGeneralMapper;
+import mobile.com.backend.mapper.order.OrderItemGeneralMapper;
 import mobile.com.backend.repository.order.DeliveryAddressRepository;
 import mobile.com.backend.repository.order.OrderItemRepository;
 import mobile.com.backend.repository.order.OrderRepository;
@@ -48,20 +45,14 @@ public class OrderService {
 
   private final OrderItemService orderItemService;
 
-  public Page<OrderGeneralResponse> getOrdersByUserId(UUID userId, OrderStatus lastStatus, PageParamRequest pageParamRequest) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public Page<OrderGeneralResponse> getOrdersByUserId(User user, OrderStatus lastStatus, PageParamRequest pageParamRequest) {
     Page<Order> orders = orderRepository.findAllByUserAndLastStatus(user, lastStatus,
         PageRequest.of(pageParamRequest.getPageNumber(), pageParamRequest.getPageSize()));
 
     return orders.map(orderGeneralMapper::toDto);
   }
 
-  public OrderDetailResponse getOrderDetailResponseByOrderId(UUID userId, UUID orderId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public OrderDetailResponse getOrderDetailResponseByOrderId(User user, UUID orderId) {
     Order order = orderRepository.findById(orderId)
         .orElseThrow(() -> new RuntimeException("Order not found"));
 
@@ -73,10 +64,7 @@ public class OrderService {
   }
 
   @Transactional
-  public OrderDetailResponse createOrderByUserId(UUID userId, OrderCreateRequest orderCreateRequest) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public OrderDetailResponse createOrderByUserId(User user, OrderCreateRequest orderCreateRequest) {
     DeliveryAddress deliveryAddress = deliveryAddressRepository.findById(orderCreateRequest.getDeliveryAddressId())
         .orElseThrow(() -> new RuntimeException("Delivery address not found"));
 
@@ -100,10 +88,7 @@ public class OrderService {
   }
 
   @Transactional
-  public void deleteOrderByUserId(UUID userId, UUID orderId) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public void deleteOrderByUserId(User user, UUID orderId) {
     Order order = orderRepository.findById(orderId)
         .orElseThrow(() -> new RuntimeException("Order not found"));
 

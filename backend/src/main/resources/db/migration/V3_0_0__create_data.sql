@@ -1,7 +1,5 @@
-INSERT INTO ecommerce.user (user_id, username, password, email, phone, address)
-VALUES ('475b88b6-8a71-11ee-b9d1-0242ac120002', 'admin', '$2a$1', 'dar@gmail.com', '0123456789', 'Hanoi, Vietnam'),
-       ('475b88b6-8a71-11ee-b9d1-0242ac120003', 'user', '$2a$1', 'darerr@gmail.com', '0123456789', 'Hanoi, Vietnam'),
-       ('475b88b6-8a71-11ee-b9d1-0242ac120004', 'user1', '$2a$1', 'darerr@gmail.com', '0123456789', 'Hanoi, Vietnam');
+INSERT INTO ecommerce.user (user_id, username, password, email, phone, address, role)
+VALUES ('475b88b6-8a71-11ee-b9d1-0242ac120002', 'thanhdat1', '$2a$10$lukDQJlh3EmwyERjKP7qjeDG2Et96kQYQAyT2oPEoMrLfv5apoXVS', 'dar@gmail.com', '0123456789', 'Hanoi, Vietnam', 'USER');
 
 INSERT INTO ecommerce.delivery_address (delivery_address_id, user_id, address, type)
 VALUES ('602a6afa-8b62-11ee-b9d1-0242ac120002', '475b88b6-8a71-11ee-b9d1-0242ac120002', 'Hanoi, Vietnam', 'HOME'),
@@ -89,7 +87,3 @@ VALUES
 INSERT INTO ecommerce.notification (notification_id, user_id, title, content, type, reference)
 VALUES
     ('a4f02214-8b63-11ee-b9d1-0242ac120002', '475b88b6-8a71-11ee-b9d1-0242ac120002', 'Thông báo 1', 'Nội dung thông báo 1', 'ORDER', '');
-
-
-INSERT INTO ecommerce.roles(role_id,name) VALUES(1,'ROLE_USER');
-INSERT INTO ecommerce.roles(role_id,name) VALUES(2,'ROLE_ADMIN');

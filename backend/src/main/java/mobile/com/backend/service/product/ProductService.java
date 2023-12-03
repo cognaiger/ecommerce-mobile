@@ -2,15 +2,14 @@ package mobile.com.backend.service.product;
 
 import lombok.RequiredArgsConstructor;
 import mobile.com.backend.document.ProductDocument;
-import mobile.com.backend.dto.reponse.product.ProductGeneralResponse;
-import mobile.com.backend.dto.request.PageParamRequest;
-import mobile.com.backend.mapper.response.entity.ProductDocumentMapper;
+import mobile.com.backend.dto.product.response.ProductGeneralResponse;
+import mobile.com.backend.dto.PageParamRequest;
+import mobile.com.backend.mapper.document.ProductDocumentMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.*;
-import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

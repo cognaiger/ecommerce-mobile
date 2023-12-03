@@ -22,10 +22,7 @@ public class OrderTransportationService {
   private final OrderTransportationRepository orderTransportationRepository;
 
   @Transactional
-  public void createOrderTransportationByUserId(UUID userId, UUID orderId, OrderStatus orderStatus) {
-    User user = userRepository.findById(userId)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-
+  public void createOrderTransportationByUserId(User user, UUID orderId, OrderStatus orderStatus) {
     Order order = orderRepository.findById(orderId)
         .orElseThrow(() -> new RuntimeException("Order not found"));
 
