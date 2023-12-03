@@ -100,9 +100,11 @@ const Register = ({ navigation }) => {
           />
         </View>
 
-        <View style={{ marginTop: 20 }}>
-          <BigButton title="Sign up" />
-        </View>
+        <Pressable
+          style={{ marginTop: 20 }}
+          onPress={handleSignUp}
+        >
+        </Pressable>
 
         <Pressable
           style={{ marginTop: 15 }}
@@ -117,7 +119,6 @@ const Register = ({ navigation }) => {
   );
 };
 
-export default Register;
 
 const styles = StyleSheet.create({
   container: {
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   condition: {
-    marginTop: 10,
+    marginTop: 50,
   },
 });
 
