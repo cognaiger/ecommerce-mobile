@@ -104,7 +104,7 @@ const Register = ({ navigation }) => {
           style={{ marginTop: 20 }}
           onPress={handleSignUp}
         >
-        <BigButton title="Sign up" />
+          <BigButton title="Sign up" />
         </Pressable>
 
         <Pressable
@@ -119,7 +119,6 @@ const Register = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

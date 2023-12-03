@@ -126,6 +126,7 @@ const Login = ({ navigation }) => {
 
 export default Login;
 
+// Add your existing styles here
 const styles = StyleSheet.create({
   container: {
     flex: 1,
