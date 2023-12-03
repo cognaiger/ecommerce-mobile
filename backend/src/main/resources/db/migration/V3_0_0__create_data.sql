@@ -58,9 +58,12 @@ VALUES
 INSERT INTO
     ecommerce.brand (brand_name, image_link)
 VALUES
-    ('ACER', 'xxx'),
-    ('ASUS', 'xxx'),
-    ('HP', 'xxx');
+    ('ACER', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Acer-logo.jpg/768px-Acer-logo.jpg'),
+    ('ASUS', 'https://inkythuatso.com/uploads/thumbnails/800/2021/11/logo-asus-inkythuatso-2-01-26-09-21-11.jpg'),
+    ('HP', 'https://i2.cdn.turner.com/money/dam/assets/160405075114-hp-logo-640x640.jpg'),
+    ('Dell','https://inkythuatso.com/uploads/images/2021/10/dell-logo-inkythuatso-4-01-30-10-17-55.jpg'),
+    ('MSI','https://devdiscourse.blob.core.windows.net/devnews/15_09_2020_11_27_22_2518697.jpg'),
+    ('Lenovo','https://thumbs.dreamstime.com/b/lenovo-logo-vector-format-available-illustrator-ai-149074793.jpg');
 
 INSERT INTO
     ecommerce.product (
