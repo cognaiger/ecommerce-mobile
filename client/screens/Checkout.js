@@ -11,18 +11,40 @@ import {
   TextInput,
   Linking,
 } from "react-native";
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback,useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import ProductCart from "../components/productCart";
 import BigButton from "../components/BigButton";
 import { Ionicons } from "@expo/vector-icons";
 const Checkout = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const handleUrlChange = (event) => {
+      if (
+        event.url === "https://sandbox.vnpayment.vn/tryitnow/Home/VnPayReturn"
+      ) {
+        navigation.navigate("PaymentSuccessfull");
+      }
+    };
+
+    // Add an event listener to handle URL changes
+    Linking.addEventListener("url", handleUrlChange);
+
+    return () => {
+      // Remove the event listener when the component unmounts
+      Linking.removeEventListener("url", handleUrlChange);
+    };
+  }, []);
+
   [paymentLink, setPaymentLink] = useState("");
   loadInBrowser = () => {
-    Linking.openURL(paymentLink).catch((err) =>
-      console.error("Couldn't load page", err)
-    );
+    Linking.openURL(paymentLink)
+      .then((data) => {
+        console.log("link is", data);
+      })
+      .catch((err) => console.error("Couldn't load page", err));
   };
   const generateRandomTxnRef = () => {
     // Generate a random number between 100000 and 999999 (inclusive)
@@ -62,7 +84,7 @@ const Checkout = () => {
   };
 
   const backButtonLink = "client/assets/Back.png";
-  const navigation = useNavigation();
+
   const [totalPrice, setTotalPrice] = useState(33000);
 
   const turnBack = () => {

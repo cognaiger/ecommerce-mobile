@@ -22,7 +22,9 @@ public class PayResources {
     @PostMapping("/pay")
     public String pay(@RequestBody PayModel payModel, HttpServletRequest request) {
         try {
-            return payService.payWithVNPAY(payModel, request);
+            String returnUrl = payService.payWithVNPAY(payModel, request);;
+            System.out.println();
+            return returnUrl;
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

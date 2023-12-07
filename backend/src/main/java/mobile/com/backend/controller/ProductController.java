@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.core.SearchPage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.algolia.search.SearchClient;
 import com.algolia.search.SearchIndex;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Validated
@@ -78,5 +80,11 @@ public class ProductController {
     productGeneralResponse.setQuantity(product.getQuantity());
     return productGeneralResponse;
 
+  }
+
+  @GetMapping("/{productId}")
+  public ResponseEntity<Product> productDetails(@PathVariable UUID productId) {
+    Product product = productService.findById(productId);
+    return ResponseEntity.ok(product);
   }
 }

@@ -1,66 +1,100 @@
-import { Modal, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
-import { AntDesign } from '@expo/vector-icons';
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
+import React, { useState, useRef } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { SearchBox } from "./SearchBox";
+import { useSearchBox } from "react-instantsearch-core";
+import { InfiniteHits } from "./InfiniteHits";
+import { useInfiniteHits } from "react-instantsearch-core";
 
+function Hit({ hit }) {
+  console.log("Show hit", hit._highlightResult.name.value);
+
+  const cleanedProductName = hit._highlightResult.name.value.replace(/<mark>(.*?)<\/mark>/g, '$1');
+  return <Text>{cleanedProductName}</Text>;
+}
 
 const SearchModal = ({ modalOpen, setModalOpen }) => {
-    const [text, setText] = useState('');
+  const { query, refine } = useSearchBox();
+  const [inputValue, setInputValue] = useState(query);
+  const inputRef = useRef(null);
 
-    const search = () => {
-        
-    }
+  function setQuery(newQuery) {
+    setInputValue(newQuery);
+    refine(newQuery);
+  }
 
-    return (
-        <Modal
-            animationType='fade'
-            transparent={true}
-            visible={modalOpen}
+  // Track when the InstantSearch query changes to synchronize it with
+  // the React state.
+  // We bypass the state update if the input is focused to avoid concurrent
+  // updates when typing.
+  if (query !== inputValue && !inputRef.current?.isFocused()) {
+    console.log(query);
+    setInputValue(query);
+  }
+
+  const { hits, isLastPage, showMore, hasMore } = useInfiniteHits();
+
+  const [text, setText] = useState("");
+
+  const search = () => {};
+
+  return (
+    <>
+      <Modal animationType="fade" transparent={true} visible={modalOpen}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+          }}
         >
-            <View style={{
+          <View style={styles.modalView}>
+            <SearchBox />
+            <View
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                alignItems: "center",
                 flex: 1,
-                alignItems: 'center',
-            }}>
-                <View style={styles.modalView}>
-                    <TextInput
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
-                        placeholder="Type something"
-                    />
-                    <View style={{
-                        flexDirection: 'row',
-                        gap: 10,
-                        alignItems: 'center'
-                    }}>
-                        <Pressable onPress={search}>
-                            <AntDesign name="search1" size={18} color="black" />
-                        </Pressable>
-                        <Pressable onPress={() => setModalOpen(!modalOpen)}>
-                            <AntDesign name="closecircleo" size={16} color="black" />
-                        </Pressable>
-                    </View>
-                </View>
+              }}
+            >
+              <Pressable onPress={() => setModalOpen(!modalOpen)}>
+                <AntDesign name="closecircleo" size={20} color="black" />
+              </Pressable>
             </View>
+          </View>
 
-        </Modal>
-    )
-}
+          <InfiniteHits hitComponent={Hit} />
+        </View>
+      </Modal>
+    </>
+  );
+};
 
 export default SearchModal;
 
 const styles = StyleSheet.create({
-    modalView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 70,
-        width: 330,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 20,
-        shadowColor: '#000',
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-        gap: 10
-    }
-})
+  modalView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 70,
+    width: 330,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    gap: 10,
+  },
+});

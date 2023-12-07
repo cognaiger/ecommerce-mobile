@@ -6,8 +6,9 @@ import {
   Pressable,
   Image,
   Alert,
+  TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BottomNavigator from "../components/BottomNavigator";
 import { AntDesign } from "@expo/vector-icons";
@@ -19,6 +20,7 @@ import SearchModal from "../components/SearchModal";
 import AuthService from "../services/auth.service";
 import BottomAdminNavigator from "../components/BottomAdminNavigator";
 import AdminDashboard from "../components/AdminDashboard";
+import { SearchBox } from "../components/SearchBox";
 
 const getUserAndLogRole = () => {
   AuthService.getCurrentUser().then((res) => {
@@ -59,99 +61,71 @@ const Home = () => {
   const category1 = [
     {
       name: "Laptop",
-      image:
+      imageLink:
         "https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn//News/1499078//laptop-15-800x450-1.jpg",
     },
     {
       name: "RAM",
-      image:
+      imageLink:
         "https://cdn.tgdd.vn/Files/2022/08/26/1460125/tim-hieu-ram-tren-macbook-1-280223-230623.jpg",
     },
     {
       name: "Storage",
-      image:
+      imageLink:
         "https://lagihitech.vn/wp-content/uploads/2023/10/o-cung-di-dong-SSD-Kingston-XS1000-1TB-SXS10001000G-USB-Type-C-3.2-Gen-2-hinh-1.jpg",
     },
     {
       name: "Apple",
-      image: "https://hc.com.vn/i/ecommerce/media/GS.007147_FEATURE_74803.jpg",
+      imageLink:
+        "https://hc.com.vn/i/ecommerce/media/GS.007147_FEATURE_74803.jpg",
     },
   ];
 
   const category2 = [
     {
       name: "Screen",
-      image:
+      imageLink:
         "https://bizweb.dktcdn.net/thumb/grande/100/490/762/products/4-rrb2211-jpg-v-1675215444673.jpg?v=1693846793583",
     },
     {
       name: "Mouse",
-      image:
+      imageLink:
         "https://i.rtings.com/assets/products/1htouLNw/amazonbasics-3-button-usb-wired-mouse/design-medium.jpg",
     },
     {
       name: "Headphone",
-      image:
+      imageLink:
         "https://media-ik.croma.com/prod/https://media.croma.com/image/upload/v1674045768/Croma%20Assets/Communication/Headphones%20and%20Earphones/Images/239032_0_ogo1io.png?tr=w-600",
     },
     {
       name: "Other",
-      image:
+      imageLink:
         "https://img.freepik.com/premium-vector/pc-components-cpu-gpu-motherboard-cooler-ssd-hand-drawn-memory-modules-system-unit-power-supply-vector-personal-computer-parts-isolated-set_102902-6145.jpg",
     },
   ];
 
-  const saleItems = [
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      salePrice: 2000,
-    },
-  ];
+  [saleItems, setSaleItems] = useState([]);
+  [recommendationProducts, setRecommendationProducts] = useState([]);
+  // [category1, setCategory1] = useState([]);
+  // [category2, setCategory2] = useState([]);
+
+  useEffect(() => {
+    // Fetch product data from the API
+    fetch("http://192.168.1.211:8080/ecommerce/api/v1/products")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Parse the JSON response
+      })
+      .then((data) => {
+        setSaleItems(data);
+        // setCategory1(data);
+        // setCategory2(data);
+        console.log(data); // Now you can access the JSON data
+      })
+      .catch((error) => console.error("Error fetching product data: ", error));
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -229,7 +203,7 @@ const Home = () => {
                         height: 40,
                         borderRadius: 20,
                       }}
-                      source={{ uri: cate.image }}
+                      source={{ uri: cate.imageLink }}
                     />
                     <Text>{cate.name}</Text>
                   </Pressable>
@@ -254,7 +228,7 @@ const Home = () => {
                         height: 40,
                         borderRadius: 20,
                       }}
-                      source={{ uri: cate.image }}
+                      source={{ uri: cate.imageLink }}
                     />
                     <Text>{cate.name}</Text>
                   </Pressable>
@@ -287,13 +261,25 @@ const Home = () => {
                 {saleItems.map((item, i) => (
                   <ProductSale
                     name={item.name}
-                    image={item.image}
+                    image={item.imageLink}
+                    price={item.price}
+                    salePrice={item.salePrice}
+                    productId={item.productId}
+                  />
+                ))}
+              </ScrollView>
+
+              {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {saleItems.map((item, i) => (
+                  <ProductSale
+                    name={item.name}
+                    image={item.imageLink}
                     price={item.price}
                     salePrice={item.salePrice}
                     key={i}
                   />
                 ))}
-              </ScrollView>
+              </ScrollView> */}
             </View>
 
             <View style={styles.recommendation}>
@@ -311,11 +297,10 @@ const Home = () => {
                 {saleItems.map((item, i) => (
                   <ProductSale
                     name={item.name}
-                    image={item.image}
+                    image={item.imageLink}
                     price={item.price}
                     salePrice={item.salePrice}
-                    key={i}
-                    color="white"
+                    productId={item.productId}
                   />
                 ))}
               </ScrollView>

@@ -23,7 +23,8 @@ public class PayService {
 
         cld.add(Calendar.MINUTE,15);
         String vnp_ExpireDate = formatter.format(cld.getTime());
-
+        Long amount = new Long(300000000);
+        payModel.setVnp_Ammount(amount);
         Map<String,String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version",VnPayConstant.vnp_Version);
         vnp_Params.put("vnp_Command",VnPayConstant.vnp_Command);
@@ -36,7 +37,7 @@ public class PayService {
         vnp_Params.put("vnp_Locale",VnPayConstant.vnp_Locale);
         vnp_Params.put("vnp_OrderInfo",payModel.vnp_OrderInfo);
         vnp_Params.put("vnp_OrderType",payModel.vnp_OrderType);
-        vnp_Params.put("vnp_ReturnUrl", VnPayConstant.vnp_ReturnUrl);
+        vnp_Params.put("vnp_ReturnUrl", "https://sandbox.vnpayment.vn/tryitnow/Home/VnPayReturn");
         vnp_Params.put("vnp_TxnRef", String.valueOf(payModel.vnp_TxnRef));
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,18 +11,29 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 
-const ProductDetailsScreen = () => {
+const ProductDetailsScreen = ({ route, navigation }) => {
+  const { productId } = route.params;
+  console.log("id: ", route.params);
   const productImgLink = "client/assets/ideapad.jpg";
   const backButtonLink = "client/assets/Back.png";
   const wishlistButtonLink = "client/assets/wishlist.png";
   const wishlistAddedButtonLink = "client/assets/wishlist_added.png";
   const starReviewIconLink = "client/assets/review_star.png";
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
+  const [product, setProduct] = useState(null);
   const [productUnit, setProductUnit] = useState(1);
-
   const [clickWishlist, setClickWishlist] = useState(false);
 
+  useEffect(() => {
+    // Fetch product details from the API based on productId
+    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/products/${productId}`)
+      .then((response) => response.json())
+      .then((data) => setProduct(data))
+      .catch((error) =>
+        console.error("Error fetching product details:", error)
+      );
+  }, [productId]);
   const handleBackButtonPress = () => {
     navigation.goBack();
   };
@@ -51,7 +62,7 @@ const ProductDetailsScreen = () => {
           onPress={handleBackButtonPress}
         >
           {/* Render your back button icon/image here */}
-          <Image source={require(backButtonLink)}></Image>
+          <Image source={require(backButtonLink)} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.wishlistButton}
@@ -59,86 +70,71 @@ const ProductDetailsScreen = () => {
         >
           {/* Render your wishlist button icon/image here */}
           {clickWishlist === false ? (
-            <Image source={require(wishlistButtonLink)}></Image>
+            <Image source={require(wishlistButtonLink)} />
           ) : (
-            <Image source={require(wishlistAddedButtonLink)}></Image>
+            <Image source={require(wishlistAddedButtonLink)} />
           )}
         </TouchableOpacity>
-        <Image source={require(productImgLink)} style={styles.image} />
-
-        <Text style={styles.title}>Laptop</Text>
-        <Text style={styles.subtitle}>
-          Laptop Lenovo Ideapad Gaming 3 15IAH7 82S9006YVN
-        </Text>
-
-        <View style={styles.priceContainer}>
-          <Text style={styles.price}>$1200</Text>
-          <View style={styles.quantityContainer}>
-            <TouchableOpacity onPress={handleDecreaseQuantity}>
-              <Text style={styles.quantityButton}>-</Text>
-            </TouchableOpacity>
-            <Text style={styles.quantityValue}>{productUnit}</Text>
-            <TouchableOpacity onPress={handleIncreaseQuantity}>
-              <Text style={styles.quantityButton}>+</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.reviewContainer}>
-          <Image source={require(starReviewIconLink)} style={styles.starIcon} />
-          <Text style={styles.reviewText}>4.5</Text>
-          <Text style={styles.reviewCount}>(50 reviews)</Text>
-        </View>
-        <View style={styles.table}>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>Brand</Text>
-            <Text style={styles.tableValue}>Lenovo</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>Screen Size</Text>
-            <Text style={styles.tableValue}>16 Inches</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>Hard Disk Size</Text>
-            <Text style={styles.tableValue}>1024 GB</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>CPU Model</Text>
-            <Text style={styles.tableValue}>Core i7 Family</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>Operating System</Text>
-            <Text style={styles.tableValue}>Windows 11 Home</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>Special Feature</Text>
-            <Text style={styles.tableValue}>Backlit Keyboard</Text>
-          </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.tableLabel}>Graphics Card Description</Text>
-            <Text style={styles.tableValue}>Dedicated</Text>
-          </View>
-        </View>
-        <Text style={styles.description}>
-          About this item
-          {"\n\n"}
-          Fueled by the revolutionary AMD Ryzen 5000 H-Series mobile processor,
-          this IdeaPad gaming laptop delivers the wins. With 6 ultra-responsive
-          cores, it's the new standard for gaming performance in innovative, thin,
-          and light laptops.
-          {"\n\n"}
-          15.6" FHD (1920 x 1080) IPS display with NVIDIA GeForce GTX 1650 GPU to
-          supercharge your favorite games. Slingshot your gaming visuals with
-          120Hz refresh rate for tear-free gaming.
-          {"\n\n"}
-          8GB 3200 MHz DDR4 RAM memory and 256GB M.2 PCIe SSD storage.
-          {"\n\n"}
-          Connectivity: RJ45 Ethernet, 2x2 WiFi 802.11 ax, Bluetooth 5.0; 720p HD
-          webcam and microphone array with privacy shutter; HDMI, USB-C.
-          {"\n\n"}2 x 2W speakers with Nahimic Audio for Gamers; spacious gaming
-          keyboard with white backlight.
-        </Text>
-
+        {product ? (
+          <>
+            <Image source={{ uri: product.imageLink }} style={styles.image} />
+            <Text style={styles.title}>{product.name}</Text>
+            <Text style={styles.subtitle}>{product.description}</Text>
+            <View style={styles.priceContainer}>
+              <Text style={styles.price}>${product.price}</Text>
+              <View style={styles.quantityContainer}>
+                <TouchableOpacity onPress={handleDecreaseQuantity}>
+                  <Text style={styles.quantityButton}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.quantityValue}>{productUnit}</Text>
+                <TouchableOpacity onPress={handleIncreaseQuantity}>
+                  <Text style={styles.quantityButton}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.reviewContainer}>
+              <Image
+                source={require(starReviewIconLink)}
+                style={styles.starIcon}
+              />
+              <Text style={styles.reviewText}>4.5</Text>
+              <Text style={styles.reviewCount}>(50 reviews)</Text>
+            </View>
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>Brand</Text>
+                <Text style={styles.tableValue}>{product.brand.brandName}</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>Screen Size</Text>
+                <Text style={styles.tableValue}>16 Inches</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>Hard Disk Size</Text>
+                <Text style={styles.tableValue}>{product.quantity} GB</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>CPU Model</Text>
+                <Text style={styles.tableValue}>Core i7 Family</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>Operating System</Text>
+                <Text style={styles.tableValue}>Windows 11 Home</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>Special Feature</Text>
+                <Text style={styles.tableValue}>Backlit Keyboard</Text>
+              </View>
+              <View style={styles.tableRow}>
+                <Text style={styles.tableLabel}>Graphics Card Description</Text>
+                <Text style={styles.tableValue}>Dedicated</Text>
+              </View>
+            </View>
+            <Text style={styles.description}>{product.description}</Text>
+          </>
+        ) : (
+          <Text>Loading...</Text>
+        )}
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={[styles.button, styles.addToCartButton]}>
             <Text style={styles.buttonTextAddToCart}>Add to Cart</Text>
@@ -147,7 +143,6 @@ const ProductDetailsScreen = () => {
             <Text style={styles.buttonTextBuyNow}>Buy Now</Text>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );
