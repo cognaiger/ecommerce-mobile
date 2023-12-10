@@ -14,6 +14,7 @@ import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
 import { CheckBox } from "@rneui/themed";
 import axios from "axios";
+import { IP } from "../const";
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -24,14 +25,19 @@ const Register = ({ navigation }) => {
   const handleSignUp = async () => {
     if (checked) {
       try {
-        const response = await axios.post("http://192.168.1.211:8080/ecommerce/api/auth/signup", {
+        const response = await axios.post(`http://${IP}:8080/ecommerce/api/auth/signup`, {
           username,
           email,
           password,
           role: ["user"],
         });
-        Alert.alert("Success", "Account created successfully!");
-        navigation.navigate("Login");
+        if (response.status === 200) {
+          Alert.alert("Success", "Account created successfully!");
+          navigation.navigate("Login");
+        } else {
+          Alert.alert("Failure", "Can't create account!");
+        }
+
       } catch (error) {
         const errorMessage =
           error.response?.data?.message || error.message || "An error occurred during sign up";

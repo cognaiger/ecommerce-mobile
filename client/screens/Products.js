@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import LaptopCard from "../components/LaptopCard";
 import BottomAdminNavigator from "../components/BottomAdminNavigator";
+import { IP } from "../const";
 const Products = () => {
   const [laptops, setLaptops] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,7 +33,7 @@ const Products = () => {
   });
   useEffect(() => {
     // Fetch product data from the API
-    fetch("http://192.168.1.211:8080/ecommerce/api/v1/products")
+    fetch(`http://${IP}:8080/ecommerce/api/v1/products`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

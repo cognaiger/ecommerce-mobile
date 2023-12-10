@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import mobile.com.backend.dto.reponse.order.OrderItemGeneralResponse;
-import mobile.com.backend.dto.reponse.product.ProductGeneralResponse;
 import mobile.com.backend.entity.order.OrderItem;
-import mobile.com.backend.entity.product.Product;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-07T10:13:35+0700",
-    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.36.0.v20231030-1524, environment: Java 17.0.9 (Eclipse Adoptium)"
+    date = "2023-12-10T23:23:43+0700",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
 )
 @Component
 public class OrderItemGeneralMapperImpl implements OrderItemGeneralMapper {
@@ -23,13 +21,9 @@ public class OrderItemGeneralMapperImpl implements OrderItemGeneralMapper {
             return null;
         }
 
-        OrderItemGeneralResponse.OrderItemGeneralResponseBuilder<?, ?> orderItemGeneralResponse = OrderItemGeneralResponse.builder();
+        OrderItemGeneralResponse orderItemGeneralResponse = new OrderItemGeneralResponse();
 
-        orderItemGeneralResponse.orderItemId( entity.getOrderItemId() );
-        orderItemGeneralResponse.product( productToProductGeneralResponse( entity.getProduct() ) );
-        orderItemGeneralResponse.quantity( entity.getQuantity() );
-
-        return orderItemGeneralResponse.build();
+        return orderItemGeneralResponse;
     }
 
     @Override
@@ -52,13 +46,9 @@ public class OrderItemGeneralMapperImpl implements OrderItemGeneralMapper {
             return null;
         }
 
-        OrderItem.OrderItemBuilder orderItem = OrderItem.builder();
+        OrderItem orderItem = new OrderItem();
 
-        orderItem.orderItemId( dto.getOrderItemId() );
-        orderItem.product( productGeneralResponseToProduct( dto.getProduct() ) );
-        orderItem.quantity( dto.getQuantity() );
-
-        return orderItem.build();
+        return orderItem;
     }
 
     @Override
@@ -73,39 +63,5 @@ public class OrderItemGeneralMapperImpl implements OrderItemGeneralMapper {
         }
 
         return list;
-    }
-
-    protected ProductGeneralResponse productToProductGeneralResponse(Product product) {
-        if ( product == null ) {
-            return null;
-        }
-
-        ProductGeneralResponse.ProductGeneralResponseBuilder<?, ?> productGeneralResponse = ProductGeneralResponse.builder();
-
-        productGeneralResponse.description( product.getDescription() );
-        productGeneralResponse.imageLink( product.getImageLink() );
-        productGeneralResponse.name( product.getName() );
-        productGeneralResponse.price( product.getPrice() );
-        productGeneralResponse.productId( product.getProductId() );
-        productGeneralResponse.quantity( product.getQuantity() );
-
-        return productGeneralResponse.build();
-    }
-
-    protected Product productGeneralResponseToProduct(ProductGeneralResponse productGeneralResponse) {
-        if ( productGeneralResponse == null ) {
-            return null;
-        }
-
-        Product.ProductBuilder product = Product.builder();
-
-        product.description( productGeneralResponse.getDescription() );
-        product.imageLink( productGeneralResponse.getImageLink() );
-        product.name( productGeneralResponse.getName() );
-        product.price( productGeneralResponse.getPrice() );
-        product.productId( productGeneralResponse.getProductId() );
-        product.quantity( productGeneralResponse.getQuantity() );
-
-        return product.build();
     }
 }

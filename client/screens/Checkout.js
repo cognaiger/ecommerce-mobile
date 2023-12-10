@@ -6,17 +6,17 @@ import {
   Text,
   TouchableOpacity,
   View,
-  PanResponder,
   Modal,
   TextInput,
   Linking,
+  Alert,
 } from "react-native";
-import React, { useState, useRef, useCallback,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-import ProductCart from "../components/productCart";
-import BigButton from "../components/BigButton";
 import { Ionicons } from "@expo/vector-icons";
+import { IP } from "../const";
+
 const Checkout = () => {
   const navigation = useNavigation();
 
@@ -67,13 +67,18 @@ const Checkout = () => {
 
       // Make a POST request to your backend
       const response = await axios.post(
-        "http://192.168.1.211:8080/ecommerce/api/vnpay/pay",
+        `http://${IP}:8080/ecommerce/api/vnpay/pay`,
         paymentData
       );
 
-      // Handle the response from the server (e.g., redirect to a payment gateway)
-      console.log(typeof response.data);
-      setPaymentLink(response.data);
+      if (response.status === 200) {
+        // Handle the response from the server (e.g., redirect to a payment gateway)
+        console.log(typeof response.data);
+        setPaymentLink(response.data);
+      } else {
+        Alert.alert('Failure', 'Payment fail');
+      }
+
 
       // Handle the payment process as per your backend's logic
     } catch (error) {
@@ -262,7 +267,7 @@ const Checkout = () => {
                   style={[
                     styles.paymentIcon,
                     selectedPaymentMethod === method.name &&
-                      styles.selectedPaymentIcon,
+                    styles.selectedPaymentIcon,
                   ]}
                   resizeMode="contain"
                 />

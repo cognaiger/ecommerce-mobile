@@ -7,9 +7,8 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { IP } from "../const";
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { productId } = route.params;
@@ -27,7 +26,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     // Fetch product details from the API based on productId
-    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/products/${productId}`)
+    fetch(`http://${IP}:8080/ecommerce/api/v1/products/${productId}`)
       .then((response) => response.json())
       .then((data) => setProduct(data))
       .catch((error) =>

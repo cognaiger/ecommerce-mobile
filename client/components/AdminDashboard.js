@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import StatisticCard from "./StatisticCard";
+import { IP } from "../const";
 
 const AdminDashboard = () => {
   const [productCount, setProductCount] = useState(0);
@@ -9,7 +10,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     // Fetch product count
-    fetch("http://192.168.1.211:8080/ecommerce/api/v1/stats/product-count")
+    fetch(`http://${IP}:8080/ecommerce/api/v1/stats/product-count`)
       .then((response) => response.json())
       .then((data) => {
         setProductCount(data.count);
@@ -18,7 +19,7 @@ const AdminDashboard = () => {
       .catch((error) => console.error("Error fetching product count: ", error));
 
     // Fetch user count
-    fetch("http://192.168.1.211:8080/ecommerce/api/v1/stats/user-count")
+    fetch(`http://${IP}:8080/ecommerce/api/v1/stats/user-count`)
       .then((response) => response.json())
       .then((data) => {
         setUserCount(data.count);
@@ -28,7 +29,7 @@ const AdminDashboard = () => {
 
     // Fetch completed order count
     fetch(
-      "http://192.168.1.211:8080/ecommerce/api/v1/stats/completed-order-count"
+      `http://${IP}:8080/ecommerce/api/v1/stats/completed-order-count`
     )
       .then((response) => response.json())
       .then((data) => {

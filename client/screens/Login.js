@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -14,7 +14,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Color } from "../GlobalStyles";
 import BigButton from "../components/BigButton";
 import { CheckBox } from "@rneui/themed";
-import axios from "axios";
 import AuthService from "../services/auth.service";
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -29,14 +28,11 @@ const Login = ({ navigation }) => {
 
     try {
       const response = await AuthService.login(username, password);
-      setLoading(false);
-      Alert.alert("Success", "Logged in successfully");
-
-      // Log the current user data
-      // console.log("Current User:", response);
-
-      navigation.navigate("Home");
-      // You might want to add more logic here for handling successful login
+      if (response.status === 200) {
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Failure", "Logged in fail");
+      }
     } catch (error) {
       setLoading(false);
       const errorMessage =

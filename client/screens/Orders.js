@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, StyleSheet } from "react-native";
 import OrderCard from "../components/OrderCard";
 import BottomAdminNavigator from "../components/BottomAdminNavigator";
+import { IP } from "../const";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -9,7 +10,7 @@ const Orders = () => {
 
   useEffect(() => {
     // Fetch product data from the API
-    fetch("http://192.168.1.211:8080/ecommerce/api/v1/orders")
+    fetch(`http://${IP}:8080/ecommerce/api/v1/orders`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

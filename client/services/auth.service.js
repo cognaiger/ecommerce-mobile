@@ -1,7 +1,8 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IP } from "../const";
 
-const API_URL = "http://192.168.1.211:8080/ecommerce/api/auth/";
+const API_URL = `http://${IP}:8080/ecommerce/api/auth/`;
 
 const storeUserData = async (user) => {
   try {
@@ -48,7 +49,7 @@ const login = (username, password) => {
       if (response.data.username) {
         storeUserData(response.data);
       }
-      return response.data;
+      return response;
     });
 };
 

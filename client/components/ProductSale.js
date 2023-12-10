@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   Image,
   Pressable,
@@ -15,9 +14,7 @@ const ProductSale = (props) => {
     return (
       <Pressable
         onPress={() => {
-          console.log("Press button");
-          console.log(props.productId);
-          navigation.navigate("ProductDetailsScreen", {
+          navigation.navigate("ProductDetail", {
             productId: props.productId,
           });
         }}
@@ -41,7 +38,9 @@ const ProductSale = (props) => {
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("ProductDetail")}
+      onPress={() => navigation.navigate("ProductDetail", {
+        productId: props.productId,
+      })}
       style={styles.productCard}
     >
       <Image source={{ uri: props.image }} style={styles.productImage} />

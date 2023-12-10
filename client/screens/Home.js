@@ -5,8 +5,6 @@ import {
   ScrollView,
   Pressable,
   Image,
-  Alert,
-  TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,7 +18,7 @@ import SearchModal from "../components/SearchModal";
 import AuthService from "../services/auth.service";
 import BottomAdminNavigator from "../components/BottomAdminNavigator";
 import AdminDashboard from "../components/AdminDashboard";
-import { SearchBox } from "../components/SearchBox";
+import { IP } from "../const";
 
 const getUserAndLogRole = () => {
   AuthService.getCurrentUser().then((res) => {
@@ -111,7 +109,7 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch product data from the API
-    fetch("http://192.168.1.211:8080/ecommerce/api/v1/products")
+    fetch(`http://${IP}:8080/ecommerce/api/v1/products`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -265,6 +263,7 @@ const Home = () => {
                     price={item.price}
                     salePrice={item.salePrice}
                     productId={item.productId}
+                    key={i}
                   />
                 ))}
               </ScrollView>

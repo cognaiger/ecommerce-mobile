@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-07T10:13:35+0700",
-    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.36.0.v20231030-1524, environment: Java 17.0.9 (Eclipse Adoptium)"
+    date = "2023-12-10T23:23:43+0700",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
 )
 @Component
 public class ProductGeneralMapperImpl implements ProductGeneralMapper {
@@ -21,16 +21,9 @@ public class ProductGeneralMapperImpl implements ProductGeneralMapper {
             return null;
         }
 
-        ProductGeneralResponse.ProductGeneralResponseBuilder<?, ?> productGeneralResponse = ProductGeneralResponse.builder();
+        ProductGeneralResponse productGeneralResponse = new ProductGeneralResponse();
 
-        productGeneralResponse.description( entity.getDescription() );
-        productGeneralResponse.imageLink( entity.getImageLink() );
-        productGeneralResponse.name( entity.getName() );
-        productGeneralResponse.price( entity.getPrice() );
-        productGeneralResponse.productId( entity.getProductId() );
-        productGeneralResponse.quantity( entity.getQuantity() );
-
-        return productGeneralResponse.build();
+        return productGeneralResponse;
     }
 
     @Override
@@ -53,16 +46,9 @@ public class ProductGeneralMapperImpl implements ProductGeneralMapper {
             return null;
         }
 
-        Product.ProductBuilder product = Product.builder();
+        Product product = new Product();
 
-        product.description( dto.getDescription() );
-        product.imageLink( dto.getImageLink() );
-        product.name( dto.getName() );
-        product.price( dto.getPrice() );
-        product.productId( dto.getProductId() );
-        product.quantity( dto.getQuantity() );
-
-        return product.build();
+        return product;
     }
 
     @Override

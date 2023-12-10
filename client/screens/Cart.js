@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import ProductCart from "../components/productCart";
-import BigButton from "../components/BigButton";
 
 const Cart = () => {
   const backButtonLink = "client/assets/Back.png";
