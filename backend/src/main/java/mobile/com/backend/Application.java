@@ -15,7 +15,6 @@ import mobile.com.backend.controller.AlgoliaProductService;
 @SpringBootApplication
 @EnableWebSecurity
 @EnableElasticsearchRepositories
-
 public class Application {
 
     public static void main(String[] args) {
