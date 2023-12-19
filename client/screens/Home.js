@@ -5,6 +5,9 @@ import {
   ScrollView,
   Pressable,
   Image,
+  TextInput,
+  Button,
+  Modal,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,7 +22,7 @@ import AuthService from "../services/auth.service";
 import BottomAdminNavigator from "../components/BottomAdminNavigator";
 import AdminDashboard from "../components/AdminDashboard";
 import { IP } from "../const";
-
+import ChatArea from "../components/ChatArea";
 const getUserAndLogRole = () => {
   AuthService.getCurrentUser().then((res) => {
     console.log(res);
@@ -34,6 +37,11 @@ const getUserAndLogRole = () => {
 };
 
 const Home = () => {
+  const [isChatModalVisible, setChatModalVisible] = useState(false);
+
+  const toggleChatModal = () => {
+    setChatModalVisible(!isChatModalVisible);
+  };
   let currentUser;
   [currentRole, setCurrentRole] = useState("");
   AuthService.getCurrentUser()
@@ -165,6 +173,7 @@ const Home = () => {
                   color="black"
                 />
               </Pressable>
+              <Button title="Open Chat" onPress={toggleChatModal} />
               <Pressable onPress={() => navigation.navigate("Cart")}>
                 <Ionicons name="cart-outline" size={24} color="black" />
               </Pressable>
@@ -304,8 +313,47 @@ const Home = () => {
                 ))}
               </ScrollView>
             </View>
+            
           </ScrollView>
+          <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isChatModalVisible}
+        onRequestClose={() => {
+          setChatModalVisible(!isChatModalVisible);
+        }}
+      >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <View
+            style={{
+              width: 300,
+              backgroundColor: 'lightblue',
+              borderRadius: 10,
+              padding: 10,
+              maxHeight: 600,
+            }}
+          >
+            <ScrollView>
+              {/* ChatArea component */}
+              <ChatArea />
 
+              {/* Close button */}
+              <Pressable
+                style={{
+                  marginTop: 10,
+                  padding: 8,
+                  backgroundColor: 'teal',
+                  borderRadius: 5,
+                  alignItems: 'center',
+                }}
+                onPress={toggleChatModal}
+              >
+                <Text style={{ color: 'white' }}>Close Chat</Text>
+              </Pressable>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
           <NotificationModal modalOpen={notiOpen} setModalOpen={setNotiOpen} />
           <SearchModal modalOpen={searchOpen} setModalOpen={setSearchOpen} />
           <BottomNavigator />

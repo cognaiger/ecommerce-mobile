@@ -14,12 +14,23 @@ import { SearchBox } from "./SearchBox";
 import { useSearchBox } from "react-instantsearch-core";
 import { InfiniteHits } from "./InfiniteHits";
 import { useInfiniteHits } from "react-instantsearch-core";
-
-function Hit({ hit }) {
+import AlgoliaComponent from "./AlgoliaComponent";
+function Hit({ hit, closeModal }) {
   console.log("Show hit", hit._highlightResult.name.value);
+  console.log("Show hit", hit.objectID);
 
-  const cleanedProductName = hit._highlightResult.name.value.replace(/<mark>(.*?)<\/mark>/g, '$1');
-  return <Text>{cleanedProductName}</Text>;
+  const cleanedProductName = hit._highlightResult.name.value.replace(
+    /<mark>(.*?)<\/mark>/g,
+    "$1"
+  );
+
+  return (
+    <AlgoliaComponent
+      cleanedProductName={cleanedProductName}
+      productID={hit.objectID}
+      onPress={closeModal} // Pass the callback to close the modal
+    />
+  );
 }
 
 const SearchModal = ({ modalOpen, setModalOpen }) => {
@@ -72,7 +83,11 @@ const SearchModal = ({ modalOpen, setModalOpen }) => {
             </View>
           </View>
 
-          <InfiniteHits hitComponent={Hit} />
+          <InfiniteHits
+            hitComponent={(hit) => (
+              <Hit {...hit} closeModal={() => setModalOpen(false)} />
+            )}
+          />
         </View>
       </Modal>
     </>

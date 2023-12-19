@@ -16,6 +16,8 @@ import java.util.UUID;
 @Setter
 public class LaptopGeneralResponse {
 
+  private String name = "";
+
   private UUID productId;
 
   private String screenSize;
@@ -34,4 +36,7 @@ public class LaptopGeneralResponse {
 
   private LocalDateTime updatedAt;
 
+  private String imageLink = "";
+
+  private String price;
 }

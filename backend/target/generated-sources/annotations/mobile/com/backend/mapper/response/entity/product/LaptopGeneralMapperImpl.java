@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-12-10T23:23:43+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
+    date = "2023-12-20T00:11:34+0700",
+    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 17.0.9 (Red Hat, Inc.)"
 )
 @Component
 public class LaptopGeneralMapperImpl implements LaptopGeneralMapper {

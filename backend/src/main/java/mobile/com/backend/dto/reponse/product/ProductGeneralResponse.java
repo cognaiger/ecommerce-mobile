@@ -29,7 +29,7 @@ public class ProductGeneralResponse implements Serializable {
 
   private String description;
 
-  private BigDecimal price;
+  private String price;
 
   private Integer quantity;
 }

@@ -20,12 +20,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
 @RequiredArgsConstructor
 public class LaptopService {
+
+
 
   private final LaptopSpecificationService laptopSpecificationService;
   private final ProductSpecificationService productSpecificationService;
@@ -54,6 +58,25 @@ public class LaptopService {
 
     Page<Product> productPage = productRepository.findAll(productSpecification, pageable);
     return productPage.map(productGeneralMapper::toDto);
+  }
+
+  public List<Laptop> getAll() {
+    return laptopRepository.findAll();
+  }
+
+  public String getLaptopName(UUID productId) {
+    Product product = productRepository.findByProductId(productId);
+    return product.getName();
+  }
+
+   public String getLaptopImageLink(UUID productId) {
+    Product product = productRepository.findByProductId(productId);
+    return product.getImageLink();
+  }
+
+  public String getLaptopPrice(UUID productId) {
+    Product product = productRepository.findByProductId(productId);
+    return product.getPrice();
   }
 
 }

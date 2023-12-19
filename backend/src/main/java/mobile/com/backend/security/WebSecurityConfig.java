@@ -66,7 +66,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
-    http.csrf(csrf -> csrf.disable())
+    http.csrf(csrf -> csrf.disable()).cors(cors -> cors.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth.requestMatchers(mvc.pattern("/v3/api-docs/**")).permitAll()
@@ -83,6 +83,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .requestMatchers(mvc.pattern("/api/v1/products/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/orders")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/algolia")).permitAll()
+            .requestMatchers(mvc.pattern("/api/v1/products/laptops")).permitAll()
             .anyRequest().authenticated());
 
     http.authenticationProvider(authenticationProvider());

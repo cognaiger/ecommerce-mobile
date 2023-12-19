@@ -1,4 +1,7 @@
 import "react-native-gesture-handler";
+import { registerRootComponent } from "expo";
+import React from "react";
+import { View } from "react-native";
 import Opening from "./screens/Opening";
 import Register from "./screens/Register";
 import Login from "./screens/Login";
@@ -24,6 +27,7 @@ import Products from "./screens/Products";
 import Orders from "./screens/Orders";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch } from "react-instantsearch-core";
+import LaptopList from "./screens/LaptopList";
 
 const algoliaClient = algoliasearch(
   "WJRZ2HS9X2",
@@ -69,7 +73,7 @@ export default function App() {
   return (
     <InstantSearch searchClient={searchClient} indexName="laptopIndex">
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Register">
+        <Stack.Navigator initialRouteName="Login">
           <Stack.Screen
             name="Opening"
             component={Opening}
@@ -92,7 +96,7 @@ export default function App() {
           />
           <Stack.Screen
             name="ProductList"
-            component={ProductListScreen}
+            component={LaptopList}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -159,3 +163,4 @@ export default function App() {
     </InstantSearch>
   );
 }
+registerRootComponent(App);

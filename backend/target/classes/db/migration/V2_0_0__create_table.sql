@@ -41,16 +41,16 @@ CREATE TABLE ecommerce.brand(
 
 CREATE TABLE ecommerce.product(
     product_id UUID NOT NULL DEFAULT uuid_generate_v1(),
-    brand_name VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    image_link VARCHAR(255) NOT NULL,
+    brand_name TEXT NOT NULL,
+    name TEXT NOT NULL,
+    image_link TEXT ,
     description TEXT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    price_discount DECIMAL(10, 2) NOT NULL,
+    price TEXT NOT NULL,
+    price_discount TEXT NOT NULL,
     quantity INT NOT NULL CHECK ( quantity >= 0 ),
 
-    CONSTRAINT product_pk PRIMARY KEY (product_id),
-    CONSTRAINT product_brand_fk FOREIGN KEY (brand_name) REFERENCES ecommerce.brand (brand_name)
+    CONSTRAINT product_pk PRIMARY KEY (product_id)
+
 );
 
 CREATE TABLE ecommerce.laptop (
@@ -128,4 +128,38 @@ CREATE TABLE ecommerce.wishlist (
     CONSTRAINT wishlist_pk PRIMARY KEY (wishlist_id),
     CONSTRAINT wishlist_user_fk FOREIGN KEY (user_id) REFERENCES ecommerce.user (user_id),
     CONSTRAINT wishlist_product_fk FOREIGN KEY (product_id) REFERENCES ecommerce.product (product_id)
+);
+
+
+CREATE TABLE ecommerce.payment (
+    payment_id UUID NOT NULL DEFAULT uuid_generate_v1(),
+    order_id UUID NOT NULL,
+    payment_amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(255) NOT NULL,
+    payment_status VARCHAR(50) NOT NULL,
+    payment_date TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT payment_pk PRIMARY KEY (payment_id),
+    CONSTRAINT payment_order_fk FOREIGN KEY (order_id) REFERENCES ecommerce.order (order_id)
+);
+
+
+CREATE TABLE ecommerce.cart (
+    cart_id UUID NOT NULL DEFAULT uuid_generate_v1(),
+    user_id UUID NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT cart_p_k PRIMARY KEY (cart_id),
+    CONSTRAINT cart_user_f_k FOREIGN KEY (user_id) REFERENCES ecommerce.user (user_id)
+);
+
+
+CREATE TABLE ecommerce.cart_product (
+    cart_id UUID NOT NULL,
+    product_id UUID NOT NULL,
+
+    CONSTRAINT cart_product_pk PRIMARY KEY (cart_id, product_id),
+    CONSTRAINT cart_product_cart_fk FOREIGN KEY (cart_id) REFERENCES ecommerce.cart (cart_id),
+    CONSTRAINT cart_product_product_fk FOREIGN KEY (product_id) REFERENCES ecommerce.product (product_id)
 );

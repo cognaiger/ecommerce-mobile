@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mobile.com.backend.entity.Cart;
 import mobile.com.backend.entity.product.Brand;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -39,13 +41,14 @@ public class Product {
   private String description;
 
   @Column(name = "price")
-  private BigDecimal price;
+  private String price;
 
   @Column(name = "price_discount")
-  private BigDecimal priceDiscount;
+  private String priceDiscount;
 
   @Column(name = "quantity")
   private Integer quantity;
+
 
 
 }

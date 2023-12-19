@@ -12,12 +12,17 @@ import { FontFamily } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
 
 const ProductCard = (props) => {
-
   const navigation = useNavigation();
 
   return (
     <View style={styles.productCard}>
-      <Pressable onPress={() => navigation.navigate("ProductDetail")}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("ProductDetail", {
+            productId: props.productId,
+          });
+        }}
+      >
         <Image source={props.imgLink} style={styles.productImage} />
         <Text style={styles.productName}>{props.name}</Text>
         <Text style={styles.productPrice}>{props.price}</Text>
