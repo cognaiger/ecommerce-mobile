@@ -72,6 +72,7 @@ spring:
 
 logging:
   level:
+    tracer: DEBUG
     org:
       hibernate:
         orm:
