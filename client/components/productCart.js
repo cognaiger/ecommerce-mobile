@@ -16,11 +16,15 @@ const ProductCart = ({ image, name, price, quantity, totalPrice, setTotalPrice }
         }
     }
 
+    const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+
     return (
         <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            width: '90%',
+            // Other styles...
         }}>
             <View style={{
                 flexDirection: 'row',
@@ -35,7 +39,7 @@ const ProductCart = ({ image, name, price, quantity, totalPrice, setTotalPrice }
                 />
                 <View>
                     <Text style={styles.textName}>{name}</Text>
-                    <Text style={styles.textPrice}>{price}$</Text>
+                    <Text style={styles.textPrice}>{formattedPrice}</Text>
                 </View>
             </View>
 
@@ -62,7 +66,9 @@ const styles = StyleSheet.create({
     textName: {
         color: '#393F42',
         fontSize: 15,
-        fontWeight: '400'
+        fontWeight: '400',
+        maxWidth: 120,
+        overflow: 'hidden',
     },
     textPrice: {
         fontSize: 18,

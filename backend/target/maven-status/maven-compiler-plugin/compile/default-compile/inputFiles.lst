@@ -19,6 +19,8 @@
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/repository/CartRepository.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/AlgoliaProductService.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/StatsController.java
+/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/WishlistService.java
+/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/WishlistController.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/dto/request/product/filter/LaptopAttributeFilter.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/mapper/response/entity/ProductDocumentMapper.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/product/specification/GenericSpecificationService.java
@@ -77,6 +79,7 @@
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/mapper/response/entity/order/OrderTransportationGeneralMapper.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/Application.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/entity/product/Brand.java
+/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/repository/WishlistRepository.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/UserService.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/CartService.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/CategoryController.java

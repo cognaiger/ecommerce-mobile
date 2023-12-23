@@ -17,9 +17,20 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { IP } from "../const";
 
-const Checkout = () => {
-  const navigation = useNavigation();
-
+const Checkout = ({ route, navigation }) => {
+  const formatPrice = (amount) => {
+    const formatter = new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+    return formatter.format(amount);
+  };
+  const getPriceValue = (priceString) => {
+    const matches = priceString.match(/\d+/g);
+    return matches ? parseInt(matches.join(""), 10) : 0;
+  };
+  // const navigation = useNavigation();
+  const { price } = route.params;
   useEffect(() => {
     const handleUrlChange = (event) => {
       if (
@@ -59,7 +70,7 @@ const Checkout = () => {
     const randomTxnRef = generateRandomTxnRef();
     try {
       const paymentData = {
-        vnp_Ammount: 3250, // Replace with the actual payment amount
+        vnp_Ammount: 55000, // Replace with the actual payment amount
         vnp_OrderInfo: "Order information",
         vnp_TxnRef: randomTxnRef, // Replace with order information
         // Add other payment data as needed
@@ -76,9 +87,8 @@ const Checkout = () => {
         console.log(typeof response.data);
         setPaymentLink(response.data);
       } else {
-        Alert.alert('Failure', 'Payment fail');
+        Alert.alert("Failure", "Payment fail");
       }
-
 
       // Handle the payment process as per your backend's logic
     } catch (error) {
@@ -90,7 +100,7 @@ const Checkout = () => {
 
   const backButtonLink = "client/assets/Back.png";
 
-  const [totalPrice, setTotalPrice] = useState(33000);
+  const [totalPrice, setTotalPrice] = useState(price);
 
   const turnBack = () => {
     navigation.goBack();
@@ -237,18 +247,20 @@ const Checkout = () => {
           <Text style={styles.sectionTitle}>Billing Information</Text>
           <View style={styles.billingInfoRow}>
             <Text style={styles.billingInfoLabel}>Delivery Fee:</Text>
-            <Text style={styles.billingInfoValue}>$50</Text>
+            <Text style={styles.billingInfoValue}>đ55.000</Text>
           </View>
           <View style={styles.billingInfoRow}>
             <Text style={styles.billingInfoLabel}>Subtotal:</Text>
-            <Text style={styles.billingInfoValue}>$3200</Text>
+            <Text style={styles.billingInfoValue}>
+              {formatPrice(totalPrice)}
+            </Text>
           </View>
           <View style={styles.billingInfoRow}>
             <Text style={[styles.billingInfoLabel, styles.totalLabel]}>
               Total:
             </Text>
             <Text style={[styles.billingInfoValue, styles.totalValue]}>
-              $3250
+              {formatPrice(totalPrice + 55000)}
             </Text>
           </View>
         </View>
@@ -267,7 +279,7 @@ const Checkout = () => {
                   style={[
                     styles.paymentIcon,
                     selectedPaymentMethod === method.name &&
-                    styles.selectedPaymentIcon,
+                      styles.selectedPaymentIcon,
                   ]}
                   resizeMode="contain"
                 />

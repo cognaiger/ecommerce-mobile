@@ -6,24 +6,25 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
 import AuthService from "../services/auth.service";
 import ProductCard from "../components/ProductCard";
 import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
 import { IP } from "../const";
+
 const LaptopList = ({ route, navigation }) => {
 
+  
   let currentUser;
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
   AuthService.getCurrentUser()
     .then((res) => {
       currentUser = res;
-      console.log("id",currentUser.id);
-      // setCurrentRole(currentUser.roles[0]);
+      console.log("id", currentUser.id);
       setUserId(currentUser.id);
     })
     .catch((error) => {
@@ -31,16 +32,13 @@ const LaptopList = ({ route, navigation }) => {
     });
 
   const backButtonLink = "client/assets/Back.png";
-  // const navigation = useNavigation();
   const { categoryName } = route.params;
-  console.log("id: ", categoryName);
   const [products, setProducts] = useState([]);
-
   const [sortedProducts, setSortedProducts] = useState(products);
   const [sortCriteria, setSortCriteria] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = (searchText) => {
-    // Fetch laptop data from the API with the updated search text
     fetch(
       `http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${searchText}`
     )
@@ -52,10 +50,13 @@ const LaptopList = ({ route, navigation }) => {
       .catch((error) => console.error("Error fetching data:", error));
   };
 
-  const handleSort = (criteria) => {
-    // Sort the products based on the selected criteria
+  const handleSort = async (criteria) => {
+    setLoading(true);
+
+    // Simulate an asynchronous API call (replace with actual API call)
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const sorted = [...products].sort((a, b) => {
-      // Extract numerical values from the price strings
       const getPriceValue = (priceString) => {
         const matches = priceString.match(/\d+/g);
         return matches ? parseInt(matches.join(""), 10) : 0;
@@ -64,22 +65,20 @@ const LaptopList = ({ route, navigation }) => {
       const priceA = getPriceValue(a.price);
       const priceB = getPriceValue(b.price);
 
-      // Add sorting logic based on the criteria
       if (criteria === "Price") {
         return priceA - priceB;
       }
-      // Add more sorting criteria if needed
 
-      // Default: No sorting
       return 0;
     });
+
+    setLoading(false);
 
     setSortedProducts(sorted);
     setSortCriteria(criteria);
   };
 
   useEffect(() => {
-    // Fetch laptop data from the API
     fetch(
       `http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${categoryName}`
     )
@@ -93,7 +92,6 @@ const LaptopList = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Top bar */}
       <View style={styles.topBar}>
         <TouchableOpacity
           style={styles.backButton}
@@ -104,19 +102,16 @@ const LaptopList = ({ route, navigation }) => {
         <Text style={styles.title}>Laptop/Asus</Text>
       </View>
 
-      {/* Search bar */}
       <SearchBar onSearch={handleSearch} />
 
-      {/* Product list */}
       <ScrollView style={styles.scrollView}>
         <View style={styles.productList}>
-          {/* Product cards go here */}
           {sortedProducts.map((product) => (
             <ProductCard
               key={product.productId}
               imgLink={{ uri: product.imageLink }}
               name={product.name}
-              price={`$${product.price}`}
+              price={`${product.price}`}
               productId={product.productId}
             />
           ))}
@@ -124,6 +119,13 @@ const LaptopList = ({ route, navigation }) => {
       </ScrollView>
 
       <FilterAndSort onSort={handleSort} />
+
+      {loading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
+
       <BottomNavigator />
     </SafeAreaView>
   );

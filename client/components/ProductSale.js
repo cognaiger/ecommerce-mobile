@@ -4,7 +4,17 @@ import { useNavigation } from "@react-navigation/native";
 
 const ProductSale = (props) => {
   const navigation = useNavigation();
-
+  const formatPrice = (amount) => {
+    const formatter = new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+    return formatter.format(amount);
+  };
+  const getPriceValue = (priceString) => {
+    const matches = priceString.match(/\d+/g);
+    return matches ? parseInt(matches.join(""), 10) : 0;
+  };
   const formatCurrency = (amount) => {
     // Format the amount as currency with comma separators
     return amount.toLocaleString("en-US", {
@@ -26,8 +36,8 @@ const ProductSale = (props) => {
       <Image source={{ uri: props.image }} style={styles.productImage} />
       <Text style={styles.productName}>{props.name}</Text>
       <View style={styles.priceContainer}>
-        <Text style={styles.salePrice}>{formatCurrency(props.salePrice)}</Text>
-        <Text style={styles.originalPrice}>{formatCurrency(props.price)}</Text>
+        <Text style={styles.salePrice}>{formatPrice(getPriceValue(props.salePrice))}</Text>
+        <Text style={styles.originalPrice}>{(props.price)}</Text>
       </View>
     </Pressable>
   );

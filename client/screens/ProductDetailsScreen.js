@@ -9,8 +9,19 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IP } from "../const";
-
+import AuthService from "../services/auth.service";
 const ProductDetailsScreen = ({ route, navigation }) => {
+  let currentUser;
+  const [userId, setUserId] = useState("");
+  AuthService.getCurrentUser()
+    .then((res) => {
+      currentUser = res;
+      console.log("id", currentUser.id);
+      setUserId(currentUser.id);
+    })
+    .catch((error) => {
+      console.error("Error while fetching current user:", error);
+    });
   const { productId } = route.params;
   console.log("id: ", route.params);
   const productImgLink = "client/assets/ideapad.jpg";
@@ -37,7 +48,18 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  const handleWishlistButtonPress = () => {
+  const handleWishlistButtonPress = async () => {
+    if (clickWishlist === false) {
+      const response = await fetch(
+        `http://192.168.1.211:8080/ecommerce/api/v1/wishlist/${userId}/${productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
     setClickWishlist(!clickWishlist);
   };
 

@@ -6,111 +6,75 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import ProductCart from "../components/productCart";
-
+import AuthService from "../services/auth.service";
 const Cart = () => {
+  let currentUser;
+  const [userId, setUserId] = useState("");
+  AuthService.getCurrentUser()
+    .then((res) => {
+      currentUser = res;
+      console.log("id", currentUser.id);
+      // setCurrentRole(currentUser.roles[0]);
+      setUserId(currentUser.id);
+    })
+    .catch((error) => {
+      console.error("Error while fetching current user:", error);
+    });
+
   const backButtonLink = "client/assets/Back.png";
   const navigation = useNavigation();
-  const [totalPrice, setTotalPrice] = useState(33000);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
 
   const turnBack = () => {
     navigation.goBack();
   };
 
   const handleCheckout = () => {
-    navigation.navigate("Checkout");
+    navigation.navigate("Checkout",  {
+      price: totalPrice,
+    });
   };
-  const item = [
-    {
-      name: "Lenovo Ideapad Gaming 3",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 3000,
-      quantity: 1,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-    {
-      name: "Ram 1",
-      image:
-        "https://images.fpt.shop/unsafe/filters:quality(90)/fptshop.com.vn/uploads/images/tin-tuc/134784/Originals/Goi-y-nhung-mau-laptop-lenovo-noi-bat-trong-tam-gia-10-15-trieu-dong-5.JPG",
-      price: 2500,
-      quantity: 2,
-    },
-  ];
+
+  useEffect(() => {
+    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/cart/${userId}/all`)
+      .then((response) => response.json())
+      .then((data) => {
+        setCartItems(data);
+        calculateTotalPrice(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching cart items:", error);
+      });
+  }, [userId]);
+
+  const calculateTotalPrice = (items) => {
+    const total = items.reduce((acc, item) => acc + parseInt(item.price), 0);
+    setTotalPrice(total);
+  };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-      }}
-    >
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.topBar}>
         <TouchableOpacity onPress={turnBack}>
           <Image source={require(backButtonLink)}></Image>
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: 14,
-            fontWeight: 700,
-          }}
-        >
-          Cart
-        </Text>
+        <Text style={{ fontSize: 14, fontWeight: 700 }}>Cart</Text>
       </View>
 
       <ScrollView>
         <View style={styles.items}>
-          {item.map((el, i) => (
+          {cartItems.map((item, index) => (
             <ProductCart
-              name={el.name}
-              price={el.price}
-              image={el.image}
-              quantity={el.quantity}
-              key={i}
+              key={index}
+              name={item.name}
+              price={item.price}
+              image={item.imageLink}
+              quantity={1} // You may adjust this based on your requirements
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
             />
@@ -121,18 +85,22 @@ const Cart = () => {
       <View style={styles.bottom}>
         <View style={styles.totalPrice}>
           <Text>Subtotal: </Text>
-          <Text style={styles.priceText}>{totalPrice} $</Text>
+          <Text style={styles.priceText}>{new Intl.NumberFormat('vi-VN', {
+              style: 'currency',
+              currency: 'VND'
+            }).format(totalPrice)} </Text>
         </View>
-        <TouchableOpacity onPress={handleCheckout} style={[styles.button, styles.buyNowButton]}>
+        <TouchableOpacity
+          onPress={handleCheckout}
+          style={[styles.button, styles.buyNowButton]}
+        >
           <Text style={styles.buttonTextBuyNow}>Checkout</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
-
 export default Cart;
-
 const styles = StyleSheet.create({
   topBar: {
     flexDirection: "row",

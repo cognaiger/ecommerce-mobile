@@ -10,6 +10,19 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AuthService from "../services/auth.service";
 const ProductCard = (props) => {
+
+  console.disableYellowBox = true;
+  const formatPrice = (amount) => {
+    const formatter = new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    });
+    return formatter.format(amount);
+  };
+  const getPriceValue = (priceString) => {
+    const matches = priceString.match(/\d+/g);
+    return matches ? parseInt(matches.join(""), 10) : 0;
+  };
   let currentUser;
   const [userId, setUserId] = useState("");
   AuthService.getCurrentUser()
@@ -69,7 +82,9 @@ const ProductCard = (props) => {
       >
         <Image source={props.imgLink} style={styles.productImage} />
         <Text style={styles.productName}>{props.name}</Text>
-        <Text style={styles.productPrice}>{props.price}</Text>
+        <Text style={styles.productPrice}>
+          {formatPrice(getPriceValue(props.price))}
+        </Text>
       </Pressable>
       <TouchableOpacity
         style={styles.addToCartButton}

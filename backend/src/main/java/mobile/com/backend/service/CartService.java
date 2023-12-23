@@ -1,5 +1,7 @@
 package mobile.com.backend.service;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +45,14 @@ public class CartService {
         cart.setCreatedAt(createdAt);
         cart.setUpdatedAt(updatedAt);
         cartRepository.save(cart);
+    }
+    public List<Product> getAllProductsInCart(UUID userId) {
+        // Retrieve the user's cart (return an empty list if cart not found)
+        Optional<Cart> cartOptional = cartRepository.findByUserId(userId);
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+            return List.copyOf(cart.getProducts());
+        }
+        return List.of();
     }
 }
