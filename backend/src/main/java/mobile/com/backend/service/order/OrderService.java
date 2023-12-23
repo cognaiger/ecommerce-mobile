@@ -127,8 +127,16 @@ public class OrderService {
     orderRepository.delete(order);
   }
 
-
   public List<Order> findAll() {
     return orderRepository.findAll();
+  }
+
+  @Transactional
+  public void changeOrderStatus(UUID orderId, OrderStatus newStatus) {
+    Order order = orderRepository.findById(orderId)
+        .orElseThrow(() -> new RuntimeException("Order not found"));
+
+    order.setLastStatus(newStatus);
+    orderRepository.save(order);
   }
 }

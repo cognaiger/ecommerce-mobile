@@ -82,6 +82,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
             .requestMatchers(mvc.pattern("/api/v1/products")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/products/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/orders")).permitAll()
+            .requestMatchers(mvc.pattern("/api/v1/orders/**")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/algolia")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/products/laptops")).permitAll()
             .requestMatchers(mvc.pattern("/api/v1/products/**")).permitAll()

@@ -1,16 +1,20 @@
 package mobile.com.backend.controller;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import mobile.com.backend.common.enums.OrderStatus;
 import mobile.com.backend.dto.reponse.order.OrderForAdminPage;
 import mobile.com.backend.entity.order.Order;
 import mobile.com.backend.service.order.OrderService;
@@ -37,6 +41,19 @@ public class OrderController {
         orderForAdminPage.setDeliveryAddress(order.getDeliveryAddress());
 
         return orderForAdminPage;
+    }
+
+    @PostMapping("/{orderId}/{newStatus}")
+    public ResponseEntity<String> changeStatus(
+            @PathVariable("orderId") UUID orderId,
+            @PathVariable("newStatus") OrderStatus newStatus) {
+
+        try {
+            orderService.changeOrderStatus(orderId, newStatus);
+            return ResponseEntity.ok("Order status changed successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

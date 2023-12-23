@@ -37,7 +37,6 @@
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/entity/Payment.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/repository/order/OrderItemRepository.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/security/utils/SecurityContextUtil.java
-/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/repository/wishlist/WishlistRepository.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/security/jwt/AuthTokenFilter.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/common/enums/OrderStatus.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/product/specification/UtilsSpecificationService.java

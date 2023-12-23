@@ -7,8 +7,14 @@ const AdminDashboard = () => {
   const [productCount, setProductCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
   const [completedOrderCount, setCompletedOrderCount] = useState(0);
+  const [dataLoaded, setDataLoaded] = useState(false); // Track whether data is loaded
 
   useEffect(() => {
+    // Check if data is already loaded
+    if (dataLoaded) {
+      return;
+    }
+
     // Fetch product count
     fetch(`http://${IP}:8080/ecommerce/api/v1/stats/product-count`)
       .then((response) => response.json())
@@ -39,7 +45,10 @@ const AdminDashboard = () => {
       .catch((error) =>
         console.error("Error fetching completed order count: ", error)
       );
-  }, []);
+
+    // Mark data as loaded
+    setDataLoaded(true);
+  }, [dataLoaded]);
 
   const productData = {
     title: "Number of Products",
@@ -48,7 +57,7 @@ const AdminDashboard = () => {
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
       datasets: [
         {
-          data: [10, 15, 30, 25, 40, 35],
+          data: [44, 23, 50, 10, 20, 31],
         },
       ],
     },
@@ -61,7 +70,7 @@ const AdminDashboard = () => {
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
       datasets: [
         {
-          data: [20, 25, 50, 45, 60, 55],
+          data: [0, 0, 1, 2, 3, 0],
         },
       ],
     },
@@ -71,10 +80,10 @@ const AdminDashboard = () => {
     title: "Number of Completed Orders",
     value: completedOrderCount,
     chartData: {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      labels: ["Aug", "Sep", "Oct", "Nov", "Dec"],
       datasets: [
         {
-          data: [5, 8, 10, 7, 12, 11],
+          data: [0, 0, 0, 0, 1],
         },
       ],
     },

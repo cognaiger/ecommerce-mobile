@@ -40,10 +40,20 @@ const Orders = () => {
           data={orders}
           keyExtractor={(item) => item.orderId}
           renderItem={({ item }) => (
-            <OrderCard order={item} onUpdateStatus={(orderId, newStatus) => {
+            <OrderCard order={item} onUpdateStatus={ async (orderId, newStatus) => {
               // Implement logic to update order status here
               // You can make a PUT request to the API to update the status
-              console.log("Updating status of order:", orderId, "to", newStatus);
+              const response = await fetch(
+                `http://192.168.1.211:8080/ecommerce/api/v1/orders/${orderId}/${newStatus}`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+
+              console.log(response);
             }} />
           )}
         />
