@@ -1,18 +1,62 @@
+import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Image,
-  ScrollView,
   Pressable,
 } from "react-native";
-import { FontFamily } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
-
+import AuthService from "../services/auth.service";
 const ProductCard = (props) => {
+  let currentUser;
+  const [userId, setUserId] = useState("");
+  AuthService.getCurrentUser()
+    .then((res) => {
+      currentUser = res;
+      console.log("id", currentUser.id);
+      // setCurrentRole(currentUser.roles[0]);
+      setUserId(currentUser.id);
+    })
+    .catch((error) => {
+      console.error("Error while fetching current user:", error);
+    });
+
   const navigation = useNavigation();
+  const [addToCartMessage, setAddToCartMessage] = useState("");
+
+  const handleAddToCart = async () => {
+    console.log("clicked add to cart");
+    try {
+      const productId = props.productId;
+      const response = await fetch(
+        `http://192.168.1.211:8080/ecommerce/api/v1/cart/add-to-cart/${productId}/${userId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Request successful, set a success message
+        setAddToCartMessage("Added to your cart");
+
+        // Clear the success message after 1 second
+        setTimeout(() => {
+          setAddToCartMessage("");
+        }, 1000);
+      } else {
+        // Request failed, set an error message
+        setAddToCartMessage("Failed to add to cart");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      setAddToCartMessage("An error occurred");
+    }
+  };
 
   return (
     <View style={styles.productCard}>
@@ -27,9 +71,15 @@ const ProductCard = (props) => {
         <Text style={styles.productName}>{props.name}</Text>
         <Text style={styles.productPrice}>{props.price}</Text>
       </Pressable>
-      <TouchableOpacity style={styles.addToCartButton}>
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={handleAddToCart}
+      >
         <Text style={styles.addToCartButtonText}>Add to Cart</Text>
       </TouchableOpacity>
+      {addToCartMessage ? (
+        <Text style={styles.addToCartMessage}>{addToCartMessage}</Text>
+      ) : null}
     </View>
   );
 };
@@ -52,12 +102,12 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 14,
     marginBottom: 5,
-    fontWeight: "regular", // Added fontWeight: 'bold'
+    fontWeight: "regular",
   },
   productPrice: {
     fontSize: 16,
     marginBottom: 10,
-    fontWeight: "bold", // Added fontWeight: 'bold'
+    fontWeight: "bold",
   },
   addToCartButton: {
     backgroundColor: "black",
@@ -68,6 +118,11 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontWeight: "bold",
+  },
+  addToCartMessage: {
+    marginTop: 10,
+    color: "green", // Change color based on success or error
+    textAlign: "center",
   },
 });
 

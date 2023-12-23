@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const FilterAndSort = () => {
+const FilterAndSort = ({ onSort }) => {
   const filterIcon = "client/assets/filter.png";
   const sortIcon = "client/assets/sort.png";
-
+  const [sortedProducts, setSortedProducts] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [filterTitle, setFilterTitle] = useState("Filter");
   const [filterCriterias, setFilterCriterias] = useState([
@@ -33,6 +34,7 @@ const FilterAndSort = () => {
     { title: "Processor" },
     { title: "RAM" },
     { title: "Storage" },
+    { title: "Price" },
   ]);
 
   const openModal = (title) => {
@@ -50,17 +52,17 @@ const FilterAndSort = () => {
         <Image source={require(filterIcon)}></Image>
         <Text style={styles.tabText}>Filter</Text>
       </TouchableOpacity> */}
-      <TouchableOpacity style={styles.tab} onPress={() => openModal("Sort by")}>
+      <TouchableOpacity style={styles.tab} onPress={() => onSort("Price")}>
         <Image source={require(sortIcon)}></Image>
-        <Text style={styles.tabText}>Sort by</Text>
+        <Text style={styles.tabText}>Sort by Price</Text>
       </TouchableOpacity>
 
       {/* Filter Modal */}
-      {/* <Modal visible={modalVisible} animationType="slide" transparent={true}>
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{filterTitle}</Text>
-            {filterCriterias.map((criteria, index) => (
+            {sortCriterias.map((criteria, index) => (
               <TouchableOpacity
                 onPress={() => openModal(criteria.title)}
                 key={index}
@@ -77,7 +79,7 @@ const FilterAndSort = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal> */}
+      </Modal>
     </View>
   );
 };

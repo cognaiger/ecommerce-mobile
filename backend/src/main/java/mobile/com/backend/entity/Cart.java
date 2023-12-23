@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import mobile.com.backend.entity.product.Product;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,5 +36,11 @@ public class Cart {
     @ManyToMany
     @JoinTable(name = "cart_product", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products;
+
+
+    public Cart(User user, HashSet<Product> productSet) {
+        this.user = user;
+        this.products = productSet;
+    }
 
 }

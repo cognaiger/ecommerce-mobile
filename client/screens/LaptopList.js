@@ -9,30 +9,85 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
-
+import AuthService from "../services/auth.service";
 import ProductCard from "../components/ProductCard";
 import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
 import { IP } from "../const";
 const LaptopList = ({ route, navigation }) => {
+
+  let currentUser;
+  const [userId, setUserId] = useState('');
+  AuthService.getCurrentUser()
+    .then((res) => {
+      currentUser = res;
+      console.log("id",currentUser.id);
+      // setCurrentRole(currentUser.roles[0]);
+      setUserId(currentUser.id);
+    })
+    .catch((error) => {
+      console.error("Error while fetching current user:", error);
+    });
+
   const backButtonLink = "client/assets/Back.png";
   // const navigation = useNavigation();
   const { categoryName } = route.params;
   console.log("id: ", categoryName);
   const [products, setProducts] = useState([]);
+
+  const [sortedProducts, setSortedProducts] = useState(products);
+  const [sortCriteria, setSortCriteria] = useState("");
+
   const handleSearch = (searchText) => {
     // Fetch laptop data from the API with the updated search text
-    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${searchText}`)
+    fetch(
+      `http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${searchText}`
+    )
       .then((response) => response.json())
-      .then((data) => setProducts(data))  
+      .then((data) => {
+        setProducts(data);
+        setSortedProducts(data);
+      })
       .catch((error) => console.error("Error fetching data:", error));
   };
+
+  const handleSort = (criteria) => {
+    // Sort the products based on the selected criteria
+    const sorted = [...products].sort((a, b) => {
+      // Extract numerical values from the price strings
+      const getPriceValue = (priceString) => {
+        const matches = priceString.match(/\d+/g);
+        return matches ? parseInt(matches.join(""), 10) : 0;
+      };
+
+      const priceA = getPriceValue(a.price);
+      const priceB = getPriceValue(b.price);
+
+      // Add sorting logic based on the criteria
+      if (criteria === "Price") {
+        return priceA - priceB;
+      }
+      // Add more sorting criteria if needed
+
+      // Default: No sorting
+      return 0;
+    });
+
+    setSortedProducts(sorted);
+    setSortCriteria(criteria);
+  };
+
   useEffect(() => {
     // Fetch laptop data from the API
-    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${categoryName}`)
+    fetch(
+      `http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${categoryName}`
+    )
       .then((response) => response.json())
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        setSortedProducts(data);
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, [categoryName]);
 
@@ -56,7 +111,7 @@ const LaptopList = ({ route, navigation }) => {
       <ScrollView style={styles.scrollView}>
         <View style={styles.productList}>
           {/* Product cards go here */}
-          {products.map((product) => (
+          {sortedProducts.map((product) => (
             <ProductCard
               key={product.productId}
               imgLink={{ uri: product.imageLink }}
@@ -68,7 +123,7 @@ const LaptopList = ({ route, navigation }) => {
         </View>
       </ScrollView>
 
-      <FilterAndSort />
+      <FilterAndSort onSort={handleSort} />
       <BottomNavigator />
     </SafeAreaView>
   );

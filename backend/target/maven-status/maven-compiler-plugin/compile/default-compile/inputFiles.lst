@@ -1,4 +1,5 @@
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/entity/order/Order.java
+/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/CartController.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/product/specification/LaptopSpecificationService.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/dto/request/PageParamRequest.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/security/jwt/AuthEntryPointJwt.java
@@ -15,6 +16,7 @@
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/entity/Role.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/mapper/response/entity/product/ProductGeneralMapper.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/payload/response/MessageResponse.java
+/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/repository/CartRepository.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/AlgoliaProductService.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/StatsController.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/dto/request/product/filter/LaptopAttributeFilter.java
@@ -76,6 +78,7 @@
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/Application.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/entity/product/Brand.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/UserService.java
+/home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/service/CartService.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/controller/CategoryController.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/entity/order/OrderItem.java
 /home/thanhtung/uet_documents/third_year_docs/mobile/project/backend/src/main/java/mobile/com/backend/security/jwt/JwtUtils.java
