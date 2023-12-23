@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
   const [searchText, setSearchText] = useState("");
 
   const searchButtonLink = "client/assets/search.png";
@@ -17,6 +17,7 @@ const SearchBar = () => {
   const handleSearch = () => {
     // Handle search logic here
     console.log("Search:", searchText);
+    onSearch(searchText);
   };
 
   return (

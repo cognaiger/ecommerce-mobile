@@ -24,12 +24,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-
 @Service
 @RequiredArgsConstructor
 public class LaptopService {
-
-
 
   private final LaptopSpecificationService laptopSpecificationService;
   private final ProductSpecificationService productSpecificationService;
@@ -40,7 +37,8 @@ public class LaptopService {
 
   public Page<ProductGeneralResponse> getLaptopPage(LaptopPageRequest laptopPageRequest) {
     List<AttributeFilter> laptopAttributeFilters = AttributeFilter.castList(laptopPageRequest.getAttributeFilters());
-    List<AttributeFilter> productAttributeFilters = AttributeFilter.castList(laptopPageRequest.getGeneralFilter().getFilters());
+    List<AttributeFilter> productAttributeFilters = AttributeFilter
+        .castList(laptopPageRequest.getGeneralFilter().getFilters());
 
     Specification<Laptop> laptopSpecification = laptopSpecificationService.getSpecification(laptopAttributeFilters);
     Specification<Product> productSpecification = productSpecificationService.getSpecification(productAttributeFilters);
@@ -48,13 +46,11 @@ public class LaptopService {
     productSpecification = UtilsSpecificationService.join(
         productSpecification,
         laptopSpecification,
-        "productId"
-    );
+        "productId");
 
     Pageable pageable = PageRequest.of(
         laptopPageRequest.getGeneralFilter().getPage(),
-        laptopPageRequest.getGeneralFilter().getSize()
-    );
+        laptopPageRequest.getGeneralFilter().getSize());
 
     Page<Product> productPage = productRepository.findAll(productSpecification, pageable);
     return productPage.map(productGeneralMapper::toDto);
@@ -69,7 +65,7 @@ public class LaptopService {
     return product.getName();
   }
 
-   public String getLaptopImageLink(UUID productId) {
+  public String getLaptopImageLink(UUID productId) {
     Product product = productRepository.findByProductId(productId);
     return product.getImageLink();
   }
@@ -79,4 +75,29 @@ public class LaptopService {
     return product.getPrice();
   }
 
+  public List<Laptop> getFirst10Laptops() {
+    // Create a PageRequest with page number 0 and size 10
+    PageRequest pageRequest = PageRequest.of(0, 10);
+
+    // Fetch the first 10 laptops from the database
+    Page<Laptop> laptopPage = laptopRepository.findAll(pageRequest);
+
+    // Return the content of the page as a list
+    return laptopPage.getContent();
+}
+
+public List<Laptop> getFirst30Laptops() {
+    // Create a PageRequest with page number 0 and size 10
+    PageRequest pageRequest = PageRequest.of(0, 30);
+
+    // Fetch the first 10 laptops from the database
+    Page<Laptop> laptopPage = laptopRepository.findAll(pageRequest);
+
+    // Return the content of the page as a list
+    return laptopPage.getContent();
+}
+
+public List<Product> getProductByBrandName(String brand) {
+  return productRepository.findLaptopsByNameContainingIgnoreCase(brand);
+}
 }

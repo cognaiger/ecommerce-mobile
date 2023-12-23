@@ -15,19 +15,26 @@ import FilterAndSort from "../components/FilterAndSort";
 import BottomNavigator from "../components/BottomNavigator";
 import SearchBar from "../components/SearchBar";
 import { IP } from "../const";
-const LaptopList = () => {
+const LaptopList = ({ route, navigation }) => {
   const backButtonLink = "client/assets/Back.png";
-  const navigation = useNavigation();
-
+  // const navigation = useNavigation();
+  const { categoryName } = route.params;
+  console.log("id: ", categoryName);
   const [products, setProducts] = useState([]);
-
+  const handleSearch = (searchText) => {
+    // Fetch laptop data from the API with the updated search text
+    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${searchText}`)
+      .then((response) => response.json())
+      .then((data) => setProducts(data))  
+      .catch((error) => console.error("Error fetching data:", error));
+  };
   useEffect(() => {
     // Fetch laptop data from the API
-    fetch("http://192.168.1.211:8080/ecommerce/api/v1/products/laptops")
+    fetch(`http://192.168.1.211:8080/ecommerce/api/v1/products/30-laptops/${categoryName}`)
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  }, [categoryName]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +50,7 @@ const LaptopList = () => {
       </View>
 
       {/* Search bar */}
-      <SearchBar />
+      <SearchBar onSearch={handleSearch} />
 
       {/* Product list */}
       <ScrollView style={styles.scrollView}>

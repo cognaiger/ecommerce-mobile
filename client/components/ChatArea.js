@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ScrollView } from 'react-native';
-import ReactMarkdown from 'react-native-markdown-display'; // Make sure to install this library
+import { View, Text, TextInput, Button, ScrollView, ActivityIndicator } from 'react-native';
+import ReactMarkdown from 'react-native-markdown-display';
 
 const ChatArea = () => {
   const [userInput, setUserInput] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (text) => {
     setUserInput(text);
@@ -20,6 +21,9 @@ const ChatArea = () => {
 
       // Clear input field
       setUserInput('');
+
+      // Set loading to true while waiting for the response
+      setLoading(true);
 
       // Send user input to API
       sendUserInput(userInput);
@@ -40,7 +44,7 @@ const ChatArea = () => {
       },
       body: JSON.stringify({
         query: input,
-        top_k: 10,
+        top_k: 5,
       }),
     })
       .then((response) => {
@@ -60,6 +64,10 @@ const ChatArea = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
+      })
+      .finally(() => {
+        // Set loading to false when the response is received (success or error)
+        setLoading(false);
       });
   };
 
@@ -93,6 +101,9 @@ const ChatArea = () => {
             </View>
           ))}
         </ScrollView>
+
+        {/* Loading indicator */}
+        {loading && <ActivityIndicator size="small" color="#0000ff" />}
 
         {/* User input */}
         <View style={{ marginTop: 10, flexDirection: 'row' }}>

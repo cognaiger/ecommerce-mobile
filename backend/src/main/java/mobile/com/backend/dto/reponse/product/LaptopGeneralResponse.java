@@ -39,4 +39,6 @@ public class LaptopGeneralResponse {
   private String imageLink = "";
 
   private String price;
+
+  private String salePrice;
 }

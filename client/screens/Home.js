@@ -117,7 +117,7 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch product data from the API
-    fetch(`http://${IP}:8080/ecommerce/api/v1/products`)
+    fetch(`http://${IP}:8080/ecommerce/api/v1/products/10-laptops`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -350,7 +350,7 @@ const Home = () => {
               >
                 <Text style={{ color: 'white' }}>Close Chat</Text>
               </Pressable>
-            </ScrollView>
+              </ScrollView>
           </View>
         </View>
       </Modal>
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   recommendation: {
-    backgroundColor: "black",
+    backgroundColor: "teal",
     gap: 20,
     padding: 20,
   },

@@ -233,7 +233,9 @@ const Category = ({ route, navigation }) => {
                                 flex: 1,
                                 alignItems: 'center'
                             }}
-                            onPress={() => setCateSelected(mainCate.name)}>
+                            onPress={() => {
+                                
+                                setCateSelected(mainCate.name);}}>
                             <Image
                                 style={{
                                     width: 40,
@@ -255,7 +257,9 @@ const Category = ({ route, navigation }) => {
                                 alignItems: 'center',
                                 flexBasis: '40%'
                             }}
-                            onPress={() => navigation.navigate("ProductList")}
+                            onPress={() => navigation.navigate("ProductList", {
+                                categoryName: sub.name,
+                              })}
                             >
                                 <Image
                                     style={{

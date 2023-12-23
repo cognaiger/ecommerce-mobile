@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import com.algolia.search.SearchClient;
 import com.algolia.search.SearchIndex;
 import com.algolia.search.models.indexing.Query;
@@ -24,9 +24,9 @@ import mobile.com.backend.service.product.ProductService;
 @Service
 public class AlgoliaProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
 
+    @Autowired
+    private ProductService productService;
     private SearchClient searchClient;
     private final SearchIndex<ProductGeneralResponse> laptopIndex;
 
@@ -38,7 +38,7 @@ public class AlgoliaProductService {
     public void indexLaptops() {
         System.out.println("indexing laptop");
         // Configure index settings (e.g., attributes to index, custom ranking, etc.)
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productService.getAll();
         List<ProductGeneralResponse> productGeneralResponses = products.stream()
                 .map(product -> convertToProductGeneralResponse(product)).collect(Collectors.toList());
         for (ProductGeneralResponse productGeneralResponse : productGeneralResponses) {

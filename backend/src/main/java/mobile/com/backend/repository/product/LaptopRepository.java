@@ -15,4 +15,5 @@ public interface LaptopRepository extends JpaRepository<Laptop, UUID> {
 
   Page<Laptop> findAll(Specification<Laptop> specification, Pageable pageable);
   List<Laptop> findAll();
+  Page<Laptop> findAll(Pageable pageable);
 }

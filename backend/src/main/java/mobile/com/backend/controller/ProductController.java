@@ -102,27 +102,51 @@ public class ProductController {
     return ResponseEntity.ok(product);
   }
 
-  @GetMapping("/laptops")
+  @GetMapping("/10-laptops")
   public ResponseEntity<List<LaptopGeneralResponse>> getAllLaptops() {
-    List<Laptop> laptops = LaptopService.getAll();
+    List<Laptop> laptops = LaptopService.getFirst10Laptops();
     List<LaptopGeneralResponse> laptopGeneralResponses = new ArrayList<LaptopGeneralResponse>();
     for (Laptop laptop : laptops) {
       UUID currentLaptopId = laptop.getProductId();
 
       LaptopGeneralResponse laptopGeneralResponse = new LaptopGeneralResponse();
-      String laptopName = laptopService.getLaptopName(currentLaptopId);
-      String laptopImageLink = laptopService.getLaptopImageLink(currentLaptopId);
-      String laptopPrice = laptopService.getLaptopPrice(currentLaptopId);
+      Product currentProduct = productService.findById(currentLaptopId);
+      String laptopName = currentProduct.getName();
+      String laptopImageLink = currentProduct.getImageLink();
+      String laptopPrice = currentProduct.getPrice();
       laptopGeneralResponse.setName(laptopName);
       laptopGeneralResponse.setImageLink(laptopImageLink);
       laptopGeneralResponse.setPrice(laptopPrice);
       laptopGeneralResponse.setProductId(currentLaptopId);
+      laptopGeneralResponse.setSalePrice(currentProduct.getPriceDiscount());
       laptopGeneralResponses.add(laptopGeneralResponse);
     }
     return ResponseEntity.ok(laptopGeneralResponses);
 
   }
 
-  
+  @GetMapping("/30-laptops/{brandName}")
+  public ResponseEntity<List<LaptopGeneralResponse>> getAllLaptop(@PathVariable("brandName") String name ) {
+    List<Laptop> laptops = LaptopService.getFirst30Laptops();
+    List<LaptopGeneralResponse> laptopGeneralResponses = new ArrayList<LaptopGeneralResponse>();
+    List<Product> products = laptopService.getProductByBrandName(name);
+    for (Product laptop : products) {
+      UUID currentLaptopId = laptop.getProductId();
+
+      LaptopGeneralResponse laptopGeneralResponse = new LaptopGeneralResponse();
+      Product currentProduct = laptop;
+      String laptopName = currentProduct.getName();
+      String laptopImageLink = currentProduct.getImageLink();
+      String laptopPrice = currentProduct.getPrice();
+      laptopGeneralResponse.setName(laptopName);
+      laptopGeneralResponse.setImageLink(laptopImageLink);
+      laptopGeneralResponse.setPrice(laptopPrice);
+      laptopGeneralResponse.setProductId(currentLaptopId);
+      laptopGeneralResponse.setSalePrice(currentProduct.getPriceDiscount());
+      laptopGeneralResponses.add(laptopGeneralResponse);
+    }
+    return ResponseEntity.ok(laptopGeneralResponses);
+
+  }
 
 }

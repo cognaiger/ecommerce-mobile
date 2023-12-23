@@ -46,17 +46,17 @@ const FilterAndSort = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.tab} onPress={() => openModal("Filter")}>
+      {/* <TouchableOpacity style={styles.tab} onPress={() => openModal("Filter")}>
         <Image source={require(filterIcon)}></Image>
         <Text style={styles.tabText}>Filter</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.tab} onPress={() => openModal("Sort by")}>
         <Image source={require(sortIcon)}></Image>
         <Text style={styles.tabText}>Sort by</Text>
       </TouchableOpacity>
 
       {/* Filter Modal */}
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+      {/* <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>{filterTitle}</Text>
@@ -77,7 +77,7 @@ const FilterAndSort = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };

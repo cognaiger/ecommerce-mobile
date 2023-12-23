@@ -10,8 +10,6 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-import mobile.com.backend.controller.AlgoliaProductService;
-
 @SpringBootApplication
 @EnableWebSecurity
 @EnableElasticsearchRepositories
